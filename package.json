@@ -1,7 +1,7 @@
 {
     "name": "arowana-staking",
     "version": "1.0.0",
-    "description": "ERC-4626 Arowana Staking Pool Contracts",
+    "description": "Modularized MasterChef Staking Pool with ERC-4626 LP tokens",
     "license": "MIT",
     "author": "Arowana Finance",
     "type": "module",
@@ -39,6 +39,10 @@
         "docs:preview": "vitepress preview docs",
         "test": "yarn hardhat test --no-compile",
         "coverage": "hardhat clean && yarn hardhat coverage --solcoverjs ./.solcover.cjs && istanbul-badges-readme --colors=\"red:50,yellow:60\""
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^5.4.0",
+        "@openzeppelin/contracts-upgradeable": "^5.4.0"
     },
     "devDependencies": {
         "@arowanadao/eslint": "^1.0.6",

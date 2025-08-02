@@ -1,6 +1,6 @@
 # Arowana Staking
 
-ERC-4626 Arowana Staking Pool Contracts
+Modularized MasterChef Staking Pool with ERC-4626 LP tokens
 
 Try running some of the following tasks:
 
