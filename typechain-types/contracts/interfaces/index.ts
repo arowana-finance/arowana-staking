@@ -3,17 +3,10 @@
 /* eslint-disable */
 import type * as ierc20Sol from"./IERC20.sol/index.js";
 export type { ierc20Sol };
-import type * as ierc4626Sol from"./IERC4626.sol/index.js";
-export type { ierc4626Sol };
-import type * as ierc4626PoolSol from"./IERC4626Pool.sol/index.js";
-export type { ierc4626PoolSol };
-import type * as iInitializableProxySol from"./IInitializableProxy.sol/index.js";
-export type { iInitializableProxySol };
-import type * as iMasterChefSol from"./IMasterChef.sol/index.js";
-export type { iMasterChefSol };
-import type * as iMasterPoolSol from"./IMasterPool.sol/index.js";
-export type { iMasterPoolSol };
-import type * as iRewardVaultSol from"./IRewardVault.sol/index.js";
-export type { iRewardVaultSol };
-import type * as iwethSol from"./IWETH.sol/index.js";
-export type { iwethSol };
+export type { IERC4626 } from "./IERC4626.js";
+export type { IERC4626Pool } from "./IERC4626Pool.js";
+export type { IInitializableProxy } from "./IInitializableProxy.js";
+export type { IMasterChef } from "./IMasterChef.js";
+export type { IMasterPool } from "./IMasterPool.js";
+export type { IRewardVault } from "./IRewardVault.js";
+export type { IWETH } from "./IWETH.js";

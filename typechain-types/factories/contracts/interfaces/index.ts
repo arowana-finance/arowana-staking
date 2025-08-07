@@ -2,10 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as ierc20Sol from "./IERC20.sol/index.js";
-export * as ierc4626Sol from "./IERC4626.sol/index.js";
-export * as ierc4626PoolSol from "./IERC4626Pool.sol/index.js";
-export * as iInitializableProxySol from "./IInitializableProxy.sol/index.js";
-export * as iMasterChefSol from "./IMasterChef.sol/index.js";
-export * as iMasterPoolSol from "./IMasterPool.sol/index.js";
-export * as iRewardVaultSol from "./IRewardVault.sol/index.js";
-export * as iwethSol from "./IWETH.sol/index.js";
+export { IERC4626__factory } from "./IERC4626__factory.js";
+export { IERC4626Pool__factory } from "./IERC4626Pool__factory.js";
+export { IInitializableProxy__factory } from "./IInitializableProxy__factory.js";
+export { IMasterChef__factory } from "./IMasterChef__factory.js";
+export { IMasterPool__factory } from "./IMasterPool__factory.js";
+export { IRewardVault__factory } from "./IRewardVault__factory.js";
+export { IWETH__factory } from "./IWETH__factory.js";
