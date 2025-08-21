@@ -5,13 +5,15 @@ import {
     ERC20PermitUpgradeable,
     ECDSA
 } from '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol';
+import { ERC165 } from '@openzeppelin/contracts/utils/introspection/ERC165.sol';
+import { IERC20Lockable } from '../interfaces/IERC20Lockable.sol';
 
 /**
  * @dev Can lock transfers of specific address, either by user permission or ownership
  *
  * (Useful for stablecoins / governance)
  */
-abstract contract ERC20Lockable is ERC20PermitUpgradeable {
+abstract contract ERC20Lockable is ERC20PermitUpgradeable, ERC165 {
     event Lock(address indexed owner, uint256 until);
     event LockedBy(address indexed owner, address indexed spender, uint256 until);
 
@@ -92,5 +94,9 @@ abstract contract ERC20Lockable is ERC20PermitUpgradeable {
         _lock(owner, until);
 
         emit LockedBy(owner, spender, until);
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IERC20Lockable).interfaceId || super.supportsInterface(interfaceId);
     }
 }
