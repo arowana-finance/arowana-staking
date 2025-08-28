@@ -22,13 +22,21 @@ import type {
 } from "../../../common.js";
 
 export interface IRewardVaultInterface extends Interface {
-  getFunction(nameOrSignature: "sendTo"): FunctionFragment;
+  getFunction(nameOrSignature: "rewardPerSec" | "sendTo"): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "rewardPerSec",
+    values?: undefined,
+  ): string;
   encodeFunctionData(
     functionFragment: "sendTo",
     values: [AddressLike, AddressLike, BigNumberish],
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "rewardPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "sendTo", data: BytesLike): Result;
 }
 
@@ -75,6 +83,8 @@ export interface IRewardVault extends BaseContract {
     event?: TCEvent,
   ): Promise<this>;
 
+  rewardPerSec: TypedContractMethod<[], [bigint], "view">;
+
   sendTo: TypedContractMethod<
     [token: AddressLike, to: AddressLike, value: BigNumberish],
     [void],
@@ -85,6 +95,9 @@ export interface IRewardVault extends BaseContract {
     key: string | FunctionFragment,
   ): T;
 
+  getFunction(
+    nameOrSignature: "rewardPerSec",
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "sendTo",
   ): TypedContractMethod<

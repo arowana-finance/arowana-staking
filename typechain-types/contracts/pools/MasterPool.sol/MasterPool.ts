@@ -30,11 +30,15 @@ export interface MasterPoolInterface extends Interface {
       | "add"
       | "deposit"
       | "depositPermit"
-      | "getBlockRewardPerShare"
       | "getMultiplier"
+      | "getPoolRewardsByTime"
+      | "getPoolRewardsPerSec"
+      | "getRewardsPerShare"
+      | "halvingInterval"
+      | "halvingRate"
       | "hasPool"
       | "hasPoolToken"
-      | "initialize"
+      | "initializeChef"
       | "initializePool"
       | "massUpdatePools"
       | "owner"
@@ -50,14 +54,16 @@ export interface MasterPoolInterface extends Interface {
       | "poolTransfer"
       | "poolWithdraw"
       | "renounceOwnership"
-      | "rewardPerBlock"
       | "rewardToken"
       | "rewardVault"
+      | "rewardsPerSec"
       | "set"
+      | "setHalvingInterval"
+      | "setHalvingRate"
+      | "setRewardsPerSec"
       | "totalAllocPoint"
       | "transferOwnership"
       | "updatePool"
-      | "updateRewardPerBlock"
       | "userInfo"
       | "withdraw",
   ): FunctionFragment;
@@ -68,9 +74,11 @@ export interface MasterPoolInterface extends Interface {
       | "Initialized"
       | "InitializedChef"
       | "OwnershipTransferred"
+      | "SetHalvingInterval"
+      | "SetHalvingRate"
       | "SetPool"
       | "SetPoolToken"
-      | "SetReward"
+      | "SetRewards"
       | "Withdraw",
   ): EventFragment;
 
@@ -88,12 +96,28 @@ export interface MasterPoolInterface extends Interface {
     values: [BigNumberish, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "getBlockRewardPerShare",
+    functionFragment: "getMultiplier",
+    values: [BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPoolRewardsByTime",
+    values: [BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPoolRewardsPerSec",
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getMultiplier",
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    functionFragment: "getRewardsPerShare",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "halvingInterval",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "halvingRate",
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "hasPool",
@@ -104,13 +128,13 @@ export interface MasterPoolInterface extends Interface {
     values: [AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeChef",
     values: [
       AddressLike,
       AddressLike,
       AddressLike,
-      BigNumberish,
       AddressLike,
+      BigNumberish,
       BigNumberish,
       BigNumberish,
       boolean,
@@ -123,8 +147,10 @@ export interface MasterPoolInterface extends Interface {
       AddressLike,
       AddressLike,
       AddressLike,
-      BigNumberish,
       AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
       BigNumberish,
       BigNumberish,
       boolean,
@@ -181,10 +207,6 @@ export interface MasterPoolInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardPerBlock",
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: "rewardToken",
     values?: undefined,
   ): string;
@@ -193,8 +215,24 @@ export interface MasterPoolInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: "rewardsPerSec",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: "set",
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, boolean],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setHalvingInterval",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setHalvingRate",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRewardsPerSec",
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: "totalAllocPoint",
@@ -206,10 +244,6 @@ export interface MasterPoolInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updatePool",
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateRewardPerBlock",
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
@@ -229,11 +263,27 @@ export interface MasterPoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getBlockRewardPerShare",
+    functionFragment: "getMultiplier",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getMultiplier",
+    functionFragment: "getPoolRewardsByTime",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPoolRewardsPerSec",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRewardsPerShare",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "halvingInterval",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "halvingRate",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
@@ -241,7 +291,10 @@ export interface MasterPoolInterface extends Interface {
     functionFragment: "hasPoolToken",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeChef",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "initializePool",
     data: BytesLike,
@@ -285,10 +338,6 @@ export interface MasterPoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "rewardPerBlock",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "rewardToken",
     data: BytesLike,
   ): Result;
@@ -296,7 +345,23 @@ export interface MasterPoolInterface extends Interface {
     functionFragment: "rewardVault",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "rewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setHalvingInterval",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setHalvingRate",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalAllocPoint",
     data: BytesLike,
@@ -306,10 +371,6 @@ export interface MasterPoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateRewardPerBlock",
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -379,27 +440,51 @@ export namespace OwnershipTransferredEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
+export namespace SetHalvingIntervalEvent {
+  export type InputTuple = [halvingInterval: BigNumberish];
+  export type OutputTuple = [halvingInterval: bigint];
+  export interface OutputObject {
+    halvingInterval: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace SetHalvingRateEvent {
+  export type InputTuple = [halvingRate: BigNumberish];
+  export type OutputTuple = [halvingRate: bigint];
+  export interface OutputObject {
+    halvingRate: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
 export namespace SetPoolEvent {
   export type InputTuple = [
     pid: BigNumberish,
     lpToken: AddressLike,
     newAllocPoint: BigNumberish,
-    startBlock: BigNumberish,
-    endBlock: BigNumberish,
+    startTime: BigNumberish,
+    endTime: BigNumberish,
   ];
   export type OutputTuple = [
     pid: bigint,
     lpToken: string,
     newAllocPoint: bigint,
-    startBlock: bigint,
-    endBlock: bigint,
+    startTime: bigint,
+    endTime: bigint,
   ];
   export interface OutputObject {
     pid: bigint;
     lpToken: string;
     newAllocPoint: bigint;
-    startBlock: bigint;
-    endBlock: bigint;
+    startTime: bigint;
+    endTime: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -420,11 +505,11 @@ export namespace SetPoolTokenEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace SetRewardEvent {
-  export type InputTuple = [newReward: BigNumberish];
-  export type OutputTuple = [newReward: bigint];
+export namespace SetRewardsEvent {
+  export type InputTuple = [rewardsPerSec: BigNumberish];
+  export type OutputTuple = [rewardsPerSec: bigint];
   export interface OutputObject {
-    newReward: bigint;
+    rewardsPerSec: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -499,8 +584,8 @@ export interface MasterPool extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -524,17 +609,33 @@ export interface MasterPool extends BaseContract {
     "nonpayable"
   >;
 
-  getBlockRewardPerShare: TypedContractMethod<
+  getMultiplier: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsByTime: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsPerSec: TypedContractMethod<
     [_pid: BigNumberish],
     [bigint],
     "view"
   >;
 
-  getMultiplier: TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+  getRewardsPerShare: TypedContractMethod<
+    [_pid: BigNumberish],
     [bigint],
     "view"
   >;
+
+  halvingInterval: TypedContractMethod<[], [bigint], "view">;
+
+  halvingRate: TypedContractMethod<[], [bigint], "view">;
 
   hasPool: TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
 
@@ -544,15 +645,15 @@ export interface MasterPool extends BaseContract {
     "view"
   >;
 
-  initialize: TypedContractMethod<
+  initializeChef: TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -565,10 +666,12 @@ export interface MasterPool extends BaseContract {
       _WETH: AddressLike,
       _poolTokenImplementation: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _halvingRate: BigNumberish,
+      _halvingInterval: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -601,10 +704,10 @@ export interface MasterPool extends BaseContract {
       [string, bigint, bigint, bigint, bigint, bigint] & {
         lpToken: string;
         allocPoint: bigint;
-        startBlock: bigint;
-        endBlock: bigint;
-        lastRewardBlock: bigint;
-        accRewardPerShare: bigint;
+        startTime: bigint;
+        endTime: bigint;
+        lastRewardTime: bigint;
+        accRewardsPerShare: bigint;
       },
     ],
     "view"
@@ -632,20 +735,38 @@ export interface MasterPool extends BaseContract {
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
-  rewardPerBlock: TypedContractMethod<[], [bigint], "view">;
-
   rewardToken: TypedContractMethod<[], [string], "view">;
 
   rewardVault: TypedContractMethod<[], [string], "view">;
+
+  rewardsPerSec: TypedContractMethod<[], [bigint], "view">;
 
   set: TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
+    [void],
+    "nonpayable"
+  >;
+
+  setHalvingInterval: TypedContractMethod<
+    [_halvingInterval: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setHalvingRate: TypedContractMethod<
+    [_halvingRate: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setRewardsPerSec: TypedContractMethod<
+    [_rewardsPerSec: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -659,12 +780,6 @@ export interface MasterPool extends BaseContract {
   >;
 
   updatePool: TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-
-  updateRewardPerBlock: TypedContractMethod<
-    [newBlockReward: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
 
   userInfo: TypedContractMethod<
     [arg0: BigNumberish, arg1: AddressLike],
@@ -691,8 +806,8 @@ export interface MasterPool extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -718,15 +833,31 @@ export interface MasterPool extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "getBlockRewardPerShare",
-  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
-  getFunction(
     nameOrSignature: "getMultiplier",
   ): TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
     [bigint],
     "view"
   >;
+  getFunction(
+    nameOrSignature: "getPoolRewardsByTime",
+  ): TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getPoolRewardsPerSec",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRewardsPerShare",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "halvingInterval",
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "halvingRate",
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "hasPool",
   ): TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
@@ -734,16 +865,16 @@ export interface MasterPool extends BaseContract {
     nameOrSignature: "hasPoolToken",
   ): TypedContractMethod<[_poolToken: AddressLike], [boolean], "view">;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeChef",
   ): TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -757,10 +888,12 @@ export interface MasterPool extends BaseContract {
       _WETH: AddressLike,
       _poolTokenImplementation: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _halvingRate: BigNumberish,
+      _halvingInterval: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -800,10 +933,10 @@ export interface MasterPool extends BaseContract {
       [string, bigint, bigint, bigint, bigint, bigint] & {
         lpToken: string;
         allocPoint: bigint;
-        startBlock: bigint;
-        endBlock: bigint;
-        lastRewardBlock: bigint;
-        accRewardPerShare: bigint;
+        startTime: bigint;
+        endTime: bigint;
+        lastRewardTime: bigint;
+        accRewardsPerShare: bigint;
       },
     ],
     "view"
@@ -838,27 +971,40 @@ export interface MasterPool extends BaseContract {
     nameOrSignature: "renounceOwnership",
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "rewardPerBlock",
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "rewardToken",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "rewardVault",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "rewardsPerSec",
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "set",
   ): TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "setHalvingInterval",
+  ): TypedContractMethod<
+    [_halvingInterval: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "setHalvingRate",
+  ): TypedContractMethod<[_halvingRate: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setRewardsPerSec",
+  ): TypedContractMethod<[_rewardsPerSec: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "totalAllocPoint",
   ): TypedContractMethod<[], [bigint], "view">;
@@ -868,9 +1014,6 @@ export interface MasterPool extends BaseContract {
   getFunction(
     nameOrSignature: "updatePool",
   ): TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "updateRewardPerBlock",
-  ): TypedContractMethod<[newBlockReward: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "userInfo",
   ): TypedContractMethod<
@@ -915,6 +1058,20 @@ export interface MasterPool extends BaseContract {
     OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
+    key: "SetHalvingInterval",
+  ): TypedContractEvent<
+    SetHalvingIntervalEvent.InputTuple,
+    SetHalvingIntervalEvent.OutputTuple,
+    SetHalvingIntervalEvent.OutputObject
+  >;
+  getEvent(
+    key: "SetHalvingRate",
+  ): TypedContractEvent<
+    SetHalvingRateEvent.InputTuple,
+    SetHalvingRateEvent.OutputTuple,
+    SetHalvingRateEvent.OutputObject
+  >;
+  getEvent(
     key: "SetPool",
   ): TypedContractEvent<
     SetPoolEvent.InputTuple,
@@ -929,11 +1086,11 @@ export interface MasterPool extends BaseContract {
     SetPoolTokenEvent.OutputObject
   >;
   getEvent(
-    key: "SetReward",
+    key: "SetRewards",
   ): TypedContractEvent<
-    SetRewardEvent.InputTuple,
-    SetRewardEvent.OutputTuple,
-    SetRewardEvent.OutputObject
+    SetRewardsEvent.InputTuple,
+    SetRewardsEvent.OutputTuple,
+    SetRewardsEvent.OutputObject
   >;
   getEvent(
     key: "Withdraw",
@@ -944,7 +1101,7 @@ export interface MasterPool extends BaseContract {
   >;
 
   filters: {
-    "Deposit(address,uint256,uint256)": TypedContractEvent<
+    "Deposit(address,uint16,uint256)": TypedContractEvent<
       DepositEvent.InputTuple,
       DepositEvent.OutputTuple,
       DepositEvent.OutputObject
@@ -988,7 +1145,29 @@ export interface MasterPool extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "SetPool(uint256,address,uint256,uint256,uint256)": TypedContractEvent<
+    "SetHalvingInterval(uint64)": TypedContractEvent<
+      SetHalvingIntervalEvent.InputTuple,
+      SetHalvingIntervalEvent.OutputTuple,
+      SetHalvingIntervalEvent.OutputObject
+    >;
+    SetHalvingInterval: TypedContractEvent<
+      SetHalvingIntervalEvent.InputTuple,
+      SetHalvingIntervalEvent.OutputTuple,
+      SetHalvingIntervalEvent.OutputObject
+    >;
+
+    "SetHalvingRate(uint16)": TypedContractEvent<
+      SetHalvingRateEvent.InputTuple,
+      SetHalvingRateEvent.OutputTuple,
+      SetHalvingRateEvent.OutputObject
+    >;
+    SetHalvingRate: TypedContractEvent<
+      SetHalvingRateEvent.InputTuple,
+      SetHalvingRateEvent.OutputTuple,
+      SetHalvingRateEvent.OutputObject
+    >;
+
+    "SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<
       SetPoolEvent.InputTuple,
       SetPoolEvent.OutputTuple,
       SetPoolEvent.OutputObject
@@ -999,7 +1178,7 @@ export interface MasterPool extends BaseContract {
       SetPoolEvent.OutputObject
     >;
 
-    "SetPoolToken(uint256,address)": TypedContractEvent<
+    "SetPoolToken(uint16,address)": TypedContractEvent<
       SetPoolTokenEvent.InputTuple,
       SetPoolTokenEvent.OutputTuple,
       SetPoolTokenEvent.OutputObject
@@ -1010,18 +1189,18 @@ export interface MasterPool extends BaseContract {
       SetPoolTokenEvent.OutputObject
     >;
 
-    "SetReward(uint256)": TypedContractEvent<
-      SetRewardEvent.InputTuple,
-      SetRewardEvent.OutputTuple,
-      SetRewardEvent.OutputObject
+    "SetRewards(uint256)": TypedContractEvent<
+      SetRewardsEvent.InputTuple,
+      SetRewardsEvent.OutputTuple,
+      SetRewardsEvent.OutputObject
     >;
-    SetReward: TypedContractEvent<
-      SetRewardEvent.InputTuple,
-      SetRewardEvent.OutputTuple,
-      SetRewardEvent.OutputObject
+    SetRewards: TypedContractEvent<
+      SetRewardsEvent.InputTuple,
+      SetRewardsEvent.OutputTuple,
+      SetRewardsEvent.OutputObject
     >;
 
-    "Withdraw(address,uint256,uint256)": TypedContractEvent<
+    "Withdraw(address,uint16,uint256)": TypedContractEvent<
       WithdrawEvent.InputTuple,
       WithdrawEvent.OutputTuple,
       WithdrawEvent.OutputObject

@@ -35,7 +35,7 @@ export interface IERC4626PoolInterface extends Interface {
       | "convertToShares"
       | "decimals"
       | "deposit"
-      | "initialize"
+      | "initializeToken"
       | "masterBurn"
       | "masterMint"
       | "maxDeposit"
@@ -94,7 +94,7 @@ export interface IERC4626PoolInterface extends Interface {
     values: [BigNumberish, AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeToken",
     values: [AddressLike, BigNumberish, AddressLike, AddressLike],
   ): string;
   encodeFunctionData(
@@ -199,7 +199,10 @@ export interface IERC4626PoolInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeToken",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "masterBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "masterMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "maxDeposit", data: BytesLike): Result;
@@ -414,7 +417,7 @@ export interface IERC4626Pool extends BaseContract {
     "nonpayable"
   >;
 
-  initialize: TypedContractMethod<
+  initializeToken: TypedContractMethod<
     [
       _masterPool: AddressLike,
       _pid: BigNumberish,
@@ -555,7 +558,7 @@ export interface IERC4626Pool extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeToken",
   ): TypedContractMethod<
     [
       _masterPool: AddressLike,

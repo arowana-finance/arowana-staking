@@ -36,7 +36,7 @@ export interface ERC4626PoolInterface extends Interface {
       | "decimals"
       | "deposit"
       | "eip712Domain"
-      | "initialize"
+      | "initializeToken"
       | "isLocked"
       | "isLockedUntil"
       | "isRewardNative"
@@ -62,6 +62,7 @@ export interface ERC4626PoolInterface extends Interface {
       | "redeem"
       | "rewardToken"
       | "sharesOf"
+      | "supportsInterface"
       | "symbol"
       | "totalAssets"
       | "totalSupply"
@@ -118,7 +119,7 @@ export interface ERC4626PoolInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeToken",
     values: [AddressLike, BigNumberish, AddressLike, AddressLike],
   ): string;
   encodeFunctionData(
@@ -217,6 +218,10 @@ export interface ERC4626PoolInterface extends Interface {
     functionFragment: "sharesOf",
     values: [AddressLike],
   ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike],
+  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalAssets",
@@ -261,7 +266,10 @@ export interface ERC4626PoolInterface extends Interface {
     functionFragment: "eip712Domain",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeToken",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "isLocked", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isLockedUntil",
@@ -314,6 +322,10 @@ export interface ERC4626PoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "sharesOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalAssets",
@@ -595,7 +607,7 @@ export interface ERC4626Pool extends BaseContract {
     "view"
   >;
 
-  initialize: TypedContractMethod<
+  initializeToken: TypedContractMethod<
     [
       _masterPool: AddressLike,
       _pid: BigNumberish,
@@ -702,6 +714,12 @@ export interface ERC4626Pool extends BaseContract {
 
   sharesOf: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
+  supportsInterface: TypedContractMethod<
+    [interfaceId: BytesLike],
+    [boolean],
+    "view"
+  >;
+
   symbol: TypedContractMethod<[], [string], "view">;
 
   totalAssets: TypedContractMethod<[], [bigint], "view">;
@@ -787,7 +805,7 @@ export interface ERC4626Pool extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeToken",
   ): TypedContractMethod<
     [
       _masterPool: AddressLike,
@@ -915,6 +933,9 @@ export interface ERC4626Pool extends BaseContract {
   getFunction(
     nameOrSignature: "sharesOf",
   ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "supportsInterface",
+  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "symbol",
   ): TypedContractMethod<[], [string], "view">;
@@ -1055,7 +1076,7 @@ export interface ERC4626Pool extends BaseContract {
       InitializedEvent.OutputObject
     >;
 
-    "InitializedPool(address,uint256,address,address)": TypedContractEvent<
+    "InitializedPool(address,uint16,address,address)": TypedContractEvent<
       InitializedPoolEvent.InputTuple,
       InitializedPoolEvent.OutputTuple,
       InitializedPoolEvent.OutputObject

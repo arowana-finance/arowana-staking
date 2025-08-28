@@ -30,19 +30,19 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
+        internalType: "uint32",
         name: "_allocPoint",
-        type: "uint256",
+        type: "uint32",
       },
       {
-        internalType: "uint256",
-        name: "_startBlock",
-        type: "uint256",
+        internalType: "uint64",
+        name: "_startTime",
+        type: "uint64",
       },
       {
-        internalType: "uint256",
-        name: "_endBlock",
-        type: "uint256",
+        internalType: "uint64",
+        name: "_endTime",
+        type: "uint64",
       },
       {
         internalType: "bool",
@@ -53,9 +53,9 @@ const _abi = [
     name: "add",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     stateMutability: "nonpayable",
@@ -64,9 +64,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "uint256",
@@ -82,9 +82,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "uint256",
@@ -92,9 +92,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256",
+        internalType: "uint64",
         name: "_deadline",
-        type: "uint256",
+        type: "uint64",
       },
       {
         internalType: "bytes",
@@ -110,12 +110,89 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
+        type: "uint16",
+      },
+      {
+        internalType: "uint64",
+        name: "_fromTime",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_toTime",
+        type: "uint64",
+      },
+    ],
+    name: "getMultiplier",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
         type: "uint256",
       },
     ],
-    name: "getBlockRewardPerShare",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "_pid",
+        type: "uint16",
+      },
+      {
+        internalType: "uint64",
+        name: "_fromTime",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_toTime",
+        type: "uint64",
+      },
+    ],
+    name: "getPoolRewardsByTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "_pid",
+        type: "uint16",
+      },
+    ],
+    name: "getPoolRewardsPerSec",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "_pid",
+        type: "uint16",
+      },
+    ],
+    name: "getRewardsPerShare",
     outputs: [
       {
         internalType: "uint256",
@@ -127,29 +204,26 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_fromBlock",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_toBlock",
-        type: "uint256",
-      },
-    ],
-    name: "getMultiplier",
+    inputs: [],
+    name: "halvingInterval",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint64",
         name: "",
-        type: "uint256",
+        type: "uint64",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "halvingRate",
+    outputs: [
+      {
+        internalType: "uint16",
+        name: "",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -211,24 +285,24 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
-        name: "_rewardPerBlock",
-        type: "uint256",
-      },
-      {
         internalType: "address",
         name: "_rewardVault",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "_startBlock",
+        name: "_rewardsPerSec",
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "_endBlock",
-        type: "uint256",
+        internalType: "uint64",
+        name: "_startTime",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_endTime",
+        type: "uint64",
       },
       {
         internalType: "bool",
@@ -236,7 +310,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    name: "initialize",
+    name: "initializeChef",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -264,24 +338,34 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
-        name: "_rewardPerBlock",
-        type: "uint256",
-      },
-      {
         internalType: "address",
         name: "_rewardVault",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "_startBlock",
+        name: "_rewardsPerSec",
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "_endBlock",
-        type: "uint256",
+        internalType: "uint16",
+        name: "_halvingRate",
+        type: "uint16",
+      },
+      {
+        internalType: "uint64",
+        name: "_halvingInterval",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_startTime",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_endTime",
+        type: "uint64",
       },
       {
         internalType: "bool",
@@ -304,9 +388,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "address",
@@ -354,9 +438,9 @@ const _abi = [
     name: "poolId",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "pid",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -373,9 +457,9 @@ const _abi = [
     name: "poolIdByTokens",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "pid",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -384,9 +468,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "pid",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     name: "poolInfo",
@@ -399,28 +483,28 @@ const _abi = [
             type: "address",
           },
           {
-            internalType: "uint256",
+            internalType: "uint32",
             name: "allocPoint",
-            type: "uint256",
+            type: "uint32",
+          },
+          {
+            internalType: "uint64",
+            name: "startTime",
+            type: "uint64",
+          },
+          {
+            internalType: "uint64",
+            name: "endTime",
+            type: "uint64",
+          },
+          {
+            internalType: "uint64",
+            name: "lastRewardTime",
+            type: "uint64",
           },
           {
             internalType: "uint256",
-            name: "startBlock",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "endBlock",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "lastRewardBlock",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "accRewardPerShare",
+            name: "accRewardsPerShare",
             type: "uint256",
           },
         ],
@@ -437,9 +521,9 @@ const _abi = [
     name: "poolLength",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -474,9 +558,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "pid",
-        type: "uint256",
+        type: "uint16",
       },
     ],
     name: "poolTokens",
@@ -533,19 +617,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "rewardPerBlock",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "rewardToken",
     outputs: [
       {
@@ -571,41 +642,8 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_allocPoint",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_startBlock",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_endBlock",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "_withUpdate",
-        type: "bool",
-      },
-    ],
-    name: "set",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "totalAllocPoint",
+    name: "rewardsPerSec",
     outputs: [
       {
         internalType: "uint256",
@@ -619,9 +657,94 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
+        type: "uint16",
+      },
+      {
+        internalType: "uint32",
+        name: "_allocPoint",
+        type: "uint32",
+      },
+      {
+        internalType: "uint64",
+        name: "_startTime",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "_endTime",
+        type: "uint64",
+      },
+      {
+        internalType: "bool",
+        name: "_withUpdate",
+        type: "bool",
+      },
+    ],
+    name: "set",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "_halvingInterval",
+        type: "uint64",
+      },
+    ],
+    name: "setHalvingInterval",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "_halvingRate",
+        type: "uint16",
+      },
+    ],
+    name: "setHalvingRate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_rewardPerSec",
         type: "uint256",
+      },
+    ],
+    name: "setRewardsPerSec",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalAllocPoint",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "_pid",
+        type: "uint16",
       },
     ],
     name: "updatePool",
@@ -632,22 +755,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "newBlockReward",
-        type: "uint256",
-      },
-    ],
-    name: "updateRewardPerBlock",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "address",
@@ -681,9 +791,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "uint256",

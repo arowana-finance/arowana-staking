@@ -1,0 +1,90 @@
+{
+    "chainId": 0,
+    "initRewardsPerSec": 1,
+    "rewardFromTimestamp": 1755694422,
+    "rewardToTimestamp": 1758694422,
+
+    "halvingRate": 90,
+    "halvingInterval": 31622400,
+
+    "masterChef": "",
+
+    "rewardVault": "",
+    "rewardToken": {
+        "address": "",
+        
+        "name": "Arowana",
+        "symbol": "ARW",
+        "decimals": 18,
+        "totalSupply": 100000000,
+
+        "oracle": "",
+        "mockUsdPrice": 0.028
+    },
+
+    "WETH": {
+        "address": "",
+        
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "decimals": 18,
+        "totalSupply": 100000000,
+        
+        "oracle": "",
+        "mockUsdPrice": 4203.03
+    },
+
+    "pools": [
+        {
+            "pid": 0,
+            "address": "",
+            
+            "name": "Arowana",
+            "symbol": "ARW",
+            "decimals": 18,
+            "totalSupply": 100000000,
+
+            "oracle": "",
+            "mockUsdPrice": 0.028,
+
+            "allocPoint": 1000,
+
+            "deposit": 12.3,
+            "withdraw": 1.12
+        },
+        {
+            "pid": 1,
+            "address": "",
+            
+            "name": "Arowana LP",
+            "symbol": "ARW-LP",
+            "decimals": 18,
+            "totalSupply": 200000000,
+
+            "oracle": "",
+            "mockUsdPrice": 10,
+
+            "allocPoint": 1300,
+
+            "deposit": 1,
+            "withdraw": 0.12
+        },
+        {
+            "pid": 2,
+            "address": "",
+            
+            "name": "Tether USD",
+            "symbol": "USDT",
+            "decimals": 18,
+            "totalSupply": 300000000,
+
+            "oracle": "",
+            "mockUsdPrice": 1,
+
+            "allocPoint": 500,
+
+            "deposit": 10,
+            "withdraw": 7.2
+        }
+    ]
+}

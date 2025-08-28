@@ -25,11 +25,11 @@ import { IMasterPool } from '../interfaces/IMasterPool.sol';
 contract ERC4626Pool is ERC4626Upgradeable, ERC20Lockable {
     using SafeERC20 for IERC20;
 
-    event InitializedPool(address masterPool, uint256 pid, address asset, address rewardToken);
+    event InitializedPool(address masterPool, uint16 pid, address asset, address rewardToken);
 
     IMasterPool public masterPool;
 
-    uint256 public pid;
+    uint16 public pid;
 
     IERC20 public rewardToken;
 
@@ -38,12 +38,12 @@ contract ERC4626Pool is ERC4626Upgradeable, ERC20Lockable {
         _;
     }
 
-    function initialize(
+    function initializeToken(
         address _masterPool,
-        uint256 _pid,
+        uint16 _pid,
         address _asset,
         address _rewardToken
-    ) external initializer {
+    ) public initializer {
         masterPool = IMasterPool(_masterPool);
         pid = _pid;
         rewardToken = IERC20(_rewardToken);

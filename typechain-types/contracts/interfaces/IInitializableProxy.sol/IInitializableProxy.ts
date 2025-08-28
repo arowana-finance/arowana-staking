@@ -7,6 +7,7 @@ import type {
   FunctionFragment,
   Result,
   Interface,
+  EventFragment,
   AddressLike,
   ContractRunner,
   ContractMethod,
@@ -16,6 +17,7 @@ import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
+  TypedLogDescription,
   TypedListener,
   TypedContractMethod,
 } from "../../../common.js";
@@ -23,17 +25,24 @@ import type {
 export interface IInitializableProxyInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "admin"
-      | "changeAdmin"
+      | "changeProxyAdmin"
+      | "changeProxyDescription"
       | "implementation"
       | "initializeProxy"
+      | "proxyAdmin"
+      | "proxyDescription"
       | "upgradeToAndCall",
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "admin", values?: undefined): string;
+  getEvent(nameOrSignatureOrTopic: "DescriptionChanged"): EventFragment;
+
   encodeFunctionData(
-    functionFragment: "changeAdmin",
+    functionFragment: "changeProxyAdmin",
     values: [AddressLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "changeProxyDescription",
+    values: [string],
   ): string;
   encodeFunctionData(
     functionFragment: "implementation",
@@ -41,16 +50,27 @@ export interface IInitializableProxyInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initializeProxy",
-    values: [AddressLike, AddressLike, BytesLike],
+    values: [string, AddressLike, AddressLike, BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proxyAdmin",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proxyDescription",
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "upgradeToAndCall",
     values: [AddressLike, BytesLike],
   ): string;
 
-  decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "changeAdmin",
+    functionFragment: "changeProxyAdmin",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeProxyDescription",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -61,10 +81,27 @@ export interface IInitializableProxyInterface extends Interface {
     functionFragment: "initializeProxy",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: "proxyAdmin", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "proxyDescription",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "upgradeToAndCall",
     data: BytesLike,
   ): Result;
+}
+
+export namespace DescriptionChangedEvent {
+  export type InputTuple = [description: string];
+  export type OutputTuple = [description: string];
+  export interface OutputObject {
+    description: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export interface IInitializableProxy extends BaseContract {
@@ -110,21 +147,34 @@ export interface IInitializableProxy extends BaseContract {
     event?: TCEvent,
   ): Promise<this>;
 
-  admin: TypedContractMethod<[], [string], "nonpayable">;
-
-  changeAdmin: TypedContractMethod<
+  changeProxyAdmin: TypedContractMethod<
     [newAdmin: AddressLike],
     [void],
     "nonpayable"
   >;
 
-  implementation: TypedContractMethod<[], [string], "nonpayable">;
+  changeProxyDescription: TypedContractMethod<
+    [_description: string],
+    [void],
+    "nonpayable"
+  >;
+
+  implementation: TypedContractMethod<[], [string], "view">;
 
   initializeProxy: TypedContractMethod<
-    [newAdmin: AddressLike, newImplementation: AddressLike, data: BytesLike],
+    [
+      _description: string,
+      newAdmin: AddressLike,
+      newImplementation: AddressLike,
+      data: BytesLike,
+    ],
     [void],
     "payable"
   >;
+
+  proxyAdmin: TypedContractMethod<[], [string], "view">;
+
+  proxyDescription: TypedContractMethod<[], [string], "view">;
 
   upgradeToAndCall: TypedContractMethod<
     [newImplementation: AddressLike, data: BytesLike],
@@ -137,21 +187,32 @@ export interface IInitializableProxy extends BaseContract {
   ): T;
 
   getFunction(
-    nameOrSignature: "admin",
-  ): TypedContractMethod<[], [string], "nonpayable">;
-  getFunction(
-    nameOrSignature: "changeAdmin",
+    nameOrSignature: "changeProxyAdmin",
   ): TypedContractMethod<[newAdmin: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "changeProxyDescription",
+  ): TypedContractMethod<[_description: string], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "implementation",
-  ): TypedContractMethod<[], [string], "nonpayable">;
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "initializeProxy",
   ): TypedContractMethod<
-    [newAdmin: AddressLike, newImplementation: AddressLike, data: BytesLike],
+    [
+      _description: string,
+      newAdmin: AddressLike,
+      newImplementation: AddressLike,
+      data: BytesLike,
+    ],
     [void],
     "payable"
   >;
+  getFunction(
+    nameOrSignature: "proxyAdmin",
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "proxyDescription",
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "upgradeToAndCall",
   ): TypedContractMethod<
@@ -160,5 +221,24 @@ export interface IInitializableProxy extends BaseContract {
     "payable"
   >;
 
-  filters: {};
+  getEvent(
+    key: "DescriptionChanged",
+  ): TypedContractEvent<
+    DescriptionChangedEvent.InputTuple,
+    DescriptionChangedEvent.OutputTuple,
+    DescriptionChangedEvent.OutputObject
+  >;
+
+  filters: {
+    "DescriptionChanged(string)": TypedContractEvent<
+      DescriptionChangedEvent.InputTuple,
+      DescriptionChangedEvent.OutputTuple,
+      DescriptionChangedEvent.OutputObject
+    >;
+    DescriptionChanged: TypedContractEvent<
+      DescriptionChangedEvent.InputTuple,
+      DescriptionChangedEvent.OutputTuple,
+      DescriptionChangedEvent.OutputObject
+    >;
+  };
 }

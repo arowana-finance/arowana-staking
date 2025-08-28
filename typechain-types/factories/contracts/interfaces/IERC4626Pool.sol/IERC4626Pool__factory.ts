@@ -297,9 +297,9 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
+        internalType: "uint16",
         name: "_pid",
-        type: "uint256",
+        type: "uint16",
       },
       {
         internalType: "address",
@@ -312,7 +312,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "initialize",
+    name: "initializeToken",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

@@ -1,4 +1,5 @@
-import { AddressLike, BaseContract, BigNumberish, BytesLike, ContractDeployTransaction, ContractFactory, ContractMethod, ContractRunner, ContractTransaction, ContractTransactionResponse, DeferredTopicFilter, EventFragment, EventLog, FunctionFragment, Interface, Listener, LogDescription, Result, Signer, TransactionRequest, Typed } from 'ethers';
+import { AddressLike, BaseContract, BigNumberish, BytesLike, ContractDeployTransaction, ContractFactory, ContractMethod, ContractRunner, ContractTransaction, ContractTransactionResponse, DeferredTopicFilter, EventFragment, EventLog, FunctionFragment, Interface, Listener, LogDescription, Provider, Result, Signer, TransactionRequest, Typed } from 'ethers';
+import { SignerWithAddress } from 'ethers-opt';
 
 export interface TypedDeferredTopicFilter<_TCEvent extends TypedContractEvent> extends DeferredTopicFilter {
 }
@@ -2590,6 +2591,39 @@ export interface EIP712 extends BaseContract {
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$2.InputTuple, EIP712DomainChangedEvent$2.OutputTuple, EIP712DomainChangedEvent$2.OutputObject>;
 	};
 }
+export interface ERC165Interface extends Interface {
+	getFunction(nameOrSignature: "supportsInterface"): FunctionFragment;
+	encodeFunctionData(functionFragment: "supportsInterface", values: [
+		BytesLike
+	]): string;
+	decodeFunctionResult(functionFragment: "supportsInterface", data: BytesLike): Result;
+}
+export interface ERC165 extends BaseContract {
+	connect(runner?: ContractRunner | null): ERC165;
+	waitForDeployment(): Promise<this>;
+	interface: ERC165Interface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	supportsInterface: TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "supportsInterface"): TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
+	filters: {};
+}
 export interface IERC165Interface extends Interface {
 	getFunction(nameOrSignature: "supportsInterface"): FunctionFragment;
 	encodeFunctionData(functionFragment: "supportsInterface", values: [
@@ -4110,6 +4144,372 @@ interface Lock$1 extends BaseContract {
 		Withdrawal: TypedContractEvent<WithdrawalEvent.InputTuple, WithdrawalEvent.OutputTuple, WithdrawalEvent.OutputObject>;
 	};
 }
+export interface IDataFeedInterface extends Interface {
+	getFunction(nameOrSignature: "asset" | "decimals" | "deploymentTimestamp" | "description" | "getAnswer" | "getRoundData" | "getTimestamp" | "getTimestampAnswer" | "initializeFeed" | "latestAnswer" | "latestRound" | "latestRoundData" | "latestTimestamp" | "setAsset" | "setDescription" | "setVersion" | "updateAnswer" | "version"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AnswerUpdated" | "NewAsset" | "NewDescription" | "NewRound"): EventFragment;
+	encodeFunctionData(functionFragment: "asset", values?: undefined): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "deploymentTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "description", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRoundData", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestamp", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestampAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "initializeFeed", values: [
+		AddressLike,
+		AddressLike,
+		string,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "latestAnswer", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRound", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRoundData", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "setAsset", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setDescription", values: [
+		string
+	]): string;
+	encodeFunctionData(functionFragment: "setVersion", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "updateAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "version", values?: undefined): string;
+	decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "deploymentTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "description", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestampAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRound", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setAsset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setDescription", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setVersion", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "updateAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
+}
+declare namespace AnswerUpdatedEvent {
+	type InputTuple = [
+		current: BigNumberish,
+		roundId: BigNumberish,
+		updatedAt: BigNumberish
+	];
+	type OutputTuple = [
+		current: bigint,
+		roundId: bigint,
+		updatedAt: bigint
+	];
+	interface OutputObject {
+		current: bigint;
+		roundId: bigint;
+		updatedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewAssetEvent {
+	type InputTuple = [
+		asset: AddressLike
+	];
+	type OutputTuple = [
+		asset: string
+	];
+	interface OutputObject {
+		asset: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewDescriptionEvent {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewRoundEvent {
+	type InputTuple = [
+		roundId: BigNumberish,
+		startedBy: AddressLike,
+		startedAt: BigNumberish
+	];
+	type OutputTuple = [
+		roundId: bigint,
+		startedBy: string,
+		startedAt: bigint
+	];
+	interface OutputObject {
+		roundId: bigint;
+		startedBy: string;
+		startedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface IDataFeed extends BaseContract {
+	connect(runner?: ContractRunner | null): IDataFeed;
+	waitForDeployment(): Promise<this>;
+	interface: IDataFeedInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	asset: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	deploymentTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	description: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getAnswer: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getRoundData: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getTimestamp: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getTimestampAnswer: TypedContractMethod<[
+		_timestamp: BigNumberish
+	], [
+		bigint
+	], "view">;
+	initializeFeed: TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	latestAnswer: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRound: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRoundData: TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	latestTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	setAsset: TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setDescription: TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	setVersion: TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	updateAnswer: TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	version: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "asset"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "deploymentTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "description"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getAnswer"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getRoundData"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getFunction(nameOrSignature: "getTimestamp"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getTimestampAnswer"): TypedContractMethod<[
+		_timestamp: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "initializeFeed"): TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "latestAnswer"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRound"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRoundData"): TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	getFunction(nameOrSignature: "latestTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "setAsset"): TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setDescription"): TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setVersion"): TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "updateAnswer"): TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "version"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getEvent(key: "AnswerUpdated"): TypedContractEvent<AnswerUpdatedEvent.InputTuple, AnswerUpdatedEvent.OutputTuple, AnswerUpdatedEvent.OutputObject>;
+	getEvent(key: "NewAsset"): TypedContractEvent<NewAssetEvent.InputTuple, NewAssetEvent.OutputTuple, NewAssetEvent.OutputObject>;
+	getEvent(key: "NewDescription"): TypedContractEvent<NewDescriptionEvent.InputTuple, NewDescriptionEvent.OutputTuple, NewDescriptionEvent.OutputObject>;
+	getEvent(key: "NewRound"): TypedContractEvent<NewRoundEvent.InputTuple, NewRoundEvent.OutputTuple, NewRoundEvent.OutputObject>;
+	filters: {
+		"AnswerUpdated(int256,uint256,uint256)": TypedContractEvent<AnswerUpdatedEvent.InputTuple, AnswerUpdatedEvent.OutputTuple, AnswerUpdatedEvent.OutputObject>;
+		AnswerUpdated: TypedContractEvent<AnswerUpdatedEvent.InputTuple, AnswerUpdatedEvent.OutputTuple, AnswerUpdatedEvent.OutputObject>;
+		"NewAsset(address)": TypedContractEvent<NewAssetEvent.InputTuple, NewAssetEvent.OutputTuple, NewAssetEvent.OutputObject>;
+		NewAsset: TypedContractEvent<NewAssetEvent.InputTuple, NewAssetEvent.OutputTuple, NewAssetEvent.OutputObject>;
+		"NewDescription(string)": TypedContractEvent<NewDescriptionEvent.InputTuple, NewDescriptionEvent.OutputTuple, NewDescriptionEvent.OutputObject>;
+		NewDescription: TypedContractEvent<NewDescriptionEvent.InputTuple, NewDescriptionEvent.OutputTuple, NewDescriptionEvent.OutputObject>;
+		"NewRound(uint256,address,uint256)": TypedContractEvent<NewRoundEvent.InputTuple, NewRoundEvent.OutputTuple, NewRoundEvent.OutputObject>;
+		NewRound: TypedContractEvent<NewRoundEvent.InputTuple, NewRoundEvent.OutputTuple, NewRoundEvent.OutputObject>;
+	};
+}
 export interface IERC20ExpInterface extends Interface {
 	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "balanceOf" | "decimals" | "name" | "nonces" | "permit" | "symbol" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
 	getEvent(nameOrSignatureOrTopic: "Approval" | "Transfer"): EventFragment;
@@ -4658,6 +5058,400 @@ export interface IERC20Mintable extends BaseContract {
 		Transfer: TypedContractEvent<TransferEvent$11.InputTuple, TransferEvent$11.OutputTuple, TransferEvent$11.OutputObject>;
 	};
 }
+export interface IERC20LockableInterface extends Interface {
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "balanceOf" | "decimals" | "isLocked" | "isLockedUntil" | "lock" | "lockPermit" | "lockedUntil" | "name" | "nonces" | "permit" | "supportsInterface" | "symbol" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "Approval" | "Lock" | "LockedBy" | "Transfer"): EventFragment;
+	encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
+	encodeFunctionData(functionFragment: "allowance", values: [
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "approve", values: [
+		AddressLike,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "balanceOf", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "isLocked", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "isLockedUntil", values: [
+		AddressLike,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "lock", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "lockPermit", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish,
+		BigNumberish,
+		BytesLike
+	]): string;
+	encodeFunctionData(functionFragment: "lockedUntil", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "name", values?: undefined): string;
+	encodeFunctionData(functionFragment: "nonces", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "permit", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
+		BytesLike,
+		BytesLike
+	]): string;
+	encodeFunctionData(functionFragment: "supportsInterface", values: [
+		BytesLike
+	]): string;
+	encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+	encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transfer", values: [
+		AddressLike,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "transferFrom", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish
+	]): string;
+	decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "isLocked", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "isLockedUntil", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "lockPermit", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "lockedUntil", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "supportsInterface", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+}
+declare namespace ApprovalEvent$12 {
+	type InputTuple = [
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish
+	];
+	type OutputTuple = [
+		owner: string,
+		spender: string,
+		value: bigint
+	];
+	interface OutputObject {
+		owner: string;
+		spender: string;
+		value: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace LockEvent {
+	type InputTuple = [
+		owner: AddressLike,
+		until: BigNumberish
+	];
+	type OutputTuple = [
+		owner: string,
+		until: bigint
+	];
+	interface OutputObject {
+		owner: string;
+		until: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace LockedByEvent {
+	type InputTuple = [
+		owner: AddressLike,
+		spender: AddressLike,
+		until: BigNumberish
+	];
+	type OutputTuple = [
+		owner: string,
+		spender: string,
+		until: bigint
+	];
+	interface OutputObject {
+		owner: string;
+		spender: string;
+		until: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace TransferEvent$12 {
+	type InputTuple = [
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	];
+	type OutputTuple = [
+		from: string,
+		to: string,
+		value: bigint
+	];
+	interface OutputObject {
+		from: string;
+		to: string;
+		value: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface IERC20Lockable extends BaseContract {
+	connect(runner?: ContractRunner | null): IERC20Lockable;
+	waitForDeployment(): Promise<this>;
+	interface: IERC20LockableInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	DOMAIN_SEPARATOR: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	allowance: TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike
+	], [
+		bigint
+	], "view">;
+	approve: TypedContractMethod<[
+		spender: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	balanceOf: TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	isLocked: TypedContractMethod<[
+		owner: AddressLike
+	], [
+		boolean
+	], "view">;
+	isLockedUntil: TypedContractMethod<[
+		owner: AddressLike,
+		until: BigNumberish
+	], [
+		boolean
+	], "view">;
+	lock: TypedContractMethod<[
+		until: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	lockPermit: TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		until: BigNumberish,
+		deadline: BigNumberish,
+		signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	lockedUntil: TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	name: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	nonces: TypedContractMethod<[
+		owner: AddressLike
+	], [
+		bigint
+	], "view">;
+	permit: TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish,
+		deadline: BigNumberish,
+		v: BigNumberish,
+		r: BytesLike,
+		s: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	supportsInterface: TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
+	symbol: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	totalSupply: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	transfer: TypedContractMethod<[
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	transferFrom: TypedContractMethod<[
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "allowance"): TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "approve"): TypedContractMethod<[
+		spender: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "isLocked"): TypedContractMethod<[
+		owner: AddressLike
+	], [
+		boolean
+	], "view">;
+	getFunction(nameOrSignature: "isLockedUntil"): TypedContractMethod<[
+		owner: AddressLike,
+		until: BigNumberish
+	], [
+		boolean
+	], "view">;
+	getFunction(nameOrSignature: "lock"): TypedContractMethod<[
+		until: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "lockPermit"): TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		until: BigNumberish,
+		deadline: BigNumberish,
+		signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "lockedUntil"): TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "name"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "nonces"): TypedContractMethod<[
+		owner: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "permit"): TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish,
+		deadline: BigNumberish,
+		v: BigNumberish,
+		r: BytesLike,
+		s: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "supportsInterface"): TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
+	getFunction(nameOrSignature: "symbol"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "totalSupply"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "transfer"): TypedContractMethod<[
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction(nameOrSignature: "transferFrom"): TypedContractMethod<[
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
+	getEvent(key: "Lock"): TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
+	getEvent(key: "LockedBy"): TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
+	filters: {
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
+		"Lock(address,uint256)": TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
+		Lock: TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
+		"LockedBy(address,address,uint256)": TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
+		LockedBy: TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
+	};
+}
 interface IERC4626Interface$1 extends Interface {
 	getFunction(nameOrSignature: "allowance" | "approve" | "asset" | "balanceOf" | "convertToAssets" | "convertToShares" | "deposit" | "maxDeposit" | "maxMint" | "maxRedeem" | "maxWithdraw" | "mint" | "previewDeposit" | "previewMint" | "previewRedeem" | "previewWithdraw" | "redeem" | "totalAssets" | "totalSupply" | "transfer" | "transferFrom" | "withdraw"): FunctionFragment;
 	getEvent(nameOrSignatureOrTopic: "Approval" | "Deposit" | "Transfer" | "Withdraw"): EventFragment;
@@ -4755,7 +5549,7 @@ interface IERC4626Interface$1 extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$12 {
+declare namespace ApprovalEvent$13 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -4800,7 +5594,7 @@ declare namespace DepositEvent$2 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$12 {
+declare namespace TransferEvent$13 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -5095,23 +5889,23 @@ interface IERC4626$1 extends BaseContract {
 	], [
 		bigint
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$2.InputTuple, DepositEvent$2.OutputTuple, DepositEvent$2.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
 	getEvent(key: "Withdraw"): TypedContractEvent<WithdrawEvent$2.InputTuple, WithdrawEvent$2.OutputTuple, WithdrawEvent$2.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$12.InputTuple, ApprovalEvent$12.OutputTuple, ApprovalEvent$12.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
 		"Deposit(address,address,uint256,uint256)": TypedContractEvent<DepositEvent$2.InputTuple, DepositEvent$2.OutputTuple, DepositEvent$2.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$2.InputTuple, DepositEvent$2.OutputTuple, DepositEvent$2.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$12.InputTuple, TransferEvent$12.OutputTuple, TransferEvent$12.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
 		"Withdraw(address,address,uint256,uint256)": TypedContractEvent<WithdrawEvent$2.InputTuple, WithdrawEvent$2.OutputTuple, WithdrawEvent$2.OutputObject>;
 		Withdraw: TypedContractEvent<WithdrawEvent$2.InputTuple, WithdrawEvent$2.OutputTuple, WithdrawEvent$2.OutputObject>;
 	};
 }
 export interface IERC4626PoolInterface extends Interface {
-	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "asset" | "balanceOf" | "convertToAssets" | "convertToShares" | "decimals" | "deposit" | "initialize" | "masterBurn" | "masterMint" | "maxDeposit" | "maxMint" | "maxRedeem" | "maxWithdraw" | "mint" | "name" | "nonces" | "permit" | "previewDeposit" | "previewMint" | "previewRedeem" | "previewWithdraw" | "redeem" | "symbol" | "totalAssets" | "totalSupply" | "transfer" | "transferFrom" | "withdraw"): FunctionFragment;
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "asset" | "balanceOf" | "convertToAssets" | "convertToShares" | "decimals" | "deposit" | "initializeToken" | "masterBurn" | "masterMint" | "maxDeposit" | "maxMint" | "maxRedeem" | "maxWithdraw" | "mint" | "name" | "nonces" | "permit" | "previewDeposit" | "previewMint" | "previewRedeem" | "previewWithdraw" | "redeem" | "symbol" | "totalAssets" | "totalSupply" | "transfer" | "transferFrom" | "withdraw"): FunctionFragment;
 	getEvent(nameOrSignatureOrTopic: "Approval" | "Deposit" | "Transfer" | "Withdraw"): EventFragment;
 	encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
 	encodeFunctionData(functionFragment: "allowance", values: [
@@ -5137,7 +5931,7 @@ export interface IERC4626PoolInterface extends Interface {
 		BigNumberish,
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeToken", values: [
 		AddressLike,
 		BigNumberish,
 		AddressLike,
@@ -5223,7 +6017,7 @@ export interface IERC4626PoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "convertToShares", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "masterBurn", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "masterMint", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "maxDeposit", data: BytesLike): Result;
@@ -5246,7 +6040,7 @@ export interface IERC4626PoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$13 {
+declare namespace ApprovalEvent$14 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -5291,7 +6085,7 @@ declare namespace DepositEvent$3 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$13 {
+declare namespace TransferEvent$14 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -5394,7 +6188,7 @@ export interface IERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "nonpayable">;
-	initialize: TypedContractMethod<[
+	initializeToken: TypedContractMethod<[
 		_masterPool: AddressLike,
 		_pid: BigNumberish,
 		_asset: AddressLike,
@@ -5565,7 +6359,7 @@ export interface IERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "nonpayable">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeToken"): TypedContractMethod<[
 		_masterPool: AddressLike,
 		_pid: BigNumberish,
 		_asset: AddressLike,
@@ -5690,42 +6484,65 @@ export interface IERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$3.InputTuple, DepositEvent$3.OutputTuple, DepositEvent$3.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
 	getEvent(key: "Withdraw"): TypedContractEvent<WithdrawEvent$3.InputTuple, WithdrawEvent$3.OutputTuple, WithdrawEvent$3.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$13.InputTuple, ApprovalEvent$13.OutputTuple, ApprovalEvent$13.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
 		"Deposit(address,address,uint256,uint256)": TypedContractEvent<DepositEvent$3.InputTuple, DepositEvent$3.OutputTuple, DepositEvent$3.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$3.InputTuple, DepositEvent$3.OutputTuple, DepositEvent$3.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$13.InputTuple, TransferEvent$13.OutputTuple, TransferEvent$13.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
 		"Withdraw(address,address,uint256,uint256)": TypedContractEvent<WithdrawEvent$3.InputTuple, WithdrawEvent$3.OutputTuple, WithdrawEvent$3.OutputObject>;
 		Withdraw: TypedContractEvent<WithdrawEvent$3.InputTuple, WithdrawEvent$3.OutputTuple, WithdrawEvent$3.OutputObject>;
 	};
 }
 export interface IInitializableProxyInterface extends Interface {
-	getFunction(nameOrSignature: "admin" | "changeAdmin" | "implementation" | "initializeProxy" | "upgradeToAndCall"): FunctionFragment;
-	encodeFunctionData(functionFragment: "admin", values?: undefined): string;
-	encodeFunctionData(functionFragment: "changeAdmin", values: [
+	getFunction(nameOrSignature: "changeProxyAdmin" | "changeProxyDescription" | "implementation" | "initializeProxy" | "proxyAdmin" | "proxyDescription" | "upgradeToAndCall"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "DescriptionChanged"): EventFragment;
+	encodeFunctionData(functionFragment: "changeProxyAdmin", values: [
 		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "changeProxyDescription", values: [
+		string
 	]): string;
 	encodeFunctionData(functionFragment: "implementation", values?: undefined): string;
 	encodeFunctionData(functionFragment: "initializeProxy", values: [
+		string,
 		AddressLike,
 		AddressLike,
 		BytesLike
 	]): string;
+	encodeFunctionData(functionFragment: "proxyAdmin", values?: undefined): string;
+	encodeFunctionData(functionFragment: "proxyDescription", values?: undefined): string;
 	encodeFunctionData(functionFragment: "upgradeToAndCall", values: [
 		AddressLike,
 		BytesLike
 	]): string;
-	decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "changeAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "changeProxyAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "changeProxyDescription", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "implementation", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "initializeProxy", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "proxyAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "proxyDescription", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "upgradeToAndCall", data: BytesLike): Result;
+}
+declare namespace DescriptionChangedEvent {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
 }
 export interface IInitializableProxy extends BaseContract {
 	connect(runner?: ContractRunner | null): IInitializableProxy;
@@ -5740,26 +6557,36 @@ export interface IInitializableProxy extends BaseContract {
 	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
 	listeners(eventName?: string): Promise<Array<Listener>>;
 	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-	admin: TypedContractMethod<[
-	], [
-		string
-	], "nonpayable">;
-	changeAdmin: TypedContractMethod<[
+	changeProxyAdmin: TypedContractMethod<[
 		newAdmin: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	changeProxyDescription: TypedContractMethod<[
+		_description: string
 	], [
 		void
 	], "nonpayable">;
 	implementation: TypedContractMethod<[
 	], [
 		string
-	], "nonpayable">;
+	], "view">;
 	initializeProxy: TypedContractMethod<[
+		_description: string,
 		newAdmin: AddressLike,
 		newImplementation: AddressLike,
 		data: BytesLike
 	], [
 		void
 	], "payable">;
+	proxyAdmin: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	proxyDescription: TypedContractMethod<[
+	], [
+		string
+	], "view">;
 	upgradeToAndCall: TypedContractMethod<[
 		newImplementation: AddressLike,
 		data: BytesLike
@@ -5767,57 +6594,71 @@ export interface IInitializableProxy extends BaseContract {
 		void
 	], "payable">;
 	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-	getFunction(nameOrSignature: "admin"): TypedContractMethod<[
-	], [
-		string
-	], "nonpayable">;
-	getFunction(nameOrSignature: "changeAdmin"): TypedContractMethod<[
+	getFunction(nameOrSignature: "changeProxyAdmin"): TypedContractMethod<[
 		newAdmin: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "changeProxyDescription"): TypedContractMethod<[
+		_description: string
 	], [
 		void
 	], "nonpayable">;
 	getFunction(nameOrSignature: "implementation"): TypedContractMethod<[
 	], [
 		string
-	], "nonpayable">;
+	], "view">;
 	getFunction(nameOrSignature: "initializeProxy"): TypedContractMethod<[
+		_description: string,
 		newAdmin: AddressLike,
 		newImplementation: AddressLike,
 		data: BytesLike
 	], [
 		void
 	], "payable">;
+	getFunction(nameOrSignature: "proxyAdmin"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "proxyDescription"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
 	getFunction(nameOrSignature: "upgradeToAndCall"): TypedContractMethod<[
 		newImplementation: AddressLike,
 		data: BytesLike
 	], [
 		void
 	], "payable">;
-	filters: {};
+	getEvent(key: "DescriptionChanged"): TypedContractEvent<DescriptionChangedEvent.InputTuple, DescriptionChangedEvent.OutputTuple, DescriptionChangedEvent.OutputObject>;
+	filters: {
+		"DescriptionChanged(string)": TypedContractEvent<DescriptionChangedEvent.InputTuple, DescriptionChangedEvent.OutputTuple, DescriptionChangedEvent.OutputObject>;
+		DescriptionChanged: TypedContractEvent<DescriptionChangedEvent.InputTuple, DescriptionChangedEvent.OutputTuple, DescriptionChangedEvent.OutputObject>;
+	};
 }
-export declare namespace IMasterChef {
+declare namespace IMasterChef {
 	type PoolInfoStruct = {
 		lpToken: AddressLike;
 		allocPoint: BigNumberish;
-		startBlock: BigNumberish;
-		endBlock: BigNumberish;
-		lastRewardBlock: BigNumberish;
-		accRewardPerShare: BigNumberish;
+		startTime: BigNumberish;
+		endTime: BigNumberish;
+		lastRewardTime: BigNumberish;
+		accRewardsPerShare: BigNumberish;
 	};
 	type PoolInfoStructOutput = [
 		lpToken: string,
 		allocPoint: bigint,
-		startBlock: bigint,
-		endBlock: bigint,
-		lastRewardBlock: bigint,
-		accRewardPerShare: bigint
+		startTime: bigint,
+		endTime: bigint,
+		lastRewardTime: bigint,
+		accRewardsPerShare: bigint
 	] & {
 		lpToken: string;
 		allocPoint: bigint;
-		startBlock: bigint;
-		endBlock: bigint;
-		lastRewardBlock: bigint;
-		accRewardPerShare: bigint;
+		startTime: bigint;
+		endTime: bigint;
+		lastRewardTime: bigint;
+		accRewardsPerShare: bigint;
 	};
 	type UserInfoStruct = {
 		amount: BigNumberish;
@@ -5832,7 +6673,7 @@ export declare namespace IMasterChef {
 	};
 }
 export interface IMasterChefInterface extends Interface {
-	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "getBlockRewardPerShare" | "getMultiplier" | "hasPool" | "initialize" | "massUpdatePools" | "pendingRewards" | "poolId" | "poolInfo" | "poolLength" | "rewardPerBlock" | "rewardToken" | "rewardVault" | "set" | "totalAllocPoint" | "updatePool" | "updateRewardPerBlock" | "userInfo" | "withdraw"): FunctionFragment;
+	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getMultiplier" | "getPoolRewardsByTime" | "getPoolRewardsPerSec" | "getRewardsPerShare" | "hasPool" | "initializeChef" | "massUpdatePools" | "pendingRewards" | "poolId" | "poolInfo" | "poolLength" | "rewardToken" | "rewardVault" | "rewardsPerSec" | "set" | "setRewardsPerSec" | "totalAllocPoint" | "updatePool" | "userInfo" | "withdraw"): FunctionFragment;
 	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
 	encodeFunctionData(functionFragment: "add", values: [
 		AddressLike,
@@ -5845,23 +6686,37 @@ export interface IMasterChefInterface extends Interface {
 		BigNumberish,
 		BigNumberish
 	]): string;
-	encodeFunctionData(functionFragment: "getBlockRewardPerShare", values: [
-		BigNumberish
+	encodeFunctionData(functionFragment: "depositPermit", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
+		BytesLike
 	]): string;
 	encodeFunctionData(functionFragment: "getMultiplier", values: [
 		BigNumberish,
 		BigNumberish,
 		BigNumberish
 	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsByTime", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsPerSec", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRewardsPerShare", values: [
+		BigNumberish
+	]): string;
 	encodeFunctionData(functionFragment: "hasPool", values: [
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeChef", values: [
+		AddressLike,
 		AddressLike,
 		AddressLike,
 		AddressLike,
 		BigNumberish,
-		AddressLike,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -5878,9 +6733,9 @@ export interface IMasterChefInterface extends Interface {
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "poolLength", values?: undefined): string;
-	encodeFunctionData(functionFragment: "rewardPerBlock", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardVault", values?: undefined): string;
+	encodeFunctionData(functionFragment: "rewardsPerSec", values?: undefined): string;
 	encodeFunctionData(functionFragment: "set", values: [
 		BigNumberish,
 		BigNumberish,
@@ -5888,11 +6743,11 @@ export interface IMasterChefInterface extends Interface {
 		BigNumberish,
 		boolean
 	]): string;
-	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
-	encodeFunctionData(functionFragment: "updatePool", values: [
+	encodeFunctionData(functionFragment: "setRewardsPerSec", values: [
 		BigNumberish
 	]): string;
-	encodeFunctionData(functionFragment: "updateRewardPerBlock", values: [
+	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
+	encodeFunctionData(functionFragment: "updatePool", values: [
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "userInfo", values: [
@@ -5906,22 +6761,25 @@ export interface IMasterChefInterface extends Interface {
 	decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "getBlockRewardPerShare", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "depositPermit", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "getMultiplier", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsByTime", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsPerSec", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRewardsPerShare", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeChef", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "massUpdatePools", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "pendingRewards", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolId", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolLength", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "rewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardVault", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "rewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setRewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalAllocPoint", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "updateRewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -5945,8 +6803,8 @@ export interface IMasterChef extends BaseContract {
 	add: TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -5957,15 +6815,35 @@ export interface IMasterChef extends BaseContract {
 	], [
 		void
 	], "payable">;
-	getBlockRewardPerShare: TypedContractMethod<[
+	depositPermit: TypedContractMethod<[
+		_pid: BigNumberish,
+		_amount: BigNumberish,
+		_deadline: BigNumberish,
+		_signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getMultiplier: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsByTime: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsPerSec: TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getMultiplier: TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getRewardsPerShare: TypedContractMethod<[
+		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
@@ -5974,14 +6852,14 @@ export interface IMasterChef extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	initialize: TypedContractMethod<[
+	initializeChef: TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6010,10 +6888,6 @@ export interface IMasterChef extends BaseContract {
 	], [
 		bigint
 	], "view">;
-	rewardPerBlock: TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	rewardToken: TypedContractMethod<[
 	], [
 		string
@@ -6022,12 +6896,21 @@ export interface IMasterChef extends BaseContract {
 	], [
 		string
 	], "view">;
+	rewardsPerSec: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	set: TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	setRewardsPerSec: TypedContractMethod<[
+		_rewardPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6037,11 +6920,6 @@ export interface IMasterChef extends BaseContract {
 	], "view">;
 	updatePool: TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	updateRewardPerBlock: TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6065,8 +6943,8 @@ export interface IMasterChef extends BaseContract {
 	getFunction(nameOrSignature: "add"): TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -6077,15 +6955,35 @@ export interface IMasterChef extends BaseContract {
 	], [
 		void
 	], "payable">;
-	getFunction(nameOrSignature: "getBlockRewardPerShare"): TypedContractMethod<[
+	getFunction(nameOrSignature: "depositPermit"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_amount: BigNumberish,
+		_deadline: BigNumberish,
+		_signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsByTime"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsPerSec"): TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getFunction(nameOrSignature: "getRewardsPerShare"): TypedContractMethod<[
+		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
@@ -6094,14 +6992,14 @@ export interface IMasterChef extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeChef"): TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6130,10 +7028,6 @@ export interface IMasterChef extends BaseContract {
 	], [
 		bigint
 	], "view">;
-	getFunction(nameOrSignature: "rewardPerBlock"): TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[
 	], [
 		string
@@ -6142,12 +7036,21 @@ export interface IMasterChef extends BaseContract {
 	], [
 		string
 	], "view">;
+	getFunction(nameOrSignature: "rewardsPerSec"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	getFunction(nameOrSignature: "set"): TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setRewardsPerSec"): TypedContractMethod<[
+		_rewardPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6157,11 +7060,6 @@ export interface IMasterChef extends BaseContract {
 	], "view">;
 	getFunction(nameOrSignature: "updatePool"): TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	getFunction(nameOrSignature: "updateRewardPerBlock"): TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6183,25 +7081,25 @@ declare namespace IMasterChef$1 {
 	type PoolInfoStruct = {
 		lpToken: AddressLike;
 		allocPoint: BigNumberish;
-		startBlock: BigNumberish;
-		endBlock: BigNumberish;
-		lastRewardBlock: BigNumberish;
-		accRewardPerShare: BigNumberish;
+		startTime: BigNumberish;
+		endTime: BigNumberish;
+		lastRewardTime: BigNumberish;
+		accRewardsPerShare: BigNumberish;
 	};
 	type PoolInfoStructOutput = [
 		lpToken: string,
 		allocPoint: bigint,
-		startBlock: bigint,
-		endBlock: bigint,
-		lastRewardBlock: bigint,
-		accRewardPerShare: bigint
+		startTime: bigint,
+		endTime: bigint,
+		lastRewardTime: bigint,
+		accRewardsPerShare: bigint
 	] & {
 		lpToken: string;
 		allocPoint: bigint;
-		startBlock: bigint;
-		endBlock: bigint;
-		lastRewardBlock: bigint;
-		accRewardPerShare: bigint;
+		startTime: bigint;
+		endTime: bigint;
+		lastRewardTime: bigint;
+		accRewardsPerShare: bigint;
 	};
 	type UserInfoStruct = {
 		amount: BigNumberish;
@@ -6216,7 +7114,7 @@ declare namespace IMasterChef$1 {
 	};
 }
 export interface IMasterPoolInterface extends Interface {
-	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getBlockRewardPerShare" | "getMultiplier" | "hasPool" | "hasPoolToken" | "initialize" | "initializePool" | "massUpdatePools" | "pendingRewards" | "poolDeposit" | "poolId" | "poolIdByTokens" | "poolInfo" | "poolLength" | "poolMint" | "poolTokenImplementation" | "poolTokens" | "poolTransfer" | "poolWithdraw" | "rewardPerBlock" | "rewardToken" | "rewardVault" | "set" | "totalAllocPoint" | "updatePool" | "updateRewardPerBlock" | "userInfo" | "withdraw"): FunctionFragment;
+	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getMultiplier" | "getPoolRewardsByTime" | "getPoolRewardsPerSec" | "getRewardsPerShare" | "halvingInterval" | "halvingRate" | "hasPool" | "hasPoolToken" | "initializeChef" | "initializePool" | "massUpdatePools" | "pendingRewards" | "poolDeposit" | "poolId" | "poolIdByTokens" | "poolInfo" | "poolLength" | "poolMint" | "poolTokenImplementation" | "poolTokens" | "poolTransfer" | "poolWithdraw" | "rewardToken" | "rewardVault" | "rewardsPerSec" | "set" | "setHalvingInterval" | "setHalvingRate" | "setRewardsPerSec" | "totalAllocPoint" | "updatePool" | "userInfo" | "withdraw"): FunctionFragment;
 	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
 	encodeFunctionData(functionFragment: "add", values: [
 		AddressLike,
@@ -6235,26 +7133,36 @@ export interface IMasterPoolInterface extends Interface {
 		BigNumberish,
 		BytesLike
 	]): string;
-	encodeFunctionData(functionFragment: "getBlockRewardPerShare", values: [
-		BigNumberish
-	]): string;
 	encodeFunctionData(functionFragment: "getMultiplier", values: [
 		BigNumberish,
 		BigNumberish,
 		BigNumberish
 	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsByTime", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsPerSec", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRewardsPerShare", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "halvingInterval", values?: undefined): string;
+	encodeFunctionData(functionFragment: "halvingRate", values?: undefined): string;
 	encodeFunctionData(functionFragment: "hasPool", values: [
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "hasPoolToken", values: [
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeChef", values: [
+		AddressLike,
 		AddressLike,
 		AddressLike,
 		AddressLike,
 		BigNumberish,
-		AddressLike,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -6264,8 +7172,10 @@ export interface IMasterPoolInterface extends Interface {
 		AddressLike,
 		AddressLike,
 		AddressLike,
-		BigNumberish,
 		AddressLike,
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -6305,9 +7215,9 @@ export interface IMasterPoolInterface extends Interface {
 		AddressLike,
 		BigNumberish
 	]): string;
-	encodeFunctionData(functionFragment: "rewardPerBlock", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardVault", values?: undefined): string;
+	encodeFunctionData(functionFragment: "rewardsPerSec", values?: undefined): string;
 	encodeFunctionData(functionFragment: "set", values: [
 		BigNumberish,
 		BigNumberish,
@@ -6315,11 +7225,17 @@ export interface IMasterPoolInterface extends Interface {
 		BigNumberish,
 		boolean
 	]): string;
-	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
-	encodeFunctionData(functionFragment: "updatePool", values: [
+	encodeFunctionData(functionFragment: "setHalvingInterval", values: [
 		BigNumberish
 	]): string;
-	encodeFunctionData(functionFragment: "updateRewardPerBlock", values: [
+	encodeFunctionData(functionFragment: "setHalvingRate", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "setRewardsPerSec", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
+	encodeFunctionData(functionFragment: "updatePool", values: [
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "userInfo", values: [
@@ -6334,11 +7250,15 @@ export interface IMasterPoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "depositPermit", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "getBlockRewardPerShare", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "getMultiplier", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsByTime", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsPerSec", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRewardsPerShare", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "halvingInterval", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "halvingRate", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPoolToken", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeChef", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "initializePool", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "massUpdatePools", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "pendingRewards", data: BytesLike): Result;
@@ -6352,13 +7272,15 @@ export interface IMasterPoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "poolTokens", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolTransfer", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolWithdraw", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "rewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardVault", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "rewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setHalvingInterval", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setHalvingRate", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setRewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalAllocPoint", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "updateRewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -6382,8 +7304,8 @@ export interface IMasterPool extends BaseContract {
 	add: TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -6402,15 +7324,35 @@ export interface IMasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getBlockRewardPerShare: TypedContractMethod<[
+	getMultiplier: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsByTime: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsPerSec: TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getMultiplier: TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getRewardsPerShare: TypedContractMethod<[
+		_pid: BigNumberish
+	], [
+		bigint
+	], "view">;
+	halvingInterval: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	halvingRate: TypedContractMethod<[
 	], [
 		bigint
 	], "view">;
@@ -6424,14 +7366,14 @@ export interface IMasterPool extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	initialize: TypedContractMethod<[
+	initializeChef: TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6441,10 +7383,12 @@ export interface IMasterPool extends BaseContract {
 		_WETH: AddressLike,
 		_poolTokenImplementation: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_halvingRate: BigNumberish,
+		_halvingInterval: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6511,10 +7455,6 @@ export interface IMasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	rewardPerBlock: TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	rewardToken: TypedContractMethod<[
 	], [
 		string
@@ -6523,12 +7463,31 @@ export interface IMasterPool extends BaseContract {
 	], [
 		string
 	], "view">;
+	rewardsPerSec: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	set: TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	setHalvingInterval: TypedContractMethod<[
+		_halvingInterval: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	setHalvingRate: TypedContractMethod<[
+		_halvingRate: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	setRewardsPerSec: TypedContractMethod<[
+		_rewardPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6538,11 +7497,6 @@ export interface IMasterPool extends BaseContract {
 	], "view">;
 	updatePool: TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	updateRewardPerBlock: TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6566,8 +7520,8 @@ export interface IMasterPool extends BaseContract {
 	getFunction(nameOrSignature: "add"): TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -6586,15 +7540,35 @@ export interface IMasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "getBlockRewardPerShare"): TypedContractMethod<[
+	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsByTime"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsPerSec"): TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getFunction(nameOrSignature: "getRewardsPerShare"): TypedContractMethod<[
+		_pid: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "halvingInterval"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "halvingRate"): TypedContractMethod<[
 	], [
 		bigint
 	], "view">;
@@ -6608,14 +7582,14 @@ export interface IMasterPool extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeChef"): TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6625,10 +7599,12 @@ export interface IMasterPool extends BaseContract {
 		_WETH: AddressLike,
 		_poolTokenImplementation: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_halvingRate: BigNumberish,
+		_halvingInterval: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -6695,10 +7671,6 @@ export interface IMasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "rewardPerBlock"): TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[
 	], [
 		string
@@ -6707,12 +7679,31 @@ export interface IMasterPool extends BaseContract {
 	], [
 		string
 	], "view">;
+	getFunction(nameOrSignature: "rewardsPerSec"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	getFunction(nameOrSignature: "set"): TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setHalvingInterval"): TypedContractMethod<[
+		_halvingInterval: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setHalvingRate"): TypedContractMethod<[
+		_halvingRate: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setRewardsPerSec"): TypedContractMethod<[
+		_rewardPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6722,11 +7713,6 @@ export interface IMasterPool extends BaseContract {
 	], "view">;
 	getFunction(nameOrSignature: "updatePool"): TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	getFunction(nameOrSignature: "updateRewardPerBlock"): TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -6745,12 +7731,14 @@ export interface IMasterPool extends BaseContract {
 	filters: {};
 }
 export interface IRewardVaultInterface extends Interface {
-	getFunction(nameOrSignature: "sendTo"): FunctionFragment;
+	getFunction(nameOrSignature: "rewardPerSec" | "sendTo"): FunctionFragment;
+	encodeFunctionData(functionFragment: "rewardPerSec", values?: undefined): string;
 	encodeFunctionData(functionFragment: "sendTo", values: [
 		AddressLike,
 		AddressLike,
 		BigNumberish
 	]): string;
+	decodeFunctionResult(functionFragment: "rewardPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "sendTo", data: BytesLike): Result;
 }
 export interface IRewardVault extends BaseContract {
@@ -6766,6 +7754,10 @@ export interface IRewardVault extends BaseContract {
 	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
 	listeners(eventName?: string): Promise<Array<Listener>>;
 	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	rewardPerSec: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	sendTo: TypedContractMethod<[
 		token: AddressLike,
 		to: AddressLike,
@@ -6774,6 +7766,10 @@ export interface IRewardVault extends BaseContract {
 		void
 	], "nonpayable">;
 	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "rewardPerSec"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	getFunction(nameOrSignature: "sendTo"): TypedContractMethod<[
 		token: AddressLike,
 		to: AddressLike,
@@ -6782,6 +7778,1072 @@ export interface IRewardVault extends BaseContract {
 		void
 	], "nonpayable">;
 	filters: {};
+}
+export interface IUniswapV2FactoryInterface extends Interface {
+	getFunction(nameOrSignature: "allPairs" | "allPairsLength" | "createPair" | "feeTo" | "feeToSetter" | "getPair" | "setFeeTo" | "setFeeToSetter"): FunctionFragment;
+	encodeFunctionData(functionFragment: "allPairs", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "allPairsLength", values?: undefined): string;
+	encodeFunctionData(functionFragment: "createPair", values: [
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "feeTo", values?: undefined): string;
+	encodeFunctionData(functionFragment: "feeToSetter", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getPair", values: [
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setFeeTo", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setFeeToSetter", values: [
+		AddressLike
+	]): string;
+	decodeFunctionResult(functionFragment: "allPairs", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "allPairsLength", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "createPair", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "feeTo", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "feeToSetter", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPair", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setFeeTo", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setFeeToSetter", data: BytesLike): Result;
+}
+export interface IUniswapV2Factory extends BaseContract {
+	connect(runner?: ContractRunner | null): IUniswapV2Factory;
+	waitForDeployment(): Promise<this>;
+	interface: IUniswapV2FactoryInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	allPairs: TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		string
+	], "view">;
+	allPairsLength: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	createPair: TypedContractMethod<[
+		tokenA: AddressLike,
+		tokenB: AddressLike
+	], [
+		string
+	], "nonpayable">;
+	feeTo: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	feeToSetter: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getPair: TypedContractMethod<[
+		tokenA: AddressLike,
+		tokenB: AddressLike
+	], [
+		string
+	], "view">;
+	setFeeTo: TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setFeeToSetter: TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "allPairs"): TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "allPairsLength"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "createPair"): TypedContractMethod<[
+		tokenA: AddressLike,
+		tokenB: AddressLike
+	], [
+		string
+	], "nonpayable">;
+	getFunction(nameOrSignature: "feeTo"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "feeToSetter"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getPair"): TypedContractMethod<[
+		tokenA: AddressLike,
+		tokenB: AddressLike
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "setFeeTo"): TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setFeeToSetter"): TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	filters: {};
+}
+export interface IUniswapV2PairInterface extends Interface {
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "MINIMUM_LIQUIDITY" | "allowance" | "approve" | "balanceOf" | "burn" | "decimals" | "factory" | "getReserves" | "kLast" | "mint" | "name" | "nonces" | "permit" | "price0CumulativeLast" | "price1CumulativeLast" | "skim" | "swap" | "symbol" | "sync" | "token0" | "token1" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "Approval" | "Transfer"): EventFragment;
+	encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
+	encodeFunctionData(functionFragment: "MINIMUM_LIQUIDITY", values?: undefined): string;
+	encodeFunctionData(functionFragment: "allowance", values: [
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "approve", values: [
+		AddressLike,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "balanceOf", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "burn", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "factory", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getReserves", values?: undefined): string;
+	encodeFunctionData(functionFragment: "kLast", values?: undefined): string;
+	encodeFunctionData(functionFragment: "mint", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "name", values?: undefined): string;
+	encodeFunctionData(functionFragment: "nonces", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "permit", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
+		BytesLike,
+		BytesLike
+	]): string;
+	encodeFunctionData(functionFragment: "price0CumulativeLast", values?: undefined): string;
+	encodeFunctionData(functionFragment: "price1CumulativeLast", values?: undefined): string;
+	encodeFunctionData(functionFragment: "skim", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "swap", values: [
+		BigNumberish,
+		BigNumberish,
+		AddressLike,
+		BytesLike
+	]): string;
+	encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+	encodeFunctionData(functionFragment: "sync", values?: undefined): string;
+	encodeFunctionData(functionFragment: "token0", values?: undefined): string;
+	encodeFunctionData(functionFragment: "token1", values?: undefined): string;
+	encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transfer", values: [
+		AddressLike,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "transferFrom", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish
+	]): string;
+	decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "MINIMUM_LIQUIDITY", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getReserves", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "kLast", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "price0CumulativeLast", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "price1CumulativeLast", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "skim", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "swap", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "sync", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "token0", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "token1", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+}
+declare namespace ApprovalEvent$15 {
+	type InputTuple = [
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish
+	];
+	type OutputTuple = [
+		owner: string,
+		spender: string,
+		value: bigint
+	];
+	interface OutputObject {
+		owner: string;
+		spender: string;
+		value: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace TransferEvent$15 {
+	type InputTuple = [
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	];
+	type OutputTuple = [
+		from: string,
+		to: string,
+		value: bigint
+	];
+	interface OutputObject {
+		from: string;
+		to: string;
+		value: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface IUniswapV2Pair extends BaseContract {
+	connect(runner?: ContractRunner | null): IUniswapV2Pair;
+	waitForDeployment(): Promise<this>;
+	interface: IUniswapV2PairInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	DOMAIN_SEPARATOR: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	MINIMUM_LIQUIDITY: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	allowance: TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike
+	], [
+		bigint
+	], "view">;
+	approve: TypedContractMethod<[
+		spender: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	balanceOf: TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	burn: TypedContractMethod<[
+		to: AddressLike
+	], [
+		[
+			bigint,
+			bigint
+		] & {
+			amount0: bigint;
+			amount1: bigint;
+		}
+	], "nonpayable">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	factory: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getReserves: TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint
+		] & {
+			reserve0: bigint;
+			reserve1: bigint;
+			blockTimestampLast: bigint;
+		}
+	], "view">;
+	kLast: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	mint: TypedContractMethod<[
+		to: AddressLike
+	], [
+		bigint
+	], "nonpayable">;
+	name: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	nonces: TypedContractMethod<[
+		owner: AddressLike
+	], [
+		bigint
+	], "view">;
+	permit: TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish,
+		deadline: BigNumberish,
+		v: BigNumberish,
+		r: BytesLike,
+		s: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	price0CumulativeLast: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	price1CumulativeLast: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	skim: TypedContractMethod<[
+		to: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	swap: TypedContractMethod<[
+		amount0Out: BigNumberish,
+		amount1Out: BigNumberish,
+		to: AddressLike,
+		data: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	symbol: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	sync: TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	token0: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	token1: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	totalSupply: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	transfer: TypedContractMethod<[
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	transferFrom: TypedContractMethod<[
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "MINIMUM_LIQUIDITY"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "allowance"): TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "approve"): TypedContractMethod<[
+		spender: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[
+		account: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "burn"): TypedContractMethod<[
+		to: AddressLike
+	], [
+		[
+			bigint,
+			bigint
+		] & {
+			amount0: bigint;
+			amount1: bigint;
+		}
+	], "nonpayable">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "factory"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getReserves"): TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint
+		] & {
+			reserve0: bigint;
+			reserve1: bigint;
+			blockTimestampLast: bigint;
+		}
+	], "view">;
+	getFunction(nameOrSignature: "kLast"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "mint"): TypedContractMethod<[
+		to: AddressLike
+	], [
+		bigint
+	], "nonpayable">;
+	getFunction(nameOrSignature: "name"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "nonces"): TypedContractMethod<[
+		owner: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "permit"): TypedContractMethod<[
+		owner: AddressLike,
+		spender: AddressLike,
+		value: BigNumberish,
+		deadline: BigNumberish,
+		v: BigNumberish,
+		r: BytesLike,
+		s: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "price0CumulativeLast"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "price1CumulativeLast"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "skim"): TypedContractMethod<[
+		to: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "swap"): TypedContractMethod<[
+		amount0Out: BigNumberish,
+		amount1Out: BigNumberish,
+		to: AddressLike,
+		data: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "symbol"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "sync"): TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "token0"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "token1"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "totalSupply"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "transfer"): TypedContractMethod<[
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getFunction(nameOrSignature: "transferFrom"): TypedContractMethod<[
+		from: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		boolean
+	], "nonpayable">;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
+	filters: {
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
+	};
+}
+export interface IV2SwapFeedInterface extends Interface {
+	getFunction(nameOrSignature: "USD" | "V2Price" | "WETH" | "asset" | "decimals" | "deploymentTimestamp" | "description" | "ethUsdPrice" | "getAnswer" | "getLPTVL" | "getLPUSD" | "getPairByToken" | "getRoundData" | "getTimestamp" | "getTimestampAnswer" | "getTokenUSD" | "initializeFeed" | "initializeSwapFeed" | "latestAnswer" | "latestRound" | "latestRoundData" | "latestTimestamp" | "setAsset" | "setDescription" | "setVersion" | "swapFactory" | "updateAnswer" | "version" | "wethUsdPair"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AnswerUpdated" | "NewAsset" | "NewDescription" | "NewRound"): EventFragment;
+	encodeFunctionData(functionFragment: "USD", values?: undefined): string;
+	encodeFunctionData(functionFragment: "V2Price", values?: undefined): string;
+	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
+	encodeFunctionData(functionFragment: "asset", values?: undefined): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "deploymentTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "description", values?: undefined): string;
+	encodeFunctionData(functionFragment: "ethUsdPrice", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getLPTVL", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getLPUSD", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getPairByToken", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getRoundData", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestamp", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestampAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTokenUSD", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "initializeFeed", values: [
+		AddressLike,
+		AddressLike,
+		string,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "initializeSwapFeed", values: [
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "latestAnswer", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRound", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRoundData", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "setAsset", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setDescription", values: [
+		string
+	]): string;
+	encodeFunctionData(functionFragment: "setVersion", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "swapFactory", values?: undefined): string;
+	encodeFunctionData(functionFragment: "updateAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "version", values?: undefined): string;
+	encodeFunctionData(functionFragment: "wethUsdPair", values?: undefined): string;
+	decodeFunctionResult(functionFragment: "USD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "V2Price", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "deploymentTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "description", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "ethUsdPrice", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getLPTVL", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getLPUSD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPairByToken", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestampAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTokenUSD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeSwapFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRound", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setAsset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setDescription", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setVersion", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "swapFactory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "updateAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "wethUsdPair", data: BytesLike): Result;
+}
+declare namespace AnswerUpdatedEvent$1 {
+	type InputTuple = [
+		current: BigNumberish,
+		roundId: BigNumberish,
+		updatedAt: BigNumberish
+	];
+	type OutputTuple = [
+		current: bigint,
+		roundId: bigint,
+		updatedAt: bigint
+	];
+	interface OutputObject {
+		current: bigint;
+		roundId: bigint;
+		updatedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewAssetEvent$1 {
+	type InputTuple = [
+		asset: AddressLike
+	];
+	type OutputTuple = [
+		asset: string
+	];
+	interface OutputObject {
+		asset: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewDescriptionEvent$1 {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewRoundEvent$1 {
+	type InputTuple = [
+		roundId: BigNumberish,
+		startedBy: AddressLike,
+		startedAt: BigNumberish
+	];
+	type OutputTuple = [
+		roundId: bigint,
+		startedBy: string,
+		startedAt: bigint
+	];
+	interface OutputObject {
+		roundId: bigint;
+		startedBy: string;
+		startedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface IV2SwapFeed extends BaseContract {
+	connect(runner?: ContractRunner | null): IV2SwapFeed;
+	waitForDeployment(): Promise<this>;
+	interface: IV2SwapFeedInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	USD: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	V2Price: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	WETH: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	asset: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	deploymentTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	description: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	ethUsdPrice: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getAnswer: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getLPTVL: TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getLPUSD: TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getPairByToken: TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		string
+	], "view">;
+	getRoundData: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getTimestamp: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getTimestampAnswer: TypedContractMethod<[
+		_timestamp: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getTokenUSD: TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		bigint
+	], "view">;
+	initializeFeed: TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	initializeSwapFeed: TypedContractMethod<[
+		_asset: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	latestAnswer: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRound: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRoundData: TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	latestTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	setAsset: TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setDescription: TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	setVersion: TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	swapFactory: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	updateAnswer: TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	version: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	wethUsdPair: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "USD"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "V2Price"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "WETH"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "asset"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "deploymentTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "description"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "ethUsdPrice"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getAnswer"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getLPTVL"): TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getLPUSD"): TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPairByToken"): TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getRoundData"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getFunction(nameOrSignature: "getTimestamp"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getTimestampAnswer"): TypedContractMethod<[
+		_timestamp: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getTokenUSD"): TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "initializeFeed"): TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "initializeSwapFeed"): TypedContractMethod<[
+		_asset: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "latestAnswer"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRound"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRoundData"): TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	getFunction(nameOrSignature: "latestTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "setAsset"): TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setDescription"): TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setVersion"): TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "swapFactory"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "updateAnswer"): TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "version"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "wethUsdPair"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getEvent(key: "AnswerUpdated"): TypedContractEvent<AnswerUpdatedEvent$1.InputTuple, AnswerUpdatedEvent$1.OutputTuple, AnswerUpdatedEvent$1.OutputObject>;
+	getEvent(key: "NewAsset"): TypedContractEvent<NewAssetEvent$1.InputTuple, NewAssetEvent$1.OutputTuple, NewAssetEvent$1.OutputObject>;
+	getEvent(key: "NewDescription"): TypedContractEvent<NewDescriptionEvent$1.InputTuple, NewDescriptionEvent$1.OutputTuple, NewDescriptionEvent$1.OutputObject>;
+	getEvent(key: "NewRound"): TypedContractEvent<NewRoundEvent$1.InputTuple, NewRoundEvent$1.OutputTuple, NewRoundEvent$1.OutputObject>;
+	filters: {
+		"AnswerUpdated(int256,uint256,uint256)": TypedContractEvent<AnswerUpdatedEvent$1.InputTuple, AnswerUpdatedEvent$1.OutputTuple, AnswerUpdatedEvent$1.OutputObject>;
+		AnswerUpdated: TypedContractEvent<AnswerUpdatedEvent$1.InputTuple, AnswerUpdatedEvent$1.OutputTuple, AnswerUpdatedEvent$1.OutputObject>;
+		"NewAsset(address)": TypedContractEvent<NewAssetEvent$1.InputTuple, NewAssetEvent$1.OutputTuple, NewAssetEvent$1.OutputObject>;
+		NewAsset: TypedContractEvent<NewAssetEvent$1.InputTuple, NewAssetEvent$1.OutputTuple, NewAssetEvent$1.OutputObject>;
+		"NewDescription(string)": TypedContractEvent<NewDescriptionEvent$1.InputTuple, NewDescriptionEvent$1.OutputTuple, NewDescriptionEvent$1.OutputObject>;
+		NewDescription: TypedContractEvent<NewDescriptionEvent$1.InputTuple, NewDescriptionEvent$1.OutputTuple, NewDescriptionEvent$1.OutputObject>;
+		"NewRound(uint256,address,uint256)": TypedContractEvent<NewRoundEvent$1.InputTuple, NewRoundEvent$1.OutputTuple, NewRoundEvent$1.OutputObject>;
+		NewRound: TypedContractEvent<NewRoundEvent$1.InputTuple, NewRoundEvent$1.OutputTuple, NewRoundEvent$1.OutputObject>;
+	};
 }
 export interface IWETHInterface extends Interface {
 	getFunction(nameOrSignature: "deposit" | "withdraw"): FunctionFragment;
@@ -6826,6 +8888,100 @@ export interface IWETH extends BaseContract {
 	], "nonpayable">;
 	filters: {};
 }
+interface OwnableInterface$1 extends Interface {
+	getFunction(nameOrSignature: "owner" | "renounceOwnership" | "transferOwnership"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "Initialized" | "OwnershipTransferred"): EventFragment;
+	encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transferOwnership", values: [
+		AddressLike
+	]): string;
+	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+}
+declare namespace InitializedEvent$9 {
+	type InputTuple = [
+		version: BigNumberish
+	];
+	type OutputTuple = [
+		version: bigint
+	];
+	interface OutputObject {
+		version: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace OwnershipTransferredEvent$2 {
+	type InputTuple = [
+		previousOwner: AddressLike,
+		newOwner: AddressLike
+	];
+	type OutputTuple = [
+		previousOwner: string,
+		newOwner: string
+	];
+	interface OutputObject {
+		previousOwner: string;
+		newOwner: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+interface Ownable$1 extends BaseContract {
+	connect(runner?: ContractRunner | null): Ownable$1;
+	waitForDeployment(): Promise<this>;
+	interface: OwnableInterface$1;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	owner: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	renounceOwnership: TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	transferOwnership: TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "owner"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
+	filters: {
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
+	};
+}
 export interface SigLibInterface extends Interface {
 }
 export interface SigLib extends BaseContract {
@@ -6844,9 +9000,1476 @@ export interface SigLib extends BaseContract {
 	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 	filters: {};
 }
+export interface WithSettlerInterface extends Interface {
+	getFunction(nameOrSignature: "addSettler" | "initializeSettler" | "owner" | "removeSettler" | "renounceOwnership" | "settlers" | "transferOwnership"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AddSettler" | "Initialized" | "OwnershipTransferred" | "RemoveSettler"): EventFragment;
+	encodeFunctionData(functionFragment: "addSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "initializeSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+	encodeFunctionData(functionFragment: "removeSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
+	encodeFunctionData(functionFragment: "settlers", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transferOwnership", values: [
+		AddressLike
+	]): string;
+	decodeFunctionResult(functionFragment: "addSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "removeSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "settlers", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+}
+declare namespace AddSettlerEvent {
+	type InputTuple = [
+		newSettler: AddressLike
+	];
+	type OutputTuple = [
+		newSettler: string
+	];
+	interface OutputObject {
+		newSettler: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace InitializedEvent$10 {
+	type InputTuple = [
+		version: BigNumberish
+	];
+	type OutputTuple = [
+		version: bigint
+	];
+	interface OutputObject {
+		version: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace OwnershipTransferredEvent$3 {
+	type InputTuple = [
+		previousOwner: AddressLike,
+		newOwner: AddressLike
+	];
+	type OutputTuple = [
+		previousOwner: string,
+		newOwner: string
+	];
+	interface OutputObject {
+		previousOwner: string;
+		newOwner: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace RemoveSettlerEvent {
+	type InputTuple = [
+		oldSettler: AddressLike
+	];
+	type OutputTuple = [
+		oldSettler: string
+	];
+	interface OutputObject {
+		oldSettler: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface WithSettler extends BaseContract {
+	connect(runner?: ContractRunner | null): WithSettler;
+	waitForDeployment(): Promise<this>;
+	interface: WithSettlerInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	addSettler: TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	initializeSettler: TypedContractMethod<[
+		_initOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	owner: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	removeSettler: TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	renounceOwnership: TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	settlers: TypedContractMethod<[
+	], [
+		string[]
+	], "view">;
+	transferOwnership: TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "addSettler"): TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "initializeSettler"): TypedContractMethod<[
+		_initOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "owner"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "removeSettler"): TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "settlers"): TypedContractMethod<[
+	], [
+		string[]
+	], "view">;
+	getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getEvent(key: "AddSettler"): TypedContractEvent<AddSettlerEvent.InputTuple, AddSettlerEvent.OutputTuple, AddSettlerEvent.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
+	getEvent(key: "RemoveSettler"): TypedContractEvent<RemoveSettlerEvent.InputTuple, RemoveSettlerEvent.OutputTuple, RemoveSettlerEvent.OutputObject>;
+	filters: {
+		"AddSettler(address)": TypedContractEvent<AddSettlerEvent.InputTuple, AddSettlerEvent.OutputTuple, AddSettlerEvent.OutputObject>;
+		AddSettler: TypedContractEvent<AddSettlerEvent.InputTuple, AddSettlerEvent.OutputTuple, AddSettlerEvent.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
+		"RemoveSettler(address)": TypedContractEvent<RemoveSettlerEvent.InputTuple, RemoveSettlerEvent.OutputTuple, RemoveSettlerEvent.OutputObject>;
+		RemoveSettler: TypedContractEvent<RemoveSettlerEvent.InputTuple, RemoveSettlerEvent.OutputTuple, RemoveSettlerEvent.OutputObject>;
+	};
+}
+export interface DataFeedInterface extends Interface {
+	getFunction(nameOrSignature: "addSettler" | "asset" | "decimals" | "deploymentTimestamp" | "description" | "getAnswer" | "getRoundData" | "getTimestamp" | "getTimestampAnswer" | "initializeFeed" | "initializeSettler" | "latestAnswer" | "latestRound" | "latestRoundData" | "latestTimestamp" | "owner" | "removeSettler" | "renounceOwnership" | "setAsset" | "setDescription" | "setVersion" | "settlers" | "transferOwnership" | "updateAnswer" | "version"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AddSettler" | "AnswerUpdated" | "Initialized" | "NewAsset" | "NewDescription" | "NewRound" | "OwnershipTransferred" | "RemoveSettler"): EventFragment;
+	encodeFunctionData(functionFragment: "addSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "asset", values?: undefined): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "deploymentTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "description", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRoundData", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestamp", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getTimestampAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "initializeFeed", values: [
+		AddressLike,
+		AddressLike,
+		string,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "initializeSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "latestAnswer", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRound", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRoundData", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+	encodeFunctionData(functionFragment: "removeSettler", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
+	encodeFunctionData(functionFragment: "setAsset", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setDescription", values: [
+		string
+	]): string;
+	encodeFunctionData(functionFragment: "setVersion", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "settlers", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transferOwnership", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "updateAnswer", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "version", values?: undefined): string;
+	decodeFunctionResult(functionFragment: "addSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "deploymentTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "description", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTimestampAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRound", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRoundData", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "removeSettler", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setAsset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setDescription", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setVersion", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "settlers", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "updateAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
+}
+declare namespace AddSettlerEvent$1 {
+	type InputTuple = [
+		newSettler: AddressLike
+	];
+	type OutputTuple = [
+		newSettler: string
+	];
+	interface OutputObject {
+		newSettler: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace AnswerUpdatedEvent$2 {
+	type InputTuple = [
+		current: BigNumberish,
+		roundId: BigNumberish,
+		updatedAt: BigNumberish
+	];
+	type OutputTuple = [
+		current: bigint,
+		roundId: bigint,
+		updatedAt: bigint
+	];
+	interface OutputObject {
+		current: bigint;
+		roundId: bigint;
+		updatedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace InitializedEvent$11 {
+	type InputTuple = [
+		version: BigNumberish
+	];
+	type OutputTuple = [
+		version: bigint
+	];
+	interface OutputObject {
+		version: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewAssetEvent$2 {
+	type InputTuple = [
+		asset: AddressLike
+	];
+	type OutputTuple = [
+		asset: string
+	];
+	interface OutputObject {
+		asset: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewDescriptionEvent$2 {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewRoundEvent$2 {
+	type InputTuple = [
+		roundId: BigNumberish,
+		startedBy: AddressLike,
+		startedAt: BigNumberish
+	];
+	type OutputTuple = [
+		roundId: bigint,
+		startedBy: string,
+		startedAt: bigint
+	];
+	interface OutputObject {
+		roundId: bigint;
+		startedBy: string;
+		startedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace OwnershipTransferredEvent$4 {
+	type InputTuple = [
+		previousOwner: AddressLike,
+		newOwner: AddressLike
+	];
+	type OutputTuple = [
+		previousOwner: string,
+		newOwner: string
+	];
+	interface OutputObject {
+		previousOwner: string;
+		newOwner: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace RemoveSettlerEvent$1 {
+	type InputTuple = [
+		oldSettler: AddressLike
+	];
+	type OutputTuple = [
+		oldSettler: string
+	];
+	interface OutputObject {
+		oldSettler: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface DataFeed extends BaseContract {
+	connect(runner?: ContractRunner | null): DataFeed;
+	waitForDeployment(): Promise<this>;
+	interface: DataFeedInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	addSettler: TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	asset: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	deploymentTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	description: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getAnswer: TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getRoundData: TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getTimestamp: TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getTimestampAnswer: TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	initializeFeed: TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	initializeSettler: TypedContractMethod<[
+		_initOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	latestAnswer: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRound: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRoundData: TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	latestTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	owner: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	removeSettler: TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	renounceOwnership: TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	setAsset: TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setDescription: TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	setVersion: TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	settlers: TypedContractMethod<[
+	], [
+		string[]
+	], "view">;
+	transferOwnership: TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	updateAnswer: TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	version: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "addSettler"): TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "asset"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "deploymentTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "description"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getAnswer"): TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getRoundData"): TypedContractMethod<[
+		_roundId: BigNumberish
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		] & {
+			roundId: bigint;
+			answer: bigint;
+			startedAt: bigint;
+			updatedAt: bigint;
+			answeredInRound: bigint;
+		}
+	], "view">;
+	getFunction(nameOrSignature: "getTimestamp"): TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getTimestampAnswer"): TypedContractMethod<[
+		arg0: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "initializeFeed"): TypedContractMethod<[
+		_initOwner: AddressLike,
+		_asset: AddressLike,
+		_description: string,
+		_initAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "initializeSettler"): TypedContractMethod<[
+		_initOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "latestAnswer"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRound"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRoundData"): TypedContractMethod<[
+	], [
+		[
+			bigint,
+			bigint,
+			bigint,
+			bigint,
+			bigint
+		]
+	], "view">;
+	getFunction(nameOrSignature: "latestTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "owner"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "removeSettler"): TypedContractMethod<[
+		_settler: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setAsset"): TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setDescription"): TypedContractMethod<[
+		_description: string
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setVersion"): TypedContractMethod<[
+		_version: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "settlers"): TypedContractMethod<[
+	], [
+		string[]
+	], "view">;
+	getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "updateAnswer"): TypedContractMethod<[
+		newAnswer: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "version"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getEvent(key: "AddSettler"): TypedContractEvent<AddSettlerEvent$1.InputTuple, AddSettlerEvent$1.OutputTuple, AddSettlerEvent$1.OutputObject>;
+	getEvent(key: "AnswerUpdated"): TypedContractEvent<AnswerUpdatedEvent$2.InputTuple, AnswerUpdatedEvent$2.OutputTuple, AnswerUpdatedEvent$2.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
+	getEvent(key: "NewAsset"): TypedContractEvent<NewAssetEvent$2.InputTuple, NewAssetEvent$2.OutputTuple, NewAssetEvent$2.OutputObject>;
+	getEvent(key: "NewDescription"): TypedContractEvent<NewDescriptionEvent$2.InputTuple, NewDescriptionEvent$2.OutputTuple, NewDescriptionEvent$2.OutputObject>;
+	getEvent(key: "NewRound"): TypedContractEvent<NewRoundEvent$2.InputTuple, NewRoundEvent$2.OutputTuple, NewRoundEvent$2.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
+	getEvent(key: "RemoveSettler"): TypedContractEvent<RemoveSettlerEvent$1.InputTuple, RemoveSettlerEvent$1.OutputTuple, RemoveSettlerEvent$1.OutputObject>;
+	filters: {
+		"AddSettler(address)": TypedContractEvent<AddSettlerEvent$1.InputTuple, AddSettlerEvent$1.OutputTuple, AddSettlerEvent$1.OutputObject>;
+		AddSettler: TypedContractEvent<AddSettlerEvent$1.InputTuple, AddSettlerEvent$1.OutputTuple, AddSettlerEvent$1.OutputObject>;
+		"AnswerUpdated(int256,uint256,uint256)": TypedContractEvent<AnswerUpdatedEvent$2.InputTuple, AnswerUpdatedEvent$2.OutputTuple, AnswerUpdatedEvent$2.OutputObject>;
+		AnswerUpdated: TypedContractEvent<AnswerUpdatedEvent$2.InputTuple, AnswerUpdatedEvent$2.OutputTuple, AnswerUpdatedEvent$2.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
+		"NewAsset(address)": TypedContractEvent<NewAssetEvent$2.InputTuple, NewAssetEvent$2.OutputTuple, NewAssetEvent$2.OutputObject>;
+		NewAsset: TypedContractEvent<NewAssetEvent$2.InputTuple, NewAssetEvent$2.OutputTuple, NewAssetEvent$2.OutputObject>;
+		"NewDescription(string)": TypedContractEvent<NewDescriptionEvent$2.InputTuple, NewDescriptionEvent$2.OutputTuple, NewDescriptionEvent$2.OutputObject>;
+		NewDescription: TypedContractEvent<NewDescriptionEvent$2.InputTuple, NewDescriptionEvent$2.OutputTuple, NewDescriptionEvent$2.OutputObject>;
+		"NewRound(uint256,address,uint256)": TypedContractEvent<NewRoundEvent$2.InputTuple, NewRoundEvent$2.OutputTuple, NewRoundEvent$2.OutputObject>;
+		NewRound: TypedContractEvent<NewRoundEvent$2.InputTuple, NewRoundEvent$2.OutputTuple, NewRoundEvent$2.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
+		"RemoveSettler(address)": TypedContractEvent<RemoveSettlerEvent$1.InputTuple, RemoveSettlerEvent$1.OutputTuple, RemoveSettlerEvent$1.OutputObject>;
+		RemoveSettler: TypedContractEvent<RemoveSettlerEvent$1.InputTuple, RemoveSettlerEvent$1.OutputTuple, RemoveSettlerEvent$1.OutputObject>;
+	};
+}
+export interface V2SwapFeedInterface extends Interface {
+	getFunction(nameOrSignature: "USD" | "V2Price" | "WETH" | "asset" | "decimals" | "deploymentTimestamp" | "description" | "ethUsdPrice" | "feedImplementation" | "getLPTVL" | "getLPUSD" | "getPairByToken" | "getTokenUSD" | "initializeSwapFeed" | "latestAnswer" | "latestRound" | "latestTimestamp" | "swapFactory" | "version" | "wethUsdPair"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AnswerUpdated" | "Initialized" | "NewAsset" | "NewDescription" | "NewRound"): EventFragment;
+	encodeFunctionData(functionFragment: "USD", values?: undefined): string;
+	encodeFunctionData(functionFragment: "V2Price", values?: undefined): string;
+	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
+	encodeFunctionData(functionFragment: "asset", values?: undefined): string;
+	encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+	encodeFunctionData(functionFragment: "deploymentTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "description", values?: undefined): string;
+	encodeFunctionData(functionFragment: "ethUsdPrice", values?: undefined): string;
+	encodeFunctionData(functionFragment: "feedImplementation", values?: undefined): string;
+	encodeFunctionData(functionFragment: "getLPTVL", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getLPUSD", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getPairByToken", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "getTokenUSD", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "initializeSwapFeed", values: [
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "latestAnswer", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestRound", values?: undefined): string;
+	encodeFunctionData(functionFragment: "latestTimestamp", values?: undefined): string;
+	encodeFunctionData(functionFragment: "swapFactory", values?: undefined): string;
+	encodeFunctionData(functionFragment: "version", values?: undefined): string;
+	encodeFunctionData(functionFragment: "wethUsdPair", values?: undefined): string;
+	decodeFunctionResult(functionFragment: "USD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "V2Price", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "deploymentTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "description", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "ethUsdPrice", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "feedImplementation", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getLPTVL", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getLPUSD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPairByToken", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getTokenUSD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeSwapFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestRound", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestTimestamp", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "swapFactory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "wethUsdPair", data: BytesLike): Result;
+}
+declare namespace AnswerUpdatedEvent$3 {
+	type InputTuple = [
+		current: BigNumberish,
+		roundId: BigNumberish,
+		updatedAt: BigNumberish
+	];
+	type OutputTuple = [
+		current: bigint,
+		roundId: bigint,
+		updatedAt: bigint
+	];
+	interface OutputObject {
+		current: bigint;
+		roundId: bigint;
+		updatedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace InitializedEvent$12 {
+	type InputTuple = [
+		version: BigNumberish
+	];
+	type OutputTuple = [
+		version: bigint
+	];
+	interface OutputObject {
+		version: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewAssetEvent$3 {
+	type InputTuple = [
+		asset: AddressLike
+	];
+	type OutputTuple = [
+		asset: string
+	];
+	interface OutputObject {
+		asset: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewDescriptionEvent$3 {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace NewRoundEvent$3 {
+	type InputTuple = [
+		roundId: BigNumberish,
+		startedBy: AddressLike,
+		startedAt: BigNumberish
+	];
+	type OutputTuple = [
+		roundId: bigint,
+		startedBy: string,
+		startedAt: bigint
+	];
+	interface OutputObject {
+		roundId: bigint;
+		startedBy: string;
+		startedAt: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface V2SwapFeed extends BaseContract {
+	connect(runner?: ContractRunner | null): V2SwapFeed;
+	waitForDeployment(): Promise<this>;
+	interface: V2SwapFeedInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	USD: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	V2Price: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	WETH: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	asset: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	decimals: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	deploymentTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	description: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	ethUsdPrice: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	feedImplementation: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getLPTVL: TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getLPUSD: TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getPairByToken: TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		string
+	], "view">;
+	getTokenUSD: TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		bigint
+	], "view">;
+	initializeSwapFeed: TypedContractMethod<[
+		_asset: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	latestAnswer: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestRound: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	latestTimestamp: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	swapFactory: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	version: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	wethUsdPair: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "USD"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "V2Price"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "WETH"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "asset"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "decimals"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "deploymentTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "description"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "ethUsdPrice"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "feedImplementation"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getLPTVL"): TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getLPUSD"): TypedContractMethod<[
+		_pair: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPairByToken"): TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "getTokenUSD"): TypedContractMethod<[
+		baseToken: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "initializeSwapFeed"): TypedContractMethod<[
+		_asset: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "latestAnswer"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestRound"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "latestTimestamp"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "swapFactory"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "version"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "wethUsdPair"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getEvent(key: "AnswerUpdated"): TypedContractEvent<AnswerUpdatedEvent$3.InputTuple, AnswerUpdatedEvent$3.OutputTuple, AnswerUpdatedEvent$3.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
+	getEvent(key: "NewAsset"): TypedContractEvent<NewAssetEvent$3.InputTuple, NewAssetEvent$3.OutputTuple, NewAssetEvent$3.OutputObject>;
+	getEvent(key: "NewDescription"): TypedContractEvent<NewDescriptionEvent$3.InputTuple, NewDescriptionEvent$3.OutputTuple, NewDescriptionEvent$3.OutputObject>;
+	getEvent(key: "NewRound"): TypedContractEvent<NewRoundEvent$3.InputTuple, NewRoundEvent$3.OutputTuple, NewRoundEvent$3.OutputObject>;
+	filters: {
+		"AnswerUpdated(int256,uint256,uint256)": TypedContractEvent<AnswerUpdatedEvent$3.InputTuple, AnswerUpdatedEvent$3.OutputTuple, AnswerUpdatedEvent$3.OutputObject>;
+		AnswerUpdated: TypedContractEvent<AnswerUpdatedEvent$3.InputTuple, AnswerUpdatedEvent$3.OutputTuple, AnswerUpdatedEvent$3.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
+		"NewAsset(address)": TypedContractEvent<NewAssetEvent$3.InputTuple, NewAssetEvent$3.OutputTuple, NewAssetEvent$3.OutputObject>;
+		NewAsset: TypedContractEvent<NewAssetEvent$3.InputTuple, NewAssetEvent$3.OutputTuple, NewAssetEvent$3.OutputObject>;
+		"NewDescription(string)": TypedContractEvent<NewDescriptionEvent$3.InputTuple, NewDescriptionEvent$3.OutputTuple, NewDescriptionEvent$3.OutputObject>;
+		NewDescription: TypedContractEvent<NewDescriptionEvent$3.InputTuple, NewDescriptionEvent$3.OutputTuple, NewDescriptionEvent$3.OutputObject>;
+		"NewRound(uint256,address,uint256)": TypedContractEvent<NewRoundEvent$3.InputTuple, NewRoundEvent$3.OutputTuple, NewRoundEvent$3.OutputObject>;
+		NewRound: TypedContractEvent<NewRoundEvent$3.InputTuple, NewRoundEvent$3.OutputTuple, NewRoundEvent$3.OutputObject>;
+	};
+}
+export interface V2SwapFeedFactoryInterface extends Interface {
+	getFunction(nameOrSignature: "USD" | "WETH" | "createFeed" | "feedImplementation" | "feeds" | "initializeFactory" | "latestAnswer" | "owner" | "phaseId" | "renounceOwnership" | "setFeedImplementation" | "setSwapFactory" | "setUSD" | "setWETH" | "swapFactory" | "transferOwnership"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "FeedConfirmed" | "FeedProposed" | "Initialized" | "OwnershipTransferred" | "SetFeedImplementation" | "SetSwapFactory" | "SetUSD" | "SetWETH"): EventFragment;
+	encodeFunctionData(functionFragment: "USD", values?: undefined): string;
+	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
+	encodeFunctionData(functionFragment: "createFeed", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "feedImplementation", values?: undefined): string;
+	encodeFunctionData(functionFragment: "feeds", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "initializeFactory", values: [
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike,
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "latestAnswer", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+	encodeFunctionData(functionFragment: "phaseId", values?: undefined): string;
+	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
+	encodeFunctionData(functionFragment: "setFeedImplementation", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setSwapFactory", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setUSD", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "setWETH", values: [
+		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "swapFactory", values?: undefined): string;
+	encodeFunctionData(functionFragment: "transferOwnership", values: [
+		AddressLike
+	]): string;
+	decodeFunctionResult(functionFragment: "USD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "createFeed", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "feedImplementation", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "feeds", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeFactory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "latestAnswer", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "phaseId", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setFeedImplementation", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setSwapFactory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setUSD", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setWETH", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "swapFactory", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+}
+declare namespace FeedConfirmedEvent {
+	type InputTuple = [
+		asset: AddressLike,
+		denomination: AddressLike,
+		latestAggregator: AddressLike,
+		previousAggregator: AddressLike,
+		nextPhaseId: BigNumberish,
+		sender: AddressLike
+	];
+	type OutputTuple = [
+		asset: string,
+		denomination: string,
+		latestAggregator: string,
+		previousAggregator: string,
+		nextPhaseId: bigint,
+		sender: string
+	];
+	interface OutputObject {
+		asset: string;
+		denomination: string;
+		latestAggregator: string;
+		previousAggregator: string;
+		nextPhaseId: bigint;
+		sender: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace FeedProposedEvent {
+	type InputTuple = [
+		asset: AddressLike,
+		denomination: AddressLike,
+		proposedAggregator: AddressLike,
+		currentAggregator: AddressLike,
+		sender: AddressLike
+	];
+	type OutputTuple = [
+		asset: string,
+		denomination: string,
+		proposedAggregator: string,
+		currentAggregator: string,
+		sender: string
+	];
+	interface OutputObject {
+		asset: string;
+		denomination: string;
+		proposedAggregator: string;
+		currentAggregator: string;
+		sender: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace InitializedEvent$13 {
+	type InputTuple = [
+		version: BigNumberish
+	];
+	type OutputTuple = [
+		version: bigint
+	];
+	interface OutputObject {
+		version: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace OwnershipTransferredEvent$5 {
+	type InputTuple = [
+		previousOwner: AddressLike,
+		newOwner: AddressLike
+	];
+	type OutputTuple = [
+		previousOwner: string,
+		newOwner: string
+	];
+	interface OutputObject {
+		previousOwner: string;
+		newOwner: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace SetFeedImplementationEvent {
+	type InputTuple = [
+		feedImplementation: AddressLike
+	];
+	type OutputTuple = [
+		feedImplementation: string
+	];
+	interface OutputObject {
+		feedImplementation: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace SetSwapFactoryEvent {
+	type InputTuple = [
+		factory: AddressLike
+	];
+	type OutputTuple = [
+		factory: string
+	];
+	interface OutputObject {
+		factory: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace SetUSDEvent {
+	type InputTuple = [
+		usd: AddressLike
+	];
+	type OutputTuple = [
+		usd: string
+	];
+	interface OutputObject {
+		usd: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace SetWETHEvent {
+	type InputTuple = [
+		weth: AddressLike
+	];
+	type OutputTuple = [
+		weth: string
+	];
+	interface OutputObject {
+		weth: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+export interface V2SwapFeedFactory extends BaseContract {
+	connect(runner?: ContractRunner | null): V2SwapFeedFactory;
+	waitForDeployment(): Promise<this>;
+	interface: V2SwapFeedFactoryInterface;
+	queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+	on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+	once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+	listeners(eventName?: string): Promise<Array<Listener>>;
+	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+	USD: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	WETH: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	createFeed: TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	feedImplementation: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	feeds: TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		string
+	], "view">;
+	initializeFactory: TypedContractMethod<[
+		_initOwner: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	latestAnswer: TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		bigint
+	], "view">;
+	owner: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	phaseId: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	renounceOwnership: TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	setFeedImplementation: TypedContractMethod<[
+		_feedImplementation: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setSwapFactory: TypedContractMethod<[
+		_swapFactory: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setUSD: TypedContractMethod<[
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	setWETH: TypedContractMethod<[
+		_WETH: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	swapFactory: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	transferOwnership: TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+	getFunction(nameOrSignature: "USD"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "WETH"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "createFeed"): TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "feedImplementation"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "feeds"): TypedContractMethod<[
+		arg0: AddressLike
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "initializeFactory"): TypedContractMethod<[
+		_initOwner: AddressLike,
+		_feedImplementation: AddressLike,
+		_swapFactory: AddressLike,
+		_WETH: AddressLike,
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "latestAnswer"): TypedContractMethod<[
+		_asset: AddressLike
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "owner"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "phaseId"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setFeedImplementation"): TypedContractMethod<[
+		_feedImplementation: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setSwapFactory"): TypedContractMethod<[
+		_swapFactory: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setUSD"): TypedContractMethod<[
+		_USD: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setWETH"): TypedContractMethod<[
+		_WETH: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "swapFactory"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[
+		newOwner: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getEvent(key: "FeedConfirmed"): TypedContractEvent<FeedConfirmedEvent.InputTuple, FeedConfirmedEvent.OutputTuple, FeedConfirmedEvent.OutputObject>;
+	getEvent(key: "FeedProposed"): TypedContractEvent<FeedProposedEvent.InputTuple, FeedProposedEvent.OutputTuple, FeedProposedEvent.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
+	getEvent(key: "SetFeedImplementation"): TypedContractEvent<SetFeedImplementationEvent.InputTuple, SetFeedImplementationEvent.OutputTuple, SetFeedImplementationEvent.OutputObject>;
+	getEvent(key: "SetSwapFactory"): TypedContractEvent<SetSwapFactoryEvent.InputTuple, SetSwapFactoryEvent.OutputTuple, SetSwapFactoryEvent.OutputObject>;
+	getEvent(key: "SetUSD"): TypedContractEvent<SetUSDEvent.InputTuple, SetUSDEvent.OutputTuple, SetUSDEvent.OutputObject>;
+	getEvent(key: "SetWETH"): TypedContractEvent<SetWETHEvent.InputTuple, SetWETHEvent.OutputTuple, SetWETHEvent.OutputObject>;
+	filters: {
+		"FeedConfirmed(address,address,address,address,uint16,address)": TypedContractEvent<FeedConfirmedEvent.InputTuple, FeedConfirmedEvent.OutputTuple, FeedConfirmedEvent.OutputObject>;
+		FeedConfirmed: TypedContractEvent<FeedConfirmedEvent.InputTuple, FeedConfirmedEvent.OutputTuple, FeedConfirmedEvent.OutputObject>;
+		"FeedProposed(address,address,address,address,address)": TypedContractEvent<FeedProposedEvent.InputTuple, FeedProposedEvent.OutputTuple, FeedProposedEvent.OutputObject>;
+		FeedProposed: TypedContractEvent<FeedProposedEvent.InputTuple, FeedProposedEvent.OutputTuple, FeedProposedEvent.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
+		"SetFeedImplementation(address)": TypedContractEvent<SetFeedImplementationEvent.InputTuple, SetFeedImplementationEvent.OutputTuple, SetFeedImplementationEvent.OutputObject>;
+		SetFeedImplementation: TypedContractEvent<SetFeedImplementationEvent.InputTuple, SetFeedImplementationEvent.OutputTuple, SetFeedImplementationEvent.OutputObject>;
+		"SetSwapFactory(address)": TypedContractEvent<SetSwapFactoryEvent.InputTuple, SetSwapFactoryEvent.OutputTuple, SetSwapFactoryEvent.OutputObject>;
+		SetSwapFactory: TypedContractEvent<SetSwapFactoryEvent.InputTuple, SetSwapFactoryEvent.OutputTuple, SetSwapFactoryEvent.OutputObject>;
+		"SetUSD(address)": TypedContractEvent<SetUSDEvent.InputTuple, SetUSDEvent.OutputTuple, SetUSDEvent.OutputObject>;
+		SetUSD: TypedContractEvent<SetUSDEvent.InputTuple, SetUSDEvent.OutputTuple, SetUSDEvent.OutputObject>;
+		"SetWETH(address)": TypedContractEvent<SetWETHEvent.InputTuple, SetWETHEvent.OutputTuple, SetWETHEvent.OutputObject>;
+		SetWETH: TypedContractEvent<SetWETHEvent.InputTuple, SetWETHEvent.OutputTuple, SetWETHEvent.OutputObject>;
+	};
+}
 export interface MasterChefInterface extends Interface {
-	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "getBlockRewardPerShare" | "getMultiplier" | "hasPool" | "initialize" | "massUpdatePools" | "owner" | "pendingRewards" | "poolId" | "poolInfo" | "poolLength" | "renounceOwnership" | "rewardPerBlock" | "rewardToken" | "rewardVault" | "set" | "totalAllocPoint" | "transferOwnership" | "updatePool" | "updateRewardPerBlock" | "userInfo" | "withdraw"): FunctionFragment;
-	getEvent(nameOrSignatureOrTopic: "Deposit" | "Initialized" | "InitializedChef" | "OwnershipTransferred" | "SetPool" | "SetReward" | "Withdraw"): EventFragment;
+	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getMultiplier" | "getPoolRewardsByTime" | "getPoolRewardsPerSec" | "getRewardsPerShare" | "hasPool" | "initializeChef" | "massUpdatePools" | "owner" | "pendingRewards" | "poolId" | "poolInfo" | "poolLength" | "renounceOwnership" | "rewardToken" | "rewardVault" | "rewardsPerSec" | "set" | "setRewardsPerSec" | "totalAllocPoint" | "transferOwnership" | "updatePool" | "userInfo" | "withdraw"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "Deposit" | "Initialized" | "InitializedChef" | "OwnershipTransferred" | "SetPool" | "SetRewards" | "Withdraw"): EventFragment;
 	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
 	encodeFunctionData(functionFragment: "add", values: [
 		AddressLike,
@@ -6859,23 +10482,37 @@ export interface MasterChefInterface extends Interface {
 		BigNumberish,
 		BigNumberish
 	]): string;
-	encodeFunctionData(functionFragment: "getBlockRewardPerShare", values: [
-		BigNumberish
+	encodeFunctionData(functionFragment: "depositPermit", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
+		BytesLike
 	]): string;
 	encodeFunctionData(functionFragment: "getMultiplier", values: [
 		BigNumberish,
 		BigNumberish,
 		BigNumberish
 	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsByTime", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsPerSec", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRewardsPerShare", values: [
+		BigNumberish
+	]): string;
 	encodeFunctionData(functionFragment: "hasPool", values: [
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeChef", values: [
+		AddressLike,
 		AddressLike,
 		AddressLike,
 		AddressLike,
 		BigNumberish,
-		AddressLike,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -6894,9 +10531,9 @@ export interface MasterChefInterface extends Interface {
 	]): string;
 	encodeFunctionData(functionFragment: "poolLength", values?: undefined): string;
 	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
-	encodeFunctionData(functionFragment: "rewardPerBlock", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardVault", values?: undefined): string;
+	encodeFunctionData(functionFragment: "rewardsPerSec", values?: undefined): string;
 	encodeFunctionData(functionFragment: "set", values: [
 		BigNumberish,
 		BigNumberish,
@@ -6904,14 +10541,14 @@ export interface MasterChefInterface extends Interface {
 		BigNumberish,
 		boolean
 	]): string;
+	encodeFunctionData(functionFragment: "setRewardsPerSec", values: [
+		BigNumberish
+	]): string;
 	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
 	encodeFunctionData(functionFragment: "transferOwnership", values: [
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "updatePool", values: [
-		BigNumberish
-	]): string;
-	encodeFunctionData(functionFragment: "updateRewardPerBlock", values: [
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "userInfo", values: [
@@ -6925,10 +10562,13 @@ export interface MasterChefInterface extends Interface {
 	decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "getBlockRewardPerShare", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "depositPermit", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "getMultiplier", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsByTime", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsPerSec", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRewardsPerShare", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeChef", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "massUpdatePools", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "pendingRewards", data: BytesLike): Result;
@@ -6936,14 +10576,14 @@ export interface MasterChefInterface extends Interface {
 	decodeFunctionResult(functionFragment: "poolInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolLength", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "rewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardVault", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "rewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setRewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalAllocPoint", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "updateRewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -6968,7 +10608,7 @@ declare namespace DepositEvent$4 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace InitializedEvent$9 {
+declare namespace InitializedEvent$14 {
 	type InputTuple = [
 		version: BigNumberish
 	];
@@ -7004,7 +10644,7 @@ declare namespace InitializedChefEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace OwnershipTransferredEvent$2 {
+declare namespace OwnershipTransferredEvent$6 {
 	type InputTuple = [
 		previousOwner: AddressLike,
 		newOwner: AddressLike
@@ -7027,37 +10667,37 @@ declare namespace SetPoolEvent {
 		pid: BigNumberish,
 		lpToken: AddressLike,
 		newAllocPoint: BigNumberish,
-		startBlock: BigNumberish,
-		endBlock: BigNumberish
+		startTime: BigNumberish,
+		endTime: BigNumberish
 	];
 	type OutputTuple = [
 		pid: bigint,
 		lpToken: string,
 		newAllocPoint: bigint,
-		startBlock: bigint,
-		endBlock: bigint
+		startTime: bigint,
+		endTime: bigint
 	];
 	interface OutputObject {
 		pid: bigint;
 		lpToken: string;
 		newAllocPoint: bigint;
-		startBlock: bigint;
-		endBlock: bigint;
+		startTime: bigint;
+		endTime: bigint;
 	}
 	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
 	type Filter = TypedDeferredTopicFilter<Event>;
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace SetRewardEvent {
+declare namespace SetRewardsEvent {
 	type InputTuple = [
-		newReward: BigNumberish
+		rewardsPerSec: BigNumberish
 	];
 	type OutputTuple = [
-		newReward: bigint
+		rewardsPerSec: bigint
 	];
 	interface OutputObject {
-		newReward: bigint;
+		rewardsPerSec: bigint;
 	}
 	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
 	type Filter = TypedDeferredTopicFilter<Event>;
@@ -7105,8 +10745,8 @@ export interface MasterChef extends BaseContract {
 	add: TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -7117,15 +10757,35 @@ export interface MasterChef extends BaseContract {
 	], [
 		void
 	], "payable">;
-	getBlockRewardPerShare: TypedContractMethod<[
+	depositPermit: TypedContractMethod<[
+		_pid: BigNumberish,
+		_amount: BigNumberish,
+		_deadline: BigNumberish,
+		_signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getMultiplier: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsByTime: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsPerSec: TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getMultiplier: TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getRewardsPerShare: TypedContractMethod<[
+		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
@@ -7134,14 +10794,14 @@ export interface MasterChef extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	initialize: TypedContractMethod<[
+	initializeChef: TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -7178,10 +10838,10 @@ export interface MasterChef extends BaseContract {
 		] & {
 			lpToken: string;
 			allocPoint: bigint;
-			startBlock: bigint;
-			endBlock: bigint;
-			lastRewardBlock: bigint;
-			accRewardPerShare: bigint;
+			startTime: bigint;
+			endTime: bigint;
+			lastRewardTime: bigint;
+			accRewardsPerShare: bigint;
 		}
 	], "view">;
 	poolLength: TypedContractMethod<[
@@ -7192,10 +10852,6 @@ export interface MasterChef extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	rewardPerBlock: TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	rewardToken: TypedContractMethod<[
 	], [
 		string
@@ -7204,12 +10860,21 @@ export interface MasterChef extends BaseContract {
 	], [
 		string
 	], "view">;
+	rewardsPerSec: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	set: TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	setRewardsPerSec: TypedContractMethod<[
+		_rewardsPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7224,11 +10889,6 @@ export interface MasterChef extends BaseContract {
 	], "nonpayable">;
 	updatePool: TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	updateRewardPerBlock: TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7258,8 +10918,8 @@ export interface MasterChef extends BaseContract {
 	getFunction(nameOrSignature: "add"): TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -7270,15 +10930,35 @@ export interface MasterChef extends BaseContract {
 	], [
 		void
 	], "payable">;
-	getFunction(nameOrSignature: "getBlockRewardPerShare"): TypedContractMethod<[
+	getFunction(nameOrSignature: "depositPermit"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_amount: BigNumberish,
+		_deadline: BigNumberish,
+		_signature: BytesLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsByTime"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsPerSec"): TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getFunction(nameOrSignature: "getRewardsPerShare"): TypedContractMethod<[
+		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
@@ -7287,14 +10967,14 @@ export interface MasterChef extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeChef"): TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -7331,10 +11011,10 @@ export interface MasterChef extends BaseContract {
 		] & {
 			lpToken: string;
 			allocPoint: bigint;
-			startBlock: bigint;
-			endBlock: bigint;
-			lastRewardBlock: bigint;
-			accRewardPerShare: bigint;
+			startTime: bigint;
+			endTime: bigint;
+			lastRewardTime: bigint;
+			accRewardsPerShare: bigint;
 		}
 	], "view">;
 	getFunction(nameOrSignature: "poolLength"): TypedContractMethod<[
@@ -7345,10 +11025,6 @@ export interface MasterChef extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "rewardPerBlock"): TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[
 	], [
 		string
@@ -7357,12 +11033,21 @@ export interface MasterChef extends BaseContract {
 	], [
 		string
 	], "view">;
+	getFunction(nameOrSignature: "rewardsPerSec"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	getFunction(nameOrSignature: "set"): TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setRewardsPerSec"): TypedContractMethod<[
+		_rewardsPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7377,11 +11062,6 @@ export interface MasterChef extends BaseContract {
 	], "nonpayable">;
 	getFunction(nameOrSignature: "updatePool"): TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	getFunction(nameOrSignature: "updateRewardPerBlock"): TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7404,32 +11084,32 @@ export interface MasterChef extends BaseContract {
 		void
 	], "nonpayable">;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$4.InputTuple, DepositEvent$4.OutputTuple, DepositEvent$4.OutputObject>;
-	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$14.InputTuple, InitializedEvent$14.OutputTuple, InitializedEvent$14.OutputObject>;
 	getEvent(key: "InitializedChef"): TypedContractEvent<InitializedChefEvent.InputTuple, InitializedChefEvent.OutputTuple, InitializedChefEvent.OutputObject>;
-	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$6.InputTuple, OwnershipTransferredEvent$6.OutputTuple, OwnershipTransferredEvent$6.OutputObject>;
 	getEvent(key: "SetPool"): TypedContractEvent<SetPoolEvent.InputTuple, SetPoolEvent.OutputTuple, SetPoolEvent.OutputObject>;
-	getEvent(key: "SetReward"): TypedContractEvent<SetRewardEvent.InputTuple, SetRewardEvent.OutputTuple, SetRewardEvent.OutputObject>;
+	getEvent(key: "SetRewards"): TypedContractEvent<SetRewardsEvent.InputTuple, SetRewardsEvent.OutputTuple, SetRewardsEvent.OutputObject>;
 	getEvent(key: "Withdraw"): TypedContractEvent<WithdrawEvent$4.InputTuple, WithdrawEvent$4.OutputTuple, WithdrawEvent$4.OutputObject>;
 	filters: {
-		"Deposit(address,uint256,uint256)": TypedContractEvent<DepositEvent$4.InputTuple, DepositEvent$4.OutputTuple, DepositEvent$4.OutputObject>;
+		"Deposit(address,uint16,uint256)": TypedContractEvent<DepositEvent$4.InputTuple, DepositEvent$4.OutputTuple, DepositEvent$4.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$4.InputTuple, DepositEvent$4.OutputTuple, DepositEvent$4.OutputObject>;
-		"Initialized(uint64)": TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
-		Initialized: TypedContractEvent<InitializedEvent$9.InputTuple, InitializedEvent$9.OutputTuple, InitializedEvent$9.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$14.InputTuple, InitializedEvent$14.OutputTuple, InitializedEvent$14.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$14.InputTuple, InitializedEvent$14.OutputTuple, InitializedEvent$14.OutputObject>;
 		"InitializedChef(address,address,address)": TypedContractEvent<InitializedChefEvent.InputTuple, InitializedChefEvent.OutputTuple, InitializedChefEvent.OutputObject>;
 		InitializedChef: TypedContractEvent<InitializedChefEvent.InputTuple, InitializedChefEvent.OutputTuple, InitializedChefEvent.OutputObject>;
-		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
-		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$2.InputTuple, OwnershipTransferredEvent$2.OutputTuple, OwnershipTransferredEvent$2.OutputObject>;
-		"SetPool(uint256,address,uint256,uint256,uint256)": TypedContractEvent<SetPoolEvent.InputTuple, SetPoolEvent.OutputTuple, SetPoolEvent.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$6.InputTuple, OwnershipTransferredEvent$6.OutputTuple, OwnershipTransferredEvent$6.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$6.InputTuple, OwnershipTransferredEvent$6.OutputTuple, OwnershipTransferredEvent$6.OutputObject>;
+		"SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<SetPoolEvent.InputTuple, SetPoolEvent.OutputTuple, SetPoolEvent.OutputObject>;
 		SetPool: TypedContractEvent<SetPoolEvent.InputTuple, SetPoolEvent.OutputTuple, SetPoolEvent.OutputObject>;
-		"SetReward(uint256)": TypedContractEvent<SetRewardEvent.InputTuple, SetRewardEvent.OutputTuple, SetRewardEvent.OutputObject>;
-		SetReward: TypedContractEvent<SetRewardEvent.InputTuple, SetRewardEvent.OutputTuple, SetRewardEvent.OutputObject>;
-		"Withdraw(address,uint256,uint256)": TypedContractEvent<WithdrawEvent$4.InputTuple, WithdrawEvent$4.OutputTuple, WithdrawEvent$4.OutputObject>;
+		"SetRewards(uint256)": TypedContractEvent<SetRewardsEvent.InputTuple, SetRewardsEvent.OutputTuple, SetRewardsEvent.OutputObject>;
+		SetRewards: TypedContractEvent<SetRewardsEvent.InputTuple, SetRewardsEvent.OutputTuple, SetRewardsEvent.OutputObject>;
+		"Withdraw(address,uint16,uint256)": TypedContractEvent<WithdrawEvent$4.InputTuple, WithdrawEvent$4.OutputTuple, WithdrawEvent$4.OutputObject>;
 		Withdraw: TypedContractEvent<WithdrawEvent$4.InputTuple, WithdrawEvent$4.OutputTuple, WithdrawEvent$4.OutputObject>;
 	};
 }
 export interface MasterPoolInterface extends Interface {
-	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getBlockRewardPerShare" | "getMultiplier" | "hasPool" | "hasPoolToken" | "initialize" | "initializePool" | "massUpdatePools" | "owner" | "pendingRewards" | "poolDeposit" | "poolId" | "poolIdByTokens" | "poolInfo" | "poolLength" | "poolMint" | "poolTokenImplementation" | "poolTokens" | "poolTransfer" | "poolWithdraw" | "renounceOwnership" | "rewardPerBlock" | "rewardToken" | "rewardVault" | "set" | "totalAllocPoint" | "transferOwnership" | "updatePool" | "updateRewardPerBlock" | "userInfo" | "withdraw"): FunctionFragment;
-	getEvent(nameOrSignatureOrTopic: "Deposit" | "Initialized" | "InitializedChef" | "OwnershipTransferred" | "SetPool" | "SetPoolToken" | "SetReward" | "Withdraw"): EventFragment;
+	getFunction(nameOrSignature: "WETH" | "add" | "deposit" | "depositPermit" | "getMultiplier" | "getPoolRewardsByTime" | "getPoolRewardsPerSec" | "getRewardsPerShare" | "halvingInterval" | "halvingRate" | "hasPool" | "hasPoolToken" | "initializeChef" | "initializePool" | "massUpdatePools" | "owner" | "pendingRewards" | "poolDeposit" | "poolId" | "poolIdByTokens" | "poolInfo" | "poolLength" | "poolMint" | "poolTokenImplementation" | "poolTokens" | "poolTransfer" | "poolWithdraw" | "renounceOwnership" | "rewardToken" | "rewardVault" | "rewardsPerSec" | "set" | "setHalvingInterval" | "setHalvingRate" | "setRewardsPerSec" | "totalAllocPoint" | "transferOwnership" | "updatePool" | "userInfo" | "withdraw"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "Deposit" | "Initialized" | "InitializedChef" | "OwnershipTransferred" | "SetHalvingInterval" | "SetHalvingRate" | "SetPool" | "SetPoolToken" | "SetRewards" | "Withdraw"): EventFragment;
 	encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
 	encodeFunctionData(functionFragment: "add", values: [
 		AddressLike,
@@ -7448,26 +11128,36 @@ export interface MasterPoolInterface extends Interface {
 		BigNumberish,
 		BytesLike
 	]): string;
-	encodeFunctionData(functionFragment: "getBlockRewardPerShare", values: [
-		BigNumberish
-	]): string;
 	encodeFunctionData(functionFragment: "getMultiplier", values: [
 		BigNumberish,
 		BigNumberish,
 		BigNumberish
 	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsByTime", values: [
+		BigNumberish,
+		BigNumberish,
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getPoolRewardsPerSec", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "getRewardsPerShare", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "halvingInterval", values?: undefined): string;
+	encodeFunctionData(functionFragment: "halvingRate", values?: undefined): string;
 	encodeFunctionData(functionFragment: "hasPool", values: [
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "hasPoolToken", values: [
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeChef", values: [
+		AddressLike,
 		AddressLike,
 		AddressLike,
 		AddressLike,
 		BigNumberish,
-		AddressLike,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -7477,8 +11167,10 @@ export interface MasterPoolInterface extends Interface {
 		AddressLike,
 		AddressLike,
 		AddressLike,
-		BigNumberish,
 		AddressLike,
+		BigNumberish,
+		BigNumberish,
+		BigNumberish,
 		BigNumberish,
 		BigNumberish,
 		boolean
@@ -7520,9 +11212,9 @@ export interface MasterPoolInterface extends Interface {
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
-	encodeFunctionData(functionFragment: "rewardPerBlock", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
 	encodeFunctionData(functionFragment: "rewardVault", values?: undefined): string;
+	encodeFunctionData(functionFragment: "rewardsPerSec", values?: undefined): string;
 	encodeFunctionData(functionFragment: "set", values: [
 		BigNumberish,
 		BigNumberish,
@@ -7530,14 +11222,20 @@ export interface MasterPoolInterface extends Interface {
 		BigNumberish,
 		boolean
 	]): string;
+	encodeFunctionData(functionFragment: "setHalvingInterval", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "setHalvingRate", values: [
+		BigNumberish
+	]): string;
+	encodeFunctionData(functionFragment: "setRewardsPerSec", values: [
+		BigNumberish
+	]): string;
 	encodeFunctionData(functionFragment: "totalAllocPoint", values?: undefined): string;
 	encodeFunctionData(functionFragment: "transferOwnership", values: [
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "updatePool", values: [
-		BigNumberish
-	]): string;
-	encodeFunctionData(functionFragment: "updateRewardPerBlock", values: [
 		BigNumberish
 	]): string;
 	encodeFunctionData(functionFragment: "userInfo", values: [
@@ -7552,11 +11250,15 @@ export interface MasterPoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "depositPermit", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "getBlockRewardPerShare", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "getMultiplier", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsByTime", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getPoolRewardsPerSec", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "getRewardsPerShare", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "halvingInterval", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "halvingRate", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "hasPoolToken", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeChef", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "initializePool", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "massUpdatePools", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -7572,14 +11274,16 @@ export interface MasterPoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "poolTransfer", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "poolWithdraw", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "rewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardVault", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "rewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setHalvingInterval", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setHalvingRate", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "setRewardsPerSec", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalAllocPoint", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "updateRewardPerBlock", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -7604,7 +11308,7 @@ declare namespace DepositEvent$5 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace InitializedEvent$10 {
+declare namespace InitializedEvent$15 {
 	type InputTuple = [
 		version: BigNumberish
 	];
@@ -7640,7 +11344,7 @@ declare namespace InitializedChefEvent$1 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace OwnershipTransferredEvent$3 {
+declare namespace OwnershipTransferredEvent$7 {
 	type InputTuple = [
 		previousOwner: AddressLike,
 		newOwner: AddressLike
@@ -7658,27 +11362,57 @@ declare namespace OwnershipTransferredEvent$3 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
+declare namespace SetHalvingIntervalEvent {
+	type InputTuple = [
+		halvingInterval: BigNumberish
+	];
+	type OutputTuple = [
+		halvingInterval: bigint
+	];
+	interface OutputObject {
+		halvingInterval: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace SetHalvingRateEvent {
+	type InputTuple = [
+		halvingRate: BigNumberish
+	];
+	type OutputTuple = [
+		halvingRate: bigint
+	];
+	interface OutputObject {
+		halvingRate: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
 declare namespace SetPoolEvent$1 {
 	type InputTuple = [
 		pid: BigNumberish,
 		lpToken: AddressLike,
 		newAllocPoint: BigNumberish,
-		startBlock: BigNumberish,
-		endBlock: BigNumberish
+		startTime: BigNumberish,
+		endTime: BigNumberish
 	];
 	type OutputTuple = [
 		pid: bigint,
 		lpToken: string,
 		newAllocPoint: bigint,
-		startBlock: bigint,
-		endBlock: bigint
+		startTime: bigint,
+		endTime: bigint
 	];
 	interface OutputObject {
 		pid: bigint;
 		lpToken: string;
 		newAllocPoint: bigint;
-		startBlock: bigint;
-		endBlock: bigint;
+		startTime: bigint;
+		endTime: bigint;
 	}
 	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
 	type Filter = TypedDeferredTopicFilter<Event>;
@@ -7703,15 +11437,15 @@ declare namespace SetPoolTokenEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace SetRewardEvent$1 {
+declare namespace SetRewardsEvent$1 {
 	type InputTuple = [
-		newReward: BigNumberish
+		rewardsPerSec: BigNumberish
 	];
 	type OutputTuple = [
-		newReward: bigint
+		rewardsPerSec: bigint
 	];
 	interface OutputObject {
-		newReward: bigint;
+		rewardsPerSec: bigint;
 	}
 	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
 	type Filter = TypedDeferredTopicFilter<Event>;
@@ -7759,8 +11493,8 @@ export interface MasterPool extends BaseContract {
 	add: TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -7779,15 +11513,35 @@ export interface MasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getBlockRewardPerShare: TypedContractMethod<[
+	getMultiplier: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsByTime: TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getPoolRewardsPerSec: TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getMultiplier: TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getRewardsPerShare: TypedContractMethod<[
+		_pid: BigNumberish
+	], [
+		bigint
+	], "view">;
+	halvingInterval: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	halvingRate: TypedContractMethod<[
 	], [
 		bigint
 	], "view">;
@@ -7801,14 +11555,14 @@ export interface MasterPool extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	initialize: TypedContractMethod<[
+	initializeChef: TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -7818,10 +11572,12 @@ export interface MasterPool extends BaseContract {
 		_WETH: AddressLike,
 		_poolTokenImplementation: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_halvingRate: BigNumberish,
+		_halvingInterval: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -7869,10 +11625,10 @@ export interface MasterPool extends BaseContract {
 		] & {
 			lpToken: string;
 			allocPoint: bigint;
-			startBlock: bigint;
-			endBlock: bigint;
-			lastRewardBlock: bigint;
-			accRewardPerShare: bigint;
+			startTime: bigint;
+			endTime: bigint;
+			lastRewardTime: bigint;
+			accRewardsPerShare: bigint;
 		}
 	], "view">;
 	poolLength: TypedContractMethod<[
@@ -7910,10 +11666,6 @@ export interface MasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	rewardPerBlock: TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	rewardToken: TypedContractMethod<[
 	], [
 		string
@@ -7922,12 +11674,31 @@ export interface MasterPool extends BaseContract {
 	], [
 		string
 	], "view">;
+	rewardsPerSec: TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	set: TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	setHalvingInterval: TypedContractMethod<[
+		_halvingInterval: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	setHalvingRate: TypedContractMethod<[
+		_halvingRate: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	setRewardsPerSec: TypedContractMethod<[
+		_rewardsPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7942,11 +11713,6 @@ export interface MasterPool extends BaseContract {
 	], "nonpayable">;
 	updatePool: TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	updateRewardPerBlock: TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -7976,8 +11742,8 @@ export interface MasterPool extends BaseContract {
 	getFunction(nameOrSignature: "add"): TypedContractMethod<[
 		_lpToken: AddressLike,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
 	], [
 		bigint
@@ -7996,15 +11762,35 @@ export interface MasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "getBlockRewardPerShare"): TypedContractMethod<[
+	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsByTime"): TypedContractMethod<[
+		_pid: BigNumberish,
+		_fromTime: BigNumberish,
+		_toTime: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "getPoolRewardsPerSec"): TypedContractMethod<[
 		_pid: BigNumberish
 	], [
 		bigint
 	], "view">;
-	getFunction(nameOrSignature: "getMultiplier"): TypedContractMethod<[
-		_pid: BigNumberish,
-		_fromBlock: BigNumberish,
-		_toBlock: BigNumberish
+	getFunction(nameOrSignature: "getRewardsPerShare"): TypedContractMethod<[
+		_pid: BigNumberish
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "halvingInterval"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
+	getFunction(nameOrSignature: "halvingRate"): TypedContractMethod<[
 	], [
 		bigint
 	], "view">;
@@ -8018,14 +11804,14 @@ export interface MasterPool extends BaseContract {
 	], [
 		boolean
 	], "view">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeChef"): TypedContractMethod<[
 		_owner: AddressLike,
 		_WETH: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -8035,10 +11821,12 @@ export interface MasterPool extends BaseContract {
 		_WETH: AddressLike,
 		_poolTokenImplementation: AddressLike,
 		_rewardToken: AddressLike,
-		_rewardPerBlock: BigNumberish,
 		_rewardVault: AddressLike,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_rewardsPerSec: BigNumberish,
+		_halvingRate: BigNumberish,
+		_halvingInterval: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		addPool: boolean
 	], [
 		void
@@ -8086,10 +11874,10 @@ export interface MasterPool extends BaseContract {
 		] & {
 			lpToken: string;
 			allocPoint: bigint;
-			startBlock: bigint;
-			endBlock: bigint;
-			lastRewardBlock: bigint;
-			accRewardPerShare: bigint;
+			startTime: bigint;
+			endTime: bigint;
+			lastRewardTime: bigint;
+			accRewardsPerShare: bigint;
 		}
 	], "view">;
 	getFunction(nameOrSignature: "poolLength"): TypedContractMethod<[
@@ -8127,10 +11915,6 @@ export interface MasterPool extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "rewardPerBlock"): TypedContractMethod<[
-	], [
-		bigint
-	], "view">;
 	getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[
 	], [
 		string
@@ -8139,12 +11923,31 @@ export interface MasterPool extends BaseContract {
 	], [
 		string
 	], "view">;
+	getFunction(nameOrSignature: "rewardsPerSec"): TypedContractMethod<[
+	], [
+		bigint
+	], "view">;
 	getFunction(nameOrSignature: "set"): TypedContractMethod<[
 		_pid: BigNumberish,
 		_allocPoint: BigNumberish,
-		_startBlock: BigNumberish,
-		_endBlock: BigNumberish,
+		_startTime: BigNumberish,
+		_endTime: BigNumberish,
 		_withUpdate: boolean
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setHalvingInterval"): TypedContractMethod<[
+		_halvingInterval: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setHalvingRate"): TypedContractMethod<[
+		_halvingRate: BigNumberish
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "setRewardsPerSec"): TypedContractMethod<[
+		_rewardsPerSec: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -8159,11 +11962,6 @@ export interface MasterPool extends BaseContract {
 	], "nonpayable">;
 	getFunction(nameOrSignature: "updatePool"): TypedContractMethod<[
 		_pid: BigNumberish
-	], [
-		void
-	], "nonpayable">;
-	getFunction(nameOrSignature: "updateRewardPerBlock"): TypedContractMethod<[
-		newBlockReward: BigNumberish
 	], [
 		void
 	], "nonpayable">;
@@ -8186,39 +11984,45 @@ export interface MasterPool extends BaseContract {
 		void
 	], "nonpayable">;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$5.InputTuple, DepositEvent$5.OutputTuple, DepositEvent$5.OutputObject>;
-	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$15.InputTuple, InitializedEvent$15.OutputTuple, InitializedEvent$15.OutputObject>;
 	getEvent(key: "InitializedChef"): TypedContractEvent<InitializedChefEvent$1.InputTuple, InitializedChefEvent$1.OutputTuple, InitializedChefEvent$1.OutputObject>;
-	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$7.InputTuple, OwnershipTransferredEvent$7.OutputTuple, OwnershipTransferredEvent$7.OutputObject>;
+	getEvent(key: "SetHalvingInterval"): TypedContractEvent<SetHalvingIntervalEvent.InputTuple, SetHalvingIntervalEvent.OutputTuple, SetHalvingIntervalEvent.OutputObject>;
+	getEvent(key: "SetHalvingRate"): TypedContractEvent<SetHalvingRateEvent.InputTuple, SetHalvingRateEvent.OutputTuple, SetHalvingRateEvent.OutputObject>;
 	getEvent(key: "SetPool"): TypedContractEvent<SetPoolEvent$1.InputTuple, SetPoolEvent$1.OutputTuple, SetPoolEvent$1.OutputObject>;
 	getEvent(key: "SetPoolToken"): TypedContractEvent<SetPoolTokenEvent.InputTuple, SetPoolTokenEvent.OutputTuple, SetPoolTokenEvent.OutputObject>;
-	getEvent(key: "SetReward"): TypedContractEvent<SetRewardEvent$1.InputTuple, SetRewardEvent$1.OutputTuple, SetRewardEvent$1.OutputObject>;
+	getEvent(key: "SetRewards"): TypedContractEvent<SetRewardsEvent$1.InputTuple, SetRewardsEvent$1.OutputTuple, SetRewardsEvent$1.OutputObject>;
 	getEvent(key: "Withdraw"): TypedContractEvent<WithdrawEvent$5.InputTuple, WithdrawEvent$5.OutputTuple, WithdrawEvent$5.OutputObject>;
 	filters: {
-		"Deposit(address,uint256,uint256)": TypedContractEvent<DepositEvent$5.InputTuple, DepositEvent$5.OutputTuple, DepositEvent$5.OutputObject>;
+		"Deposit(address,uint16,uint256)": TypedContractEvent<DepositEvent$5.InputTuple, DepositEvent$5.OutputTuple, DepositEvent$5.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$5.InputTuple, DepositEvent$5.OutputTuple, DepositEvent$5.OutputObject>;
-		"Initialized(uint64)": TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
-		Initialized: TypedContractEvent<InitializedEvent$10.InputTuple, InitializedEvent$10.OutputTuple, InitializedEvent$10.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$15.InputTuple, InitializedEvent$15.OutputTuple, InitializedEvent$15.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$15.InputTuple, InitializedEvent$15.OutputTuple, InitializedEvent$15.OutputObject>;
 		"InitializedChef(address,address,address)": TypedContractEvent<InitializedChefEvent$1.InputTuple, InitializedChefEvent$1.OutputTuple, InitializedChefEvent$1.OutputObject>;
 		InitializedChef: TypedContractEvent<InitializedChefEvent$1.InputTuple, InitializedChefEvent$1.OutputTuple, InitializedChefEvent$1.OutputObject>;
-		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
-		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$3.InputTuple, OwnershipTransferredEvent$3.OutputTuple, OwnershipTransferredEvent$3.OutputObject>;
-		"SetPool(uint256,address,uint256,uint256,uint256)": TypedContractEvent<SetPoolEvent$1.InputTuple, SetPoolEvent$1.OutputTuple, SetPoolEvent$1.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$7.InputTuple, OwnershipTransferredEvent$7.OutputTuple, OwnershipTransferredEvent$7.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$7.InputTuple, OwnershipTransferredEvent$7.OutputTuple, OwnershipTransferredEvent$7.OutputObject>;
+		"SetHalvingInterval(uint64)": TypedContractEvent<SetHalvingIntervalEvent.InputTuple, SetHalvingIntervalEvent.OutputTuple, SetHalvingIntervalEvent.OutputObject>;
+		SetHalvingInterval: TypedContractEvent<SetHalvingIntervalEvent.InputTuple, SetHalvingIntervalEvent.OutputTuple, SetHalvingIntervalEvent.OutputObject>;
+		"SetHalvingRate(uint16)": TypedContractEvent<SetHalvingRateEvent.InputTuple, SetHalvingRateEvent.OutputTuple, SetHalvingRateEvent.OutputObject>;
+		SetHalvingRate: TypedContractEvent<SetHalvingRateEvent.InputTuple, SetHalvingRateEvent.OutputTuple, SetHalvingRateEvent.OutputObject>;
+		"SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<SetPoolEvent$1.InputTuple, SetPoolEvent$1.OutputTuple, SetPoolEvent$1.OutputObject>;
 		SetPool: TypedContractEvent<SetPoolEvent$1.InputTuple, SetPoolEvent$1.OutputTuple, SetPoolEvent$1.OutputObject>;
-		"SetPoolToken(uint256,address)": TypedContractEvent<SetPoolTokenEvent.InputTuple, SetPoolTokenEvent.OutputTuple, SetPoolTokenEvent.OutputObject>;
+		"SetPoolToken(uint16,address)": TypedContractEvent<SetPoolTokenEvent.InputTuple, SetPoolTokenEvent.OutputTuple, SetPoolTokenEvent.OutputObject>;
 		SetPoolToken: TypedContractEvent<SetPoolTokenEvent.InputTuple, SetPoolTokenEvent.OutputTuple, SetPoolTokenEvent.OutputObject>;
-		"SetReward(uint256)": TypedContractEvent<SetRewardEvent$1.InputTuple, SetRewardEvent$1.OutputTuple, SetRewardEvent$1.OutputObject>;
-		SetReward: TypedContractEvent<SetRewardEvent$1.InputTuple, SetRewardEvent$1.OutputTuple, SetRewardEvent$1.OutputObject>;
-		"Withdraw(address,uint256,uint256)": TypedContractEvent<WithdrawEvent$5.InputTuple, WithdrawEvent$5.OutputTuple, WithdrawEvent$5.OutputObject>;
+		"SetRewards(uint256)": TypedContractEvent<SetRewardsEvent$1.InputTuple, SetRewardsEvent$1.OutputTuple, SetRewardsEvent$1.OutputObject>;
+		SetRewards: TypedContractEvent<SetRewardsEvent$1.InputTuple, SetRewardsEvent$1.OutputTuple, SetRewardsEvent$1.OutputObject>;
+		"Withdraw(address,uint16,uint256)": TypedContractEvent<WithdrawEvent$5.InputTuple, WithdrawEvent$5.OutputTuple, WithdrawEvent$5.OutputObject>;
 		Withdraw: TypedContractEvent<WithdrawEvent$5.InputTuple, WithdrawEvent$5.OutputTuple, WithdrawEvent$5.OutputObject>;
 	};
 }
 export interface RewardVaultInterface extends Interface {
-	getFunction(nameOrSignature: "addSpender" | "initialize" | "owner" | "removeSpender" | "renounceOwnership" | "sendTo" | "spenders" | "transferOwnership"): FunctionFragment;
-	getEvent(nameOrSignatureOrTopic: "AddSpender" | "Initialized" | "OwnershipTransferred" | "RemoveSpender" | "Rewarded"): EventFragment;
+	getFunction(nameOrSignature: "addSpender" | "initializeVault" | "owner" | "removeSpender" | "renounceOwnership" | "sendTo" | "spenders" | "transferOwnership" | "withdraw"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AddSpender" | "Initialized" | "OwnershipTransferred" | "RemoveSpender" | "Rewarded" | "Withdrawn"): EventFragment;
 	encodeFunctionData(functionFragment: "addSpender", values: [
 		AddressLike
 	]): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeVault", values: [
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -8235,14 +12039,20 @@ export interface RewardVaultInterface extends Interface {
 	encodeFunctionData(functionFragment: "transferOwnership", values: [
 		AddressLike
 	]): string;
+	encodeFunctionData(functionFragment: "withdraw", values: [
+		AddressLike,
+		AddressLike,
+		BigNumberish
+	]): string;
 	decodeFunctionResult(functionFragment: "addSpender", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeVault", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "removeSpender", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "sendTo", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "spenders", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
 declare namespace AddSpenderEvent {
 	type InputTuple = [
@@ -8259,7 +12069,7 @@ declare namespace AddSpenderEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace InitializedEvent$11 {
+declare namespace InitializedEvent$16 {
 	type InputTuple = [
 		version: BigNumberish
 	];
@@ -8274,7 +12084,7 @@ declare namespace InitializedEvent$11 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace OwnershipTransferredEvent$4 {
+declare namespace OwnershipTransferredEvent$8 {
 	type InputTuple = [
 		previousOwner: AddressLike,
 		newOwner: AddressLike
@@ -8331,6 +12141,30 @@ declare namespace RewardedEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
+declare namespace WithdrawnEvent {
+	type InputTuple = [
+		token: AddressLike,
+		spender: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	];
+	type OutputTuple = [
+		token: string,
+		spender: string,
+		to: string,
+		value: bigint
+	];
+	interface OutputObject {
+		token: string;
+		spender: string;
+		to: string;
+		value: bigint;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
 export interface RewardVault extends BaseContract {
 	connect(runner?: ContractRunner | null): RewardVault;
 	waitForDeployment(): Promise<this>;
@@ -8349,7 +12183,7 @@ export interface RewardVault extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	initialize: TypedContractMethod<[
+	initializeVault: TypedContractMethod<[
 		_initOwner: AddressLike
 	], [
 		void
@@ -8383,13 +12217,20 @@ export interface RewardVault extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
+	withdraw: TypedContractMethod<[
+		token: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		void
+	], "nonpayable">;
 	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 	getFunction(nameOrSignature: "addSpender"): TypedContractMethod<[
 		_spender: AddressLike
 	], [
 		void
 	], "nonpayable">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeVault"): TypedContractMethod<[
 		_initOwner: AddressLike
 	], [
 		void
@@ -8423,45 +12264,62 @@ export interface RewardVault extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
+	getFunction(nameOrSignature: "withdraw"): TypedContractMethod<[
+		token: AddressLike,
+		to: AddressLike,
+		value: BigNumberish
+	], [
+		void
+	], "nonpayable">;
 	getEvent(key: "AddSpender"): TypedContractEvent<AddSpenderEvent.InputTuple, AddSpenderEvent.OutputTuple, AddSpenderEvent.OutputObject>;
-	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
-	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$16.InputTuple, InitializedEvent$16.OutputTuple, InitializedEvent$16.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$8.InputTuple, OwnershipTransferredEvent$8.OutputTuple, OwnershipTransferredEvent$8.OutputObject>;
 	getEvent(key: "RemoveSpender"): TypedContractEvent<RemoveSpenderEvent.InputTuple, RemoveSpenderEvent.OutputTuple, RemoveSpenderEvent.OutputObject>;
 	getEvent(key: "Rewarded"): TypedContractEvent<RewardedEvent.InputTuple, RewardedEvent.OutputTuple, RewardedEvent.OutputObject>;
+	getEvent(key: "Withdrawn"): TypedContractEvent<WithdrawnEvent.InputTuple, WithdrawnEvent.OutputTuple, WithdrawnEvent.OutputObject>;
 	filters: {
 		"AddSpender(address)": TypedContractEvent<AddSpenderEvent.InputTuple, AddSpenderEvent.OutputTuple, AddSpenderEvent.OutputObject>;
 		AddSpender: TypedContractEvent<AddSpenderEvent.InputTuple, AddSpenderEvent.OutputTuple, AddSpenderEvent.OutputObject>;
-		"Initialized(uint64)": TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
-		Initialized: TypedContractEvent<InitializedEvent$11.InputTuple, InitializedEvent$11.OutputTuple, InitializedEvent$11.OutputObject>;
-		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
-		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$4.InputTuple, OwnershipTransferredEvent$4.OutputTuple, OwnershipTransferredEvent$4.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$16.InputTuple, InitializedEvent$16.OutputTuple, InitializedEvent$16.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$16.InputTuple, InitializedEvent$16.OutputTuple, InitializedEvent$16.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$8.InputTuple, OwnershipTransferredEvent$8.OutputTuple, OwnershipTransferredEvent$8.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$8.InputTuple, OwnershipTransferredEvent$8.OutputTuple, OwnershipTransferredEvent$8.OutputObject>;
 		"RemoveSpender(address)": TypedContractEvent<RemoveSpenderEvent.InputTuple, RemoveSpenderEvent.OutputTuple, RemoveSpenderEvent.OutputObject>;
 		RemoveSpender: TypedContractEvent<RemoveSpenderEvent.InputTuple, RemoveSpenderEvent.OutputTuple, RemoveSpenderEvent.OutputObject>;
 		"Rewarded(address,address,address,uint256)": TypedContractEvent<RewardedEvent.InputTuple, RewardedEvent.OutputTuple, RewardedEvent.OutputObject>;
 		Rewarded: TypedContractEvent<RewardedEvent.InputTuple, RewardedEvent.OutputTuple, RewardedEvent.OutputObject>;
+		"Withdrawn(address,address,address,uint256)": TypedContractEvent<WithdrawnEvent.InputTuple, WithdrawnEvent.OutputTuple, WithdrawnEvent.OutputObject>;
+		Withdrawn: TypedContractEvent<WithdrawnEvent.InputTuple, WithdrawnEvent.OutputTuple, WithdrawnEvent.OutputObject>;
 	};
 }
 export interface InitializableProxyInterface extends Interface {
-	getFunction(nameOrSignature: "admin" | "changeAdmin" | "implementation" | "initializeProxy" | "upgradeToAndCall"): FunctionFragment;
-	getEvent(nameOrSignatureOrTopic: "AdminChanged" | "Upgraded"): EventFragment;
-	encodeFunctionData(functionFragment: "admin", values?: undefined): string;
-	encodeFunctionData(functionFragment: "changeAdmin", values: [
+	getFunction(nameOrSignature: "changeProxyAdmin" | "changeProxyDescription" | "implementation" | "initializeProxy" | "proxyAdmin" | "proxyDescription" | "upgradeToAndCall"): FunctionFragment;
+	getEvent(nameOrSignatureOrTopic: "AdminChanged" | "DescriptionChanged" | "Upgraded"): EventFragment;
+	encodeFunctionData(functionFragment: "changeProxyAdmin", values: [
 		AddressLike
+	]): string;
+	encodeFunctionData(functionFragment: "changeProxyDescription", values: [
+		string
 	]): string;
 	encodeFunctionData(functionFragment: "implementation", values?: undefined): string;
 	encodeFunctionData(functionFragment: "initializeProxy", values: [
+		string,
 		AddressLike,
 		AddressLike,
 		BytesLike
 	]): string;
+	encodeFunctionData(functionFragment: "proxyAdmin", values?: undefined): string;
+	encodeFunctionData(functionFragment: "proxyDescription", values?: undefined): string;
 	encodeFunctionData(functionFragment: "upgradeToAndCall", values: [
 		AddressLike,
 		BytesLike
 	]): string;
-	decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "changeAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "changeProxyAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "changeProxyDescription", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "implementation", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "initializeProxy", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "proxyAdmin", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "proxyDescription", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "upgradeToAndCall", data: BytesLike): Result;
 }
 declare namespace AdminChangedEvent$1 {
@@ -8476,6 +12334,21 @@ declare namespace AdminChangedEvent$1 {
 	interface OutputObject {
 		previousAdmin: string;
 		newAdmin: string;
+	}
+	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+	type Filter = TypedDeferredTopicFilter<Event>;
+	type Log = TypedEventLog<Event>;
+	type LogDescription = TypedLogDescription<Event>;
+}
+declare namespace DescriptionChangedEvent$1 {
+	type InputTuple = [
+		description: string
+	];
+	type OutputTuple = [
+		description: string
+	];
+	interface OutputObject {
+		description: string;
 	}
 	type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
 	type Filter = TypedDeferredTopicFilter<Event>;
@@ -8510,12 +12383,13 @@ export interface InitializableProxy extends BaseContract {
 	listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
 	listeners(eventName?: string): Promise<Array<Listener>>;
 	removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-	admin: TypedContractMethod<[
-	], [
-		string
-	], "view">;
-	changeAdmin: TypedContractMethod<[
+	changeProxyAdmin: TypedContractMethod<[
 		newAdmin: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	changeProxyDescription: TypedContractMethod<[
+		_description: string
 	], [
 		void
 	], "nonpayable">;
@@ -8524,12 +12398,21 @@ export interface InitializableProxy extends BaseContract {
 		string
 	], "view">;
 	initializeProxy: TypedContractMethod<[
+		_description: string,
 		newAdmin: AddressLike,
 		newImplementation: AddressLike,
 		data: BytesLike
 	], [
 		void
 	], "payable">;
+	proxyAdmin: TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	proxyDescription: TypedContractMethod<[
+	], [
+		string
+	], "view">;
 	upgradeToAndCall: TypedContractMethod<[
 		newImplementation: AddressLike,
 		data: BytesLike
@@ -8537,12 +12420,13 @@ export interface InitializableProxy extends BaseContract {
 		void
 	], "payable">;
 	getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-	getFunction(nameOrSignature: "admin"): TypedContractMethod<[
-	], [
-		string
-	], "view">;
-	getFunction(nameOrSignature: "changeAdmin"): TypedContractMethod<[
+	getFunction(nameOrSignature: "changeProxyAdmin"): TypedContractMethod<[
 		newAdmin: AddressLike
+	], [
+		void
+	], "nonpayable">;
+	getFunction(nameOrSignature: "changeProxyDescription"): TypedContractMethod<[
+		_description: string
 	], [
 		void
 	], "nonpayable">;
@@ -8551,12 +12435,21 @@ export interface InitializableProxy extends BaseContract {
 		string
 	], "view">;
 	getFunction(nameOrSignature: "initializeProxy"): TypedContractMethod<[
+		_description: string,
 		newAdmin: AddressLike,
 		newImplementation: AddressLike,
 		data: BytesLike
 	], [
 		void
 	], "payable">;
+	getFunction(nameOrSignature: "proxyAdmin"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
+	getFunction(nameOrSignature: "proxyDescription"): TypedContractMethod<[
+	], [
+		string
+	], "view">;
 	getFunction(nameOrSignature: "upgradeToAndCall"): TypedContractMethod<[
 		newImplementation: AddressLike,
 		data: BytesLike
@@ -8564,16 +12457,19 @@ export interface InitializableProxy extends BaseContract {
 		void
 	], "payable">;
 	getEvent(key: "AdminChanged"): TypedContractEvent<AdminChangedEvent$1.InputTuple, AdminChangedEvent$1.OutputTuple, AdminChangedEvent$1.OutputObject>;
+	getEvent(key: "DescriptionChanged"): TypedContractEvent<DescriptionChangedEvent$1.InputTuple, DescriptionChangedEvent$1.OutputTuple, DescriptionChangedEvent$1.OutputObject>;
 	getEvent(key: "Upgraded"): TypedContractEvent<UpgradedEvent$1.InputTuple, UpgradedEvent$1.OutputTuple, UpgradedEvent$1.OutputObject>;
 	filters: {
 		"AdminChanged(address,address)": TypedContractEvent<AdminChangedEvent$1.InputTuple, AdminChangedEvent$1.OutputTuple, AdminChangedEvent$1.OutputObject>;
 		AdminChanged: TypedContractEvent<AdminChangedEvent$1.InputTuple, AdminChangedEvent$1.OutputTuple, AdminChangedEvent$1.OutputObject>;
+		"DescriptionChanged(string)": TypedContractEvent<DescriptionChangedEvent$1.InputTuple, DescriptionChangedEvent$1.OutputTuple, DescriptionChangedEvent$1.OutputObject>;
+		DescriptionChanged: TypedContractEvent<DescriptionChangedEvent$1.InputTuple, DescriptionChangedEvent$1.OutputTuple, DescriptionChangedEvent$1.OutputObject>;
 		"Upgraded(address)": TypedContractEvent<UpgradedEvent$1.InputTuple, UpgradedEvent$1.OutputTuple, UpgradedEvent$1.OutputObject>;
 		Upgraded: TypedContractEvent<UpgradedEvent$1.InputTuple, UpgradedEvent$1.OutputTuple, UpgradedEvent$1.OutputObject>;
 	};
 }
 export interface ERC20LockableInterface extends Interface {
-	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "balanceOf" | "decimals" | "eip712Domain" | "isLocked" | "isLockedUntil" | "lock" | "lockPermit" | "lockedUntil" | "name" | "nonces" | "permit" | "symbol" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "balanceOf" | "decimals" | "eip712Domain" | "isLocked" | "isLockedUntil" | "lock" | "lockPermit" | "lockedUntil" | "name" | "nonces" | "permit" | "supportsInterface" | "symbol" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
 	getEvent(nameOrSignatureOrTopic: "Approval" | "EIP712DomainChanged" | "Initialized" | "Lock" | "LockedBy" | "Transfer"): EventFragment;
 	encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
 	encodeFunctionData(functionFragment: "allowance", values: [
@@ -8622,6 +12518,9 @@ export interface ERC20LockableInterface extends Interface {
 		BytesLike,
 		BytesLike
 	]): string;
+	encodeFunctionData(functionFragment: "supportsInterface", values: [
+		BytesLike
+	]): string;
 	encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
 	encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
 	encodeFunctionData(functionFragment: "transfer", values: [
@@ -8647,12 +12546,13 @@ export interface ERC20LockableInterface extends Interface {
 	decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "supportsInterface", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$14 {
+declare namespace ApprovalEvent$16 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -8685,7 +12585,7 @@ declare namespace EIP712DomainChangedEvent$5 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace InitializedEvent$12 {
+declare namespace InitializedEvent$17 {
 	type InputTuple = [
 		version: BigNumberish
 	];
@@ -8700,7 +12600,7 @@ declare namespace InitializedEvent$12 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace LockEvent {
+declare namespace LockEvent$1 {
 	type InputTuple = [
 		owner: AddressLike,
 		until: BigNumberish
@@ -8718,7 +12618,7 @@ declare namespace LockEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace LockedByEvent {
+declare namespace LockedByEvent$1 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -8739,7 +12639,7 @@ declare namespace LockedByEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$14 {
+declare namespace TransferEvent$16 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -8868,6 +12768,11 @@ export interface ERC20Lockable extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
+	supportsInterface: TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
 	symbol: TypedContractMethod<[
 	], [
 		string
@@ -8985,6 +12890,11 @@ export interface ERC20Lockable extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
+	getFunction(nameOrSignature: "supportsInterface"): TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
 	getFunction(nameOrSignature: "symbol"): TypedContractMethod<[
 	], [
 		string
@@ -9006,25 +12916,25 @@ export interface ERC20Lockable extends BaseContract {
 	], [
 		boolean
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
 	getEvent(key: "EIP712DomainChanged"): TypedContractEvent<EIP712DomainChangedEvent$5.InputTuple, EIP712DomainChangedEvent$5.OutputTuple, EIP712DomainChangedEvent$5.OutputObject>;
-	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
-	getEvent(key: "Lock"): TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
-	getEvent(key: "LockedBy"): TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$17.InputTuple, InitializedEvent$17.OutputTuple, InitializedEvent$17.OutputObject>;
+	getEvent(key: "Lock"): TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
+	getEvent(key: "LockedBy"): TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$14.InputTuple, ApprovalEvent$14.OutputTuple, ApprovalEvent$14.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
 		"EIP712DomainChanged()": TypedContractEvent<EIP712DomainChangedEvent$5.InputTuple, EIP712DomainChangedEvent$5.OutputTuple, EIP712DomainChangedEvent$5.OutputObject>;
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$5.InputTuple, EIP712DomainChangedEvent$5.OutputTuple, EIP712DomainChangedEvent$5.OutputObject>;
-		"Initialized(uint64)": TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
-		Initialized: TypedContractEvent<InitializedEvent$12.InputTuple, InitializedEvent$12.OutputTuple, InitializedEvent$12.OutputObject>;
-		"Lock(address,uint256)": TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
-		Lock: TypedContractEvent<LockEvent.InputTuple, LockEvent.OutputTuple, LockEvent.OutputObject>;
-		"LockedBy(address,address,uint256)": TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
-		LockedBy: TypedContractEvent<LockedByEvent.InputTuple, LockedByEvent.OutputTuple, LockedByEvent.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$14.InputTuple, TransferEvent$14.OutputTuple, TransferEvent$14.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$17.InputTuple, InitializedEvent$17.OutputTuple, InitializedEvent$17.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$17.InputTuple, InitializedEvent$17.OutputTuple, InitializedEvent$17.OutputObject>;
+		"Lock(address,uint256)": TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
+		Lock: TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
+		"LockedBy(address,address,uint256)": TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
+		LockedBy: TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
 	};
 }
 export interface ERC20MockInterface extends Interface {
@@ -9108,7 +13018,7 @@ export interface ERC20MockInterface extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$15 {
+declare namespace ApprovalEvent$17 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -9141,7 +13051,7 @@ declare namespace EIP712DomainChangedEvent$6 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace OwnershipTransferredEvent$5 {
+declare namespace OwnershipTransferredEvent$9 {
 	type InputTuple = [
 		previousOwner: AddressLike,
 		newOwner: AddressLike
@@ -9159,7 +13069,7 @@ declare namespace OwnershipTransferredEvent$5 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$15 {
+declare namespace TransferEvent$17 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -9436,23 +13346,23 @@ export interface ERC20Mock extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
 	getEvent(key: "EIP712DomainChanged"): TypedContractEvent<EIP712DomainChangedEvent$6.InputTuple, EIP712DomainChangedEvent$6.OutputTuple, EIP712DomainChangedEvent$6.OutputObject>;
-	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
+	getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent$9.InputTuple, OwnershipTransferredEvent$9.OutputTuple, OwnershipTransferredEvent$9.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$15.InputTuple, ApprovalEvent$15.OutputTuple, ApprovalEvent$15.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
 		"EIP712DomainChanged()": TypedContractEvent<EIP712DomainChangedEvent$6.InputTuple, EIP712DomainChangedEvent$6.OutputTuple, EIP712DomainChangedEvent$6.OutputObject>;
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$6.InputTuple, EIP712DomainChangedEvent$6.OutputTuple, EIP712DomainChangedEvent$6.OutputObject>;
-		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
-		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$5.InputTuple, OwnershipTransferredEvent$5.OutputTuple, OwnershipTransferredEvent$5.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$15.InputTuple, TransferEvent$15.OutputTuple, TransferEvent$15.OutputObject>;
+		"OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent$9.InputTuple, OwnershipTransferredEvent$9.OutputTuple, OwnershipTransferredEvent$9.OutputObject>;
+		OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent$9.InputTuple, OwnershipTransferredEvent$9.OutputTuple, OwnershipTransferredEvent$9.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
 	};
 }
 export interface ERC4626PoolInterface extends Interface {
-	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "asset" | "balanceOf" | "convertToAssets" | "convertToShares" | "decimals" | "deposit" | "eip712Domain" | "initialize" | "isLocked" | "isLockedUntil" | "isRewardNative" | "lock" | "lockPermit" | "lockedUntil" | "masterBurn" | "masterMint" | "masterPool" | "maxDeposit" | "maxMint" | "maxRedeem" | "maxWithdraw" | "mint" | "name" | "nonces" | "permit" | "pid" | "previewDeposit" | "previewMint" | "previewRedeem" | "previewWithdraw" | "redeem" | "rewardToken" | "sharesOf" | "symbol" | "totalAssets" | "totalSupply" | "transfer" | "transferFrom" | "withdraw"): FunctionFragment;
+	getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "allowance" | "approve" | "asset" | "balanceOf" | "convertToAssets" | "convertToShares" | "decimals" | "deposit" | "eip712Domain" | "initializeToken" | "isLocked" | "isLockedUntil" | "isRewardNative" | "lock" | "lockPermit" | "lockedUntil" | "masterBurn" | "masterMint" | "masterPool" | "maxDeposit" | "maxMint" | "maxRedeem" | "maxWithdraw" | "mint" | "name" | "nonces" | "permit" | "pid" | "previewDeposit" | "previewMint" | "previewRedeem" | "previewWithdraw" | "redeem" | "rewardToken" | "sharesOf" | "supportsInterface" | "symbol" | "totalAssets" | "totalSupply" | "transfer" | "transferFrom" | "withdraw"): FunctionFragment;
 	getEvent(nameOrSignatureOrTopic: "Approval" | "Deposit" | "EIP712DomainChanged" | "Initialized" | "InitializedPool" | "Lock" | "LockedBy" | "Transfer" | "Withdraw"): EventFragment;
 	encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
 	encodeFunctionData(functionFragment: "allowance", values: [
@@ -9479,7 +13389,7 @@ export interface ERC4626PoolInterface extends Interface {
 		AddressLike
 	]): string;
 	encodeFunctionData(functionFragment: "eip712Domain", values?: undefined): string;
-	encodeFunctionData(functionFragment: "initialize", values: [
+	encodeFunctionData(functionFragment: "initializeToken", values: [
 		AddressLike,
 		BigNumberish,
 		AddressLike,
@@ -9566,6 +13476,9 @@ export interface ERC4626PoolInterface extends Interface {
 	encodeFunctionData(functionFragment: "sharesOf", values: [
 		AddressLike
 	]): string;
+	encodeFunctionData(functionFragment: "supportsInterface", values: [
+		BytesLike
+	]): string;
 	encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
 	encodeFunctionData(functionFragment: "totalAssets", values?: undefined): string;
 	encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
@@ -9593,7 +13506,7 @@ export interface ERC4626PoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "eip712Domain", data: BytesLike): Result;
-	decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "initializeToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "isLocked", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "isLockedUntil", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "isRewardNative", data: BytesLike): Result;
@@ -9619,6 +13532,7 @@ export interface ERC4626PoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "sharesOf", data: BytesLike): Result;
+	decodeFunctionResult(functionFragment: "supportsInterface", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalAssets", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
@@ -9626,7 +13540,7 @@ export interface ERC4626PoolInterface extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$16 {
+declare namespace ApprovalEvent$18 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -9683,7 +13597,7 @@ declare namespace EIP712DomainChangedEvent$7 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace InitializedEvent$13 {
+declare namespace InitializedEvent$18 {
 	type InputTuple = [
 		version: BigNumberish
 	];
@@ -9722,7 +13636,7 @@ declare namespace InitializedPoolEvent {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace LockEvent$1 {
+declare namespace LockEvent$2 {
 	type InputTuple = [
 		owner: AddressLike,
 		until: BigNumberish
@@ -9740,7 +13654,7 @@ declare namespace LockEvent$1 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace LockedByEvent$1 {
+declare namespace LockedByEvent$2 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -9761,7 +13675,7 @@ declare namespace LockedByEvent$1 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$16 {
+declare namespace TransferEvent$18 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -9887,7 +13801,7 @@ export interface ERC4626Pool extends BaseContract {
 			extensions: bigint[];
 		}
 	], "view">;
-	initialize: TypedContractMethod<[
+	initializeToken: TypedContractMethod<[
 		_masterPool: AddressLike,
 		_pid: BigNumberish,
 		_asset: AddressLike,
@@ -10031,6 +13945,11 @@ export interface ERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "view">;
+	supportsInterface: TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
 	symbol: TypedContractMethod<[
 	], [
 		string
@@ -10129,7 +14048,7 @@ export interface ERC4626Pool extends BaseContract {
 			extensions: bigint[];
 		}
 	], "view">;
-	getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
+	getFunction(nameOrSignature: "initializeToken"): TypedContractMethod<[
 		_masterPool: AddressLike,
 		_pid: BigNumberish,
 		_asset: AddressLike,
@@ -10273,6 +14192,11 @@ export interface ERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "view">;
+	getFunction(nameOrSignature: "supportsInterface"): TypedContractMethod<[
+		interfaceId: BytesLike
+	], [
+		boolean
+	], "view">;
 	getFunction(nameOrSignature: "symbol"): TypedContractMethod<[
 	], [
 		string
@@ -10305,32 +14229,32 @@ export interface ERC4626Pool extends BaseContract {
 	], [
 		bigint
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$6.InputTuple, DepositEvent$6.OutputTuple, DepositEvent$6.OutputObject>;
 	getEvent(key: "EIP712DomainChanged"): TypedContractEvent<EIP712DomainChangedEvent$7.InputTuple, EIP712DomainChangedEvent$7.OutputTuple, EIP712DomainChangedEvent$7.OutputObject>;
-	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
+	getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent$18.InputTuple, InitializedEvent$18.OutputTuple, InitializedEvent$18.OutputObject>;
 	getEvent(key: "InitializedPool"): TypedContractEvent<InitializedPoolEvent.InputTuple, InitializedPoolEvent.OutputTuple, InitializedPoolEvent.OutputObject>;
-	getEvent(key: "Lock"): TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
-	getEvent(key: "LockedBy"): TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
+	getEvent(key: "Lock"): TypedContractEvent<LockEvent$2.InputTuple, LockEvent$2.OutputTuple, LockEvent$2.OutputObject>;
+	getEvent(key: "LockedBy"): TypedContractEvent<LockedByEvent$2.InputTuple, LockedByEvent$2.OutputTuple, LockedByEvent$2.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
 	getEvent(key: "Withdraw"): TypedContractEvent<WithdrawEvent$6.InputTuple, WithdrawEvent$6.OutputTuple, WithdrawEvent$6.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$16.InputTuple, ApprovalEvent$16.OutputTuple, ApprovalEvent$16.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
 		"Deposit(address,address,uint256,uint256)": TypedContractEvent<DepositEvent$6.InputTuple, DepositEvent$6.OutputTuple, DepositEvent$6.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$6.InputTuple, DepositEvent$6.OutputTuple, DepositEvent$6.OutputObject>;
 		"EIP712DomainChanged()": TypedContractEvent<EIP712DomainChangedEvent$7.InputTuple, EIP712DomainChangedEvent$7.OutputTuple, EIP712DomainChangedEvent$7.OutputObject>;
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$7.InputTuple, EIP712DomainChangedEvent$7.OutputTuple, EIP712DomainChangedEvent$7.OutputObject>;
-		"Initialized(uint64)": TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
-		Initialized: TypedContractEvent<InitializedEvent$13.InputTuple, InitializedEvent$13.OutputTuple, InitializedEvent$13.OutputObject>;
-		"InitializedPool(address,uint256,address,address)": TypedContractEvent<InitializedPoolEvent.InputTuple, InitializedPoolEvent.OutputTuple, InitializedPoolEvent.OutputObject>;
+		"Initialized(uint64)": TypedContractEvent<InitializedEvent$18.InputTuple, InitializedEvent$18.OutputTuple, InitializedEvent$18.OutputObject>;
+		Initialized: TypedContractEvent<InitializedEvent$18.InputTuple, InitializedEvent$18.OutputTuple, InitializedEvent$18.OutputObject>;
+		"InitializedPool(address,uint16,address,address)": TypedContractEvent<InitializedPoolEvent.InputTuple, InitializedPoolEvent.OutputTuple, InitializedPoolEvent.OutputObject>;
 		InitializedPool: TypedContractEvent<InitializedPoolEvent.InputTuple, InitializedPoolEvent.OutputTuple, InitializedPoolEvent.OutputObject>;
-		"Lock(address,uint256)": TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
-		Lock: TypedContractEvent<LockEvent$1.InputTuple, LockEvent$1.OutputTuple, LockEvent$1.OutputObject>;
-		"LockedBy(address,address,uint256)": TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
-		LockedBy: TypedContractEvent<LockedByEvent$1.InputTuple, LockedByEvent$1.OutputTuple, LockedByEvent$1.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$16.InputTuple, TransferEvent$16.OutputTuple, TransferEvent$16.OutputObject>;
+		"Lock(address,uint256)": TypedContractEvent<LockEvent$2.InputTuple, LockEvent$2.OutputTuple, LockEvent$2.OutputObject>;
+		Lock: TypedContractEvent<LockEvent$2.InputTuple, LockEvent$2.OutputTuple, LockEvent$2.OutputObject>;
+		"LockedBy(address,address,uint256)": TypedContractEvent<LockedByEvent$2.InputTuple, LockedByEvent$2.OutputTuple, LockedByEvent$2.OutputObject>;
+		LockedBy: TypedContractEvent<LockedByEvent$2.InputTuple, LockedByEvent$2.OutputTuple, LockedByEvent$2.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
 		"Withdraw(address,address,address,uint256,uint256)": TypedContractEvent<WithdrawEvent$6.InputTuple, WithdrawEvent$6.OutputTuple, WithdrawEvent$6.OutputObject>;
 		Withdraw: TypedContractEvent<WithdrawEvent$6.InputTuple, WithdrawEvent$6.OutputTuple, WithdrawEvent$6.OutputObject>;
 	};
@@ -10396,7 +14320,7 @@ export interface WETHInterface extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$17 {
+declare namespace ApprovalEvent$19 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -10447,7 +14371,7 @@ declare namespace EIP712DomainChangedEvent$8 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$17 {
+declare namespace TransferEvent$19 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -10690,20 +14614,20 @@ export interface WETH extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$19.InputTuple, ApprovalEvent$19.OutputTuple, ApprovalEvent$19.OutputObject>;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$7.InputTuple, DepositEvent$7.OutputTuple, DepositEvent$7.OutputObject>;
 	getEvent(key: "EIP712DomainChanged"): TypedContractEvent<EIP712DomainChangedEvent$8.InputTuple, EIP712DomainChangedEvent$8.OutputTuple, EIP712DomainChangedEvent$8.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$19.InputTuple, TransferEvent$19.OutputTuple, TransferEvent$19.OutputObject>;
 	getEvent(key: "Withdrawal"): TypedContractEvent<WithdrawalEvent$1.InputTuple, WithdrawalEvent$1.OutputTuple, WithdrawalEvent$1.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$17.InputTuple, ApprovalEvent$17.OutputTuple, ApprovalEvent$17.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$19.InputTuple, ApprovalEvent$19.OutputTuple, ApprovalEvent$19.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$19.InputTuple, ApprovalEvent$19.OutputTuple, ApprovalEvent$19.OutputObject>;
 		"Deposit(address,uint256)": TypedContractEvent<DepositEvent$7.InputTuple, DepositEvent$7.OutputTuple, DepositEvent$7.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$7.InputTuple, DepositEvent$7.OutputTuple, DepositEvent$7.OutputObject>;
 		"EIP712DomainChanged()": TypedContractEvent<EIP712DomainChangedEvent$8.InputTuple, EIP712DomainChangedEvent$8.OutputTuple, EIP712DomainChangedEvent$8.OutputObject>;
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$8.InputTuple, EIP712DomainChangedEvent$8.OutputTuple, EIP712DomainChangedEvent$8.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$17.InputTuple, TransferEvent$17.OutputTuple, TransferEvent$17.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$19.InputTuple, TransferEvent$19.OutputTuple, TransferEvent$19.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$19.InputTuple, TransferEvent$19.OutputTuple, TransferEvent$19.OutputObject>;
 		"Withdrawal(address,uint256)": TypedContractEvent<WithdrawalEvent$1.InputTuple, WithdrawalEvent$1.OutputTuple, WithdrawalEvent$1.OutputObject>;
 		Withdrawal: TypedContractEvent<WithdrawalEvent$1.InputTuple, WithdrawalEvent$1.OutputTuple, WithdrawalEvent$1.OutputObject>;
 	};
@@ -10769,7 +14693,7 @@ export interface WETHMockInterface extends Interface {
 	decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
 	decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
-declare namespace ApprovalEvent$18 {
+declare namespace ApprovalEvent$20 {
 	type InputTuple = [
 		owner: AddressLike,
 		spender: AddressLike,
@@ -10820,7 +14744,7 @@ declare namespace EIP712DomainChangedEvent$9 {
 	type Log = TypedEventLog<Event>;
 	type LogDescription = TypedLogDescription<Event>;
 }
-declare namespace TransferEvent$18 {
+declare namespace TransferEvent$20 {
 	type InputTuple = [
 		from: AddressLike,
 		to: AddressLike,
@@ -11063,25 +14987,25 @@ export interface WETHMock extends BaseContract {
 	], [
 		void
 	], "nonpayable">;
-	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
+	getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent$20.InputTuple, ApprovalEvent$20.OutputTuple, ApprovalEvent$20.OutputObject>;
 	getEvent(key: "Deposit"): TypedContractEvent<DepositEvent$8.InputTuple, DepositEvent$8.OutputTuple, DepositEvent$8.OutputObject>;
 	getEvent(key: "EIP712DomainChanged"): TypedContractEvent<EIP712DomainChangedEvent$9.InputTuple, EIP712DomainChangedEvent$9.OutputTuple, EIP712DomainChangedEvent$9.OutputObject>;
-	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
+	getEvent(key: "Transfer"): TypedContractEvent<TransferEvent$20.InputTuple, TransferEvent$20.OutputTuple, TransferEvent$20.OutputObject>;
 	getEvent(key: "Withdrawal"): TypedContractEvent<WithdrawalEvent$2.InputTuple, WithdrawalEvent$2.OutputTuple, WithdrawalEvent$2.OutputObject>;
 	filters: {
-		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
-		Approval: TypedContractEvent<ApprovalEvent$18.InputTuple, ApprovalEvent$18.OutputTuple, ApprovalEvent$18.OutputObject>;
+		"Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent$20.InputTuple, ApprovalEvent$20.OutputTuple, ApprovalEvent$20.OutputObject>;
+		Approval: TypedContractEvent<ApprovalEvent$20.InputTuple, ApprovalEvent$20.OutputTuple, ApprovalEvent$20.OutputObject>;
 		"Deposit(address,uint256)": TypedContractEvent<DepositEvent$8.InputTuple, DepositEvent$8.OutputTuple, DepositEvent$8.OutputObject>;
 		Deposit: TypedContractEvent<DepositEvent$8.InputTuple, DepositEvent$8.OutputTuple, DepositEvent$8.OutputObject>;
 		"EIP712DomainChanged()": TypedContractEvent<EIP712DomainChangedEvent$9.InputTuple, EIP712DomainChangedEvent$9.OutputTuple, EIP712DomainChangedEvent$9.OutputObject>;
 		EIP712DomainChanged: TypedContractEvent<EIP712DomainChangedEvent$9.InputTuple, EIP712DomainChangedEvent$9.OutputTuple, EIP712DomainChangedEvent$9.OutputObject>;
-		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
-		Transfer: TypedContractEvent<TransferEvent$18.InputTuple, TransferEvent$18.OutputTuple, TransferEvent$18.OutputObject>;
+		"Transfer(address,address,uint256)": TypedContractEvent<TransferEvent$20.InputTuple, TransferEvent$20.OutputTuple, TransferEvent$20.OutputObject>;
+		Transfer: TypedContractEvent<TransferEvent$20.InputTuple, TransferEvent$20.OutputTuple, TransferEvent$20.OutputObject>;
 		"Withdrawal(address,uint256)": TypedContractEvent<WithdrawalEvent$2.InputTuple, WithdrawalEvent$2.OutputTuple, WithdrawalEvent$2.OutputObject>;
 		Withdrawal: TypedContractEvent<WithdrawalEvent$2.InputTuple, WithdrawalEvent$2.OutputTuple, WithdrawalEvent$2.OutputObject>;
 	};
 }
-export declare class Ownable__factory {
+declare class Ownable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -11165,7 +15089,7 @@ export declare class Ownable__factory {
 	static createInterface(): OwnableInterface;
 	static connect(address: string, runner?: ContractRunner | null): Ownable;
 }
-export declare class IERC1363__factory {
+declare class IERC1363__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -11543,7 +15467,7 @@ export declare class IERC1363__factory {
 	static createInterface(): IERC1363Interface;
 	static connect(address: string, runner?: ContractRunner | null): IERC1363;
 }
-export declare class IERC1967__factory {
+declare class IERC1967__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -12218,7 +16142,7 @@ declare class IERC4626__factory {
 	static createInterface(): IERC4626Interface;
 	static connect(address: string, runner?: ContractRunner | null): IERC4626;
 }
-export declare class IERC5267__factory {
+declare class IERC5267__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -12275,7 +16199,7 @@ export declare class IERC5267__factory {
 	static createInterface(): IERC5267Interface;
 	static connect(address: string, runner?: ContractRunner | null): IERC5267;
 }
-export declare class IERC1155Errors__factory {
+declare class IERC1155Errors__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12383,7 +16307,7 @@ export declare class IERC1155Errors__factory {
 	static createInterface(): IERC1155ErrorsInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC1155Errors;
 }
-export declare class IERC20Errors__factory {
+declare class IERC20Errors__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12475,7 +16399,7 @@ export declare class IERC20Errors__factory {
 	static createInterface(): IERC20ErrorsInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC20Errors;
 }
-export declare class IERC721Errors__factory {
+declare class IERC721Errors__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12587,7 +16511,7 @@ export declare class IERC721Errors__factory {
 export type ClonesConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Clones__factory extends ContractFactory {
+declare class Clones__factory extends ContractFactory {
 	constructor(...args: ClonesConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -12598,7 +16522,7 @@ export declare class Clones__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Clones__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122039e9346b8eebd598e8a95fceb2ff6d264881156657ef34276dd2d09e1d933f1a64736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a3497c8927d988c9f46ca672d8bac0671e491ad11ec84568b14fcad75dba976364736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12613,7 +16537,7 @@ export declare class Clones__factory extends ContractFactory {
 export type ERC1967UtilsConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class ERC1967Utils__factory extends ContractFactory {
+declare class ERC1967Utils__factory extends ContractFactory {
 	constructor(...args: ERC1967UtilsConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -12624,7 +16548,7 @@ export declare class ERC1967Utils__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): ERC1967Utils__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200157b0640511e14f579bbe52ffe7d75d1e4c8d72819a054c2c4b690db18e4b2564736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220da07386a61d414bd5d43ff4ffde017fc34514ec5d0f083b0baaae122638f99d064736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12669,7 +16593,7 @@ export declare class ERC1967Utils__factory extends ContractFactory {
 	static createInterface(): ERC1967UtilsInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC1967Utils;
 }
-export declare class Proxy__factory {
+declare class Proxy__factory {
 	static readonly abi: readonly [
 		{
 			readonly stateMutability: "payable";
@@ -12679,7 +16603,7 @@ export declare class Proxy__factory {
 	static createInterface(): ProxyInterface;
 	static connect(address: string, runner?: ContractRunner | null): Proxy$1;
 }
-export declare class IBeacon__factory {
+declare class IBeacon__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -12699,7 +16623,7 @@ export declare class IBeacon__factory {
 	static createInterface(): IBeaconInterface;
 	static connect(address: string, runner?: ContractRunner | null): IBeacon;
 }
-export declare class ERC20__factory {
+declare class ERC20__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -13017,7 +16941,7 @@ export declare class ERC20__factory {
 	static createInterface(): ERC20Interface;
 	static connect(address: string, runner?: ContractRunner | null): ERC20;
 }
-export declare class IERC20__factory {
+declare class IERC20__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -13207,7 +17131,7 @@ export declare class IERC20__factory {
 	static createInterface(): IERC20Interface;
 	static connect(address: string, runner?: ContractRunner | null): IERC20;
 }
-export declare class ERC20Burnable__factory {
+declare class ERC20Burnable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -13558,7 +17482,7 @@ export declare class ERC20Burnable__factory {
 	static createInterface(): ERC20BurnableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC20Burnable;
 }
-export declare class ERC20Permit__factory {
+declare class ERC20Permit__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14092,7 +18016,7 @@ export declare class ERC20Permit__factory {
 	static createInterface(): ERC20PermitInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC20Permit;
 }
-export declare class IERC20Metadata__factory {
+declare class IERC20Metadata__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -14324,7 +18248,7 @@ export declare class IERC20Metadata__factory {
 	static createInterface(): IERC20MetadataInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC20Metadata;
 }
-export declare class IERC20Permit__factory {
+declare class IERC20Permit__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14410,7 +18334,7 @@ export declare class IERC20Permit__factory {
 export type SafeERC20ConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class SafeERC20__factory extends ContractFactory {
+declare class SafeERC20__factory extends ContractFactory {
 	constructor(...args: SafeERC20ConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14421,7 +18345,7 @@ export declare class SafeERC20__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): SafeERC20__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206c464a7c65eaa243906b4e78cb62a8bd54bbb7be7f21bf08ec1bb71ec4d773d264736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212204de24c4ffee54bb9d75ef9d09300ebae0ae57d7c03f95e59fa86a7557e05d12764736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14462,7 +18386,7 @@ export declare class SafeERC20__factory extends ContractFactory {
 export type AddressConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Address__factory extends ContractFactory {
+declare class Address__factory extends ContractFactory {
 	constructor(...args: AddressConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14473,7 +18397,7 @@ export declare class Address__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Address__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220b431bded8d4310738b0960a7232e0993cb784585ff96633fea8a8e670972989264736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220cf30f4a4cb0bfa68c758522c24e479465855492223ce207982afa46e188a3f3364736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14493,7 +18417,7 @@ export declare class Address__factory extends ContractFactory {
 export type Create2ConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Create2__factory extends ContractFactory {
+declare class Create2__factory extends ContractFactory {
 	constructor(...args: Create2ConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14504,7 +18428,7 @@ export declare class Create2__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Create2__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220edca4b88d78b50110d0cb08db3e692a46532ac38b866efd3ef98f2059df230e064736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220fbbd6424695f0669cc1a46d34276cf8260bce3b220a5fee27dfd8c7a624837cf64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14519,7 +18443,7 @@ export declare class Create2__factory extends ContractFactory {
 export type ErrorsConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Errors__factory extends ContractFactory {
+declare class Errors__factory extends ContractFactory {
 	constructor(...args: ErrorsConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14530,7 +18454,7 @@ export declare class Errors__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Errors__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122058c7529d153477542a4ea14888faf624240303d75499d31fa05ac048ae69ebe464736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220de67e827d55bfb960061d534d0e01f488bf55c499c850c0149f03508efcd93b364736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14575,7 +18499,7 @@ export declare class Errors__factory extends ContractFactory {
 	static createInterface(): ErrorsInterface;
 	static connect(address: string, runner?: ContractRunner | null): Errors;
 }
-export declare class Nonces__factory {
+declare class Nonces__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14619,7 +18543,7 @@ export declare class Nonces__factory {
 export type ShortStringsConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class ShortStrings__factory extends ContractFactory {
+declare class ShortStrings__factory extends ContractFactory {
 	constructor(...args: ShortStringsConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14630,7 +18554,7 @@ export declare class ShortStrings__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): ShortStrings__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220157ddc474d7d1d724783f12f40ae36c5173b34bab84ac91022185a7e2600b59864736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220dfc0b5e82508d558a78e2c336e970d8e92c35eb4ac0c23969a494814102d577764736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14656,7 +18580,7 @@ export declare class ShortStrings__factory extends ContractFactory {
 export type StringsConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Strings__factory extends ContractFactory {
+declare class Strings__factory extends ContractFactory {
 	constructor(...args: StringsConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14667,7 +18591,7 @@ export declare class Strings__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Strings__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122062ba1422d890f5918591de650c3dd67443c14c2bb6fd372105365d22b9cfb4d364736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d59a5eb58cc70bcae42617d593fcfe40a406e348da0bc23a57a359de048e0d7464736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14704,7 +18628,7 @@ export declare class Strings__factory extends ContractFactory {
 export type ECDSAConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class ECDSA__factory extends ContractFactory {
+declare class ECDSA__factory extends ContractFactory {
 	constructor(...args: ECDSAConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14715,7 +18639,7 @@ export declare class ECDSA__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): ECDSA__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122056dcadb6d15742cad6468dd89174169713f63d317d129733ad4716b164a0041364736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ad28f9cd000890d472e47eb2b25da87e811786da2102c2c233132cd74c9c216b64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14749,7 +18673,7 @@ export declare class ECDSA__factory extends ContractFactory {
 	static createInterface(): ECDSAInterface;
 	static connect(address: string, runner?: ContractRunner | null): ECDSA;
 }
-export declare class EIP712__factory {
+declare class EIP712__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14823,7 +18747,32 @@ export declare class EIP712__factory {
 	static createInterface(): EIP712Interface;
 	static connect(address: string, runner?: ContractRunner | null): EIP712;
 }
-export declare class IERC165__factory {
+declare class ERC165__factory {
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "bytes4";
+					readonly name: "interfaceId";
+					readonly type: "bytes4";
+				}
+			];
+			readonly name: "supportsInterface";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): ERC165Interface;
+	static connect(address: string, runner?: ContractRunner | null): ERC165;
+}
+declare class IERC165__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14851,7 +18800,7 @@ export declare class IERC165__factory {
 export type SafeCastConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class SafeCast__factory extends ContractFactory {
+declare class SafeCast__factory extends ContractFactory {
 	constructor(...args: SafeCastConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -14862,7 +18811,7 @@ export declare class SafeCast__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): SafeCast__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200fb3822217d46040f28b88745db7ae5d02c50736452cf773f126fd79237f4cc764736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212202389413baa7ca55cc5ee4ca90e1d2e933515d28fa7da344455900fadd4fcf0d364736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -14922,7 +18871,7 @@ export declare class SafeCast__factory extends ContractFactory {
 	static createInterface(): SafeCastInterface;
 	static connect(address: string, runner?: ContractRunner | null): SafeCast;
 }
-export declare class OwnableUpgradeable__factory {
+declare class OwnableUpgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -15031,7 +18980,7 @@ export declare class OwnableUpgradeable__factory {
 	static createInterface(): OwnableUpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): OwnableUpgradeable;
 }
-export declare class Initializable__factory {
+declare class Initializable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -15062,7 +19011,7 @@ export declare class Initializable__factory {
 	static createInterface(): InitializableInterface;
 	static connect(address: string, runner?: ContractRunner | null): Initializable;
 }
-export declare class ERC20Upgradeable__factory {
+declare class ERC20Upgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -15405,7 +19354,7 @@ export declare class ERC20Upgradeable__factory {
 	static createInterface(): ERC20UpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC20Upgradeable;
 }
-export declare class ERC20PermitUpgradeable__factory {
+declare class ERC20PermitUpgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -15947,7 +19896,7 @@ export declare class ERC20PermitUpgradeable__factory {
 	static createInterface(): ERC20PermitUpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC20PermitUpgradeable;
 }
-export declare class ERC4626Upgradeable__factory {
+declare class ERC4626Upgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -16777,7 +20726,7 @@ export declare class ERC4626Upgradeable__factory {
 	static createInterface(): ERC4626UpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ERC4626Upgradeable;
 }
-export declare class ContextUpgradeable__factory {
+declare class ContextUpgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -16808,7 +20757,7 @@ export declare class ContextUpgradeable__factory {
 	static createInterface(): ContextUpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ContextUpgradeable;
 }
-export declare class NoncesUpgradeable__factory {
+declare class NoncesUpgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -16874,7 +20823,7 @@ export declare class NoncesUpgradeable__factory {
 	static createInterface(): NoncesUpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): NoncesUpgradeable;
 }
-export declare class ReentrancyGuardUpgradeable__factory {
+declare class ReentrancyGuardUpgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -16911,7 +20860,7 @@ export declare class ReentrancyGuardUpgradeable__factory {
 	static createInterface(): ReentrancyGuardUpgradeableInterface;
 	static connect(address: string, runner?: ContractRunner | null): ReentrancyGuardUpgradeable;
 }
-export declare class EIP712Upgradeable__factory {
+declare class EIP712Upgradeable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -16996,7 +20945,7 @@ export declare class EIP712Upgradeable__factory {
 export type LockConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class Lock__factory extends ContractFactory {
+declare class Lock__factory extends ContractFactory {
 	constructor(...args: LockConstructorParams);
 	getDeployTransaction(_unlockTime: BigNumberish, overrides?: PayableOverrides & {
 		from?: string;
@@ -17007,7 +20956,7 @@ export declare class Lock__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): Lock__factory;
-	static readonly bytecode = "0x60806040526040516102a03803806102a08339810160408190526020916097565b804210607e5760405162461bcd60e51b815260206004820152602360248201527f556e6c6f636b2074696d652073686f756c6420626520696e207468652066757460448201526275726560e81b606482015260840160405180910390fd5b600055600180546001600160a01b0319163317905560af565b60006020828403121560a857600080fd5b5051919050565b6101e2806100be6000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c8063251c1aa3146100465780633ccfd60b146100625780638da5cb5b1461006c575b600080fd5b61004f60005481565b6040519081526020015b60405180910390f35b61006a610097565b005b60015461007f906001600160a01b031681565b6040516001600160a01b039091168152602001610059565b6000544210156100e75760405162461bcd60e51b8152602060048201526016602482015275165bdd4818d85b89dd081dda5d1a191c985dc81e595d60521b60448201526064015b60405180910390fd5b6001546001600160a01b031633146101385760405162461bcd60e51b81526020600482015260146024820152732cb7ba9030b932b713ba103a34329037bbb732b960611b60448201526064016100de565b604080514781524260208201527fbf2ed60bd5b5965d685680c01195c9514e4382e28e3a5a2d2d5244bf59411b93910160405180910390a16001546040516001600160a01b03909116904780156108fc02916000818181858888f193505050501580156101a9573d6000803e3d6000fd5b5056fea2646970667358221220a1577f546d6c0a9e25a86cb8fda39eeca35b736d118aa835021e9dfe21efadfb64736f6c634300081e0033";
+	static readonly bytecode = "0x60806040526040516102a03803806102a08339810160408190526020916097565b804210607e5760405162461bcd60e51b815260206004820152602360248201527f556e6c6f636b2074696d652073686f756c6420626520696e207468652066757460448201526275726560e81b606482015260840160405180910390fd5b600055600180546001600160a01b0319163317905560af565b60006020828403121560a857600080fd5b5051919050565b6101e2806100be6000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c8063251c1aa3146100465780633ccfd60b146100625780638da5cb5b1461006c575b600080fd5b61004f60005481565b6040519081526020015b60405180910390f35b61006a610097565b005b60015461007f906001600160a01b031681565b6040516001600160a01b039091168152602001610059565b6000544210156100e75760405162461bcd60e51b8152602060048201526016602482015275165bdd4818d85b89dd081dda5d1a191c985dc81e595d60521b60448201526064015b60405180910390fd5b6001546001600160a01b031633146101385760405162461bcd60e51b81526020600482015260146024820152732cb7ba9030b932b713ba103a34329037bbb732b960611b60448201526064016100de565b604080514781524260208201527fbf2ed60bd5b5965d685680c01195c9514e4382e28e3a5a2d2d5244bf59411b93910160405180910390a16001546040516001600160a01b03909116904780156108fc02916000818181858888f193505050501580156101a9573d6000803e3d6000fd5b5056fea264697066735822122080e8d7a0c7ba4d68e6c164bd98c8b653cbaca8ae946484c0891b2be8230f2e4464736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -17080,7 +21029,416 @@ export declare class Lock__factory extends ContractFactory {
 	static createInterface(): LockInterface;
 	static connect(address: string, runner?: ContractRunner | null): Lock$1;
 }
-export declare class IERC20Exp__factory {
+declare class IDataFeed__factory {
+	static readonly abi: readonly [
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "int256";
+					readonly name: "current";
+					readonly type: "int256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "AnswerUpdated";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "NewAsset";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "NewDescription";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "startedBy";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "NewRound";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "asset";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "deploymentTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "description";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_roundId";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "_roundId";
+					readonly type: "uint80";
+				}
+			];
+			readonly name: "getRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "roundId";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "answeredInRound";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_roundId";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "timestamp";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_timestamp";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestampAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "_initAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "initializeFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRound";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setAsset";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "setDescription";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_version";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setVersion";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "newAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "updateAnswer";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "version";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): IDataFeedInterface;
+	static connect(address: string, runner?: ContractRunner | null): IDataFeed;
+}
+declare class IERC20Exp__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -17389,7 +21747,7 @@ export declare class IERC20Exp__factory {
 	static createInterface(): IERC20ExpInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC20Exp;
 }
-export declare class IERC20Mintable__factory {
+declare class IERC20Mintable__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -17749,6 +22107,488 @@ export declare class IERC20Mintable__factory {
 	];
 	static createInterface(): IERC20MintableInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC20Mintable;
+}
+declare class IERC20Lockable__factory {
+	static readonly abi: readonly [
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Approval";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "until";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Lock";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "until";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "LockedBy";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "from";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Transfer";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "DOMAIN_SEPARATOR";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bytes32";
+					readonly name: "";
+					readonly type: "bytes32";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				}
+			];
+			readonly name: "allowance";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "approve";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "balanceOf";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "isLocked";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "until";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "isLockedUntil";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "until";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "lock";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "until";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "deadline";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "bytes";
+					readonly name: "signature";
+					readonly type: "bytes";
+				}
+			];
+			readonly name: "lockPermit";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "lockedUntil";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "timestamp";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "name";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "nonces";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "deadline";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint8";
+					readonly name: "v";
+					readonly type: "uint8";
+				},
+				{
+					readonly internalType: "bytes32";
+					readonly name: "r";
+					readonly type: "bytes32";
+				},
+				{
+					readonly internalType: "bytes32";
+					readonly name: "s";
+					readonly type: "bytes32";
+				}
+			];
+			readonly name: "permit";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "bytes4";
+					readonly name: "interfaceId";
+					readonly type: "bytes4";
+				}
+			];
+			readonly name: "supportsInterface";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "symbol";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "totalSupply";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "transfer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "from";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "transferFrom";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): IERC20LockableInterface;
+	static connect(address: string, runner?: ContractRunner | null): IERC20Lockable;
 }
 declare class IERC4626__factory$1 {
 	static readonly abi: readonly [
@@ -18326,7 +23166,7 @@ declare class IERC4626__factory$1 {
 	static createInterface(): IERC4626Interface$1;
 	static connect(address: string, runner?: ContractRunner | null): IERC4626$1;
 }
-export declare class IERC4626Pool__factory {
+declare class IERC4626Pool__factory {
 	static readonly abi: readonly [
 		{
 			readonly anonymous: false;
@@ -18619,9 +23459,9 @@ export declare class IERC4626Pool__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -18634,7 +23474,7 @@ export declare class IERC4626Pool__factory {
 					readonly type: "address";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeToken";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -19088,21 +23928,20 @@ export declare class IERC4626Pool__factory {
 	static createInterface(): IERC4626PoolInterface;
 	static connect(address: string, runner?: ContractRunner | null): IERC4626Pool;
 }
-export declare class IInitializableProxy__factory {
+declare class IInitializableProxy__factory {
 	static readonly abi: readonly [
 		{
+			readonly anonymous: false;
 			readonly inputs: readonly [
-			];
-			readonly name: "admin";
-			readonly outputs: readonly [
 				{
-					readonly internalType: "address";
-					readonly name: "";
-					readonly type: "address";
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
 				}
 			];
-			readonly stateMutability: "nonpayable";
-			readonly type: "function";
+			readonly name: "DescriptionChanged";
+			readonly type: "event";
 		},
 		{
 			readonly inputs: readonly [
@@ -19112,7 +23951,21 @@ export declare class IInitializableProxy__factory {
 					readonly type: "address";
 				}
 			];
-			readonly name: "changeAdmin";
+			readonly name: "changeProxyAdmin";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "changeProxyDescription";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -19129,11 +23982,16 @@ export declare class IInitializableProxy__factory {
 					readonly type: "address";
 				}
 			];
-			readonly stateMutability: "nonpayable";
+			readonly stateMutability: "view";
 			readonly type: "function";
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				},
 				{
 					readonly internalType: "address";
 					readonly name: "newAdmin";
@@ -19158,6 +24016,34 @@ export declare class IInitializableProxy__factory {
 		},
 		{
 			readonly inputs: readonly [
+			];
+			readonly name: "proxyAdmin";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "proxyDescription";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bytes";
+					readonly name: "";
+					readonly type: "bytes";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 				{
 					readonly internalType: "address";
 					readonly name: "newImplementation";
@@ -19174,12 +24060,16 @@ export declare class IInitializableProxy__factory {
 			];
 			readonly stateMutability: "payable";
 			readonly type: "function";
+		},
+		{
+			readonly stateMutability: "payable";
+			readonly type: "receive";
 		}
 	];
 	static createInterface(): IInitializableProxyInterface;
 	static connect(address: string, runner?: ContractRunner | null): IInitializableProxy;
 }
-export declare class IMasterChef__factory {
+declare class IMasterChef__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -19203,19 +24093,19 @@ export declare class IMasterChef__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19226,9 +24116,9 @@ export declare class IMasterChef__factory {
 			readonly name: "add";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "nonpayable";
@@ -19237,9 +24127,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -19256,16 +24146,55 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "_amount";
 					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_deadline";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "bytes";
+					readonly name: "_signature";
+					readonly type: "bytes";
 				}
 			];
-			readonly name: "getBlockRewardPerShare";
+			readonly name: "depositPermit";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getMultiplier";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
-					readonly name: "rewardPerShare";
+					readonly name: "";
 					readonly type: "uint256";
 				}
 			];
@@ -19275,26 +24204,64 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_fromBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_toBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
 				}
 			];
-			readonly name: "getMultiplier";
+			readonly name: "getPoolRewardsByTime";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
 					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getPoolRewardsPerSec";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getRewardsPerShare";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "rewardPerShare";
 					readonly type: "uint256";
 				}
 			];
@@ -19338,24 +24305,24 @@ export declare class IMasterChef__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19363,7 +24330,7 @@ export declare class IMasterChef__factory {
 					readonly type: "bool";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeChef";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -19381,9 +24348,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -19413,9 +24380,9 @@ export declare class IMasterChef__factory {
 			readonly name: "poolId";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -19424,9 +24391,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "poolInfo";
@@ -19439,28 +24406,28 @@ export declare class IMasterChef__factory {
 							readonly type: "address";
 						},
 						{
-							readonly internalType: "uint256";
+							readonly internalType: "uint32";
 							readonly name: "allocPoint";
-							readonly type: "uint256";
+							readonly type: "uint32";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "startTime";
+							readonly type: "uint64";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "endTime";
+							readonly type: "uint64";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "lastRewardTime";
+							readonly type: "uint64";
 						},
 						{
 							readonly internalType: "uint256";
-							readonly name: "startBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "endBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "lastRewardBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "accRewardPerShare";
+							readonly name: "accRewardsPerShare";
 							readonly type: "uint256";
 						}
 					];
@@ -19478,23 +24445,9 @@ export declare class IMasterChef__factory {
 			readonly name: "poolLength";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
-				}
-			];
-			readonly stateMutability: "view";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-			];
-			readonly name: "rewardPerBlock";
-			readonly outputs: readonly [
-				{
-					readonly internalType: "uint256";
-					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -19530,25 +24483,39 @@ export declare class IMasterChef__factory {
 		},
 		{
 			readonly inputs: readonly [
+			];
+			readonly name: "rewardsPerSec";
+			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19564,13 +24531,27 @@ export declare class IMasterChef__factory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_rewardPerSec";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setRewardsPerSec";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "totalAllocPoint";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				}
 			];
 			readonly stateMutability: "view";
@@ -19579,9 +24560,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "updatePool";
@@ -19593,23 +24574,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
-					readonly name: "newBlockReward";
-					readonly type: "uint256";
-				}
-			];
-			readonly name: "updateRewardPerBlock";
-			readonly outputs: readonly [
-			];
-			readonly stateMutability: "nonpayable";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -19643,9 +24610,9 @@ export declare class IMasterChef__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -19663,7 +24630,7 @@ export declare class IMasterChef__factory {
 	static createInterface(): IMasterChefInterface;
 	static connect(address: string, runner?: ContractRunner | null): IMasterChef;
 }
-export declare class IMasterPool__factory {
+declare class IMasterPool__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -19687,19 +24654,19 @@ export declare class IMasterPool__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19710,9 +24677,9 @@ export declare class IMasterPool__factory {
 			readonly name: "add";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "nonpayable";
@@ -19721,9 +24688,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -19740,9 +24707,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -19750,9 +24717,9 @@ export declare class IMasterPool__factory {
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint64";
 					readonly name: "_deadline";
-					readonly type: "uint256";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bytes";
@@ -19769,12 +24736,89 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getMultiplier";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
 					readonly type: "uint256";
 				}
 			];
-			readonly name: "getBlockRewardPerShare";
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getPoolRewardsByTime";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getPoolRewardsPerSec";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getRewardsPerShare";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
@@ -19787,28 +24831,27 @@ export declare class IMasterPool__factory {
 		},
 		{
 			readonly inputs: readonly [
-				{
-					readonly internalType: "uint256";
-					readonly name: "_pid";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "_fromBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "_toBlock";
-					readonly type: "uint256";
-				}
 			];
-			readonly name: "getMultiplier";
+			readonly name: "halvingInterval";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint64";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint64";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "halvingRate";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -19870,24 +24913,24 @@ export declare class IMasterPool__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19895,7 +24938,7 @@ export declare class IMasterPool__factory {
 					readonly type: "bool";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeChef";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -19924,24 +24967,34 @@ export declare class IMasterPool__factory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint16";
+					readonly name: "_halvingRate";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_halvingInterval";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -19967,9 +25020,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -20018,9 +25071,9 @@ export declare class IMasterPool__factory {
 			readonly name: "poolId";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -20037,9 +25090,9 @@ export declare class IMasterPool__factory {
 			readonly name: "poolIdByTokens";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -20048,9 +25101,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "poolInfo";
@@ -20063,28 +25116,28 @@ export declare class IMasterPool__factory {
 							readonly type: "address";
 						},
 						{
-							readonly internalType: "uint256";
+							readonly internalType: "uint32";
 							readonly name: "allocPoint";
-							readonly type: "uint256";
+							readonly type: "uint32";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "startTime";
+							readonly type: "uint64";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "endTime";
+							readonly type: "uint64";
+						},
+						{
+							readonly internalType: "uint64";
+							readonly name: "lastRewardTime";
+							readonly type: "uint64";
 						},
 						{
 							readonly internalType: "uint256";
-							readonly name: "startBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "endBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "lastRewardBlock";
-							readonly type: "uint256";
-						},
-						{
-							readonly internalType: "uint256";
-							readonly name: "accRewardPerShare";
+							readonly name: "accRewardsPerShare";
 							readonly type: "uint256";
 						}
 					];
@@ -20102,9 +25155,9 @@ export declare class IMasterPool__factory {
 			readonly name: "poolLength";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -20141,9 +25194,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "poolTokens";
@@ -20203,20 +25256,6 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 			];
-			readonly name: "rewardPerBlock";
-			readonly outputs: readonly [
-				{
-					readonly internalType: "uint256";
-					readonly name: "";
-					readonly type: "uint256";
-				}
-			];
-			readonly stateMutability: "view";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-			];
 			readonly name: "rewardToken";
 			readonly outputs: readonly [
 				{
@@ -20244,25 +25283,39 @@ export declare class IMasterPool__factory {
 		},
 		{
 			readonly inputs: readonly [
+			];
+			readonly name: "rewardsPerSec";
+			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -20278,13 +25331,55 @@ export declare class IMasterPool__factory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "uint64";
+					readonly name: "_halvingInterval";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "setHalvingInterval";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_halvingRate";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "setHalvingRate";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_rewardPerSec";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setRewardsPerSec";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "totalAllocPoint";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				}
 			];
 			readonly stateMutability: "view";
@@ -20293,9 +25388,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "updatePool";
@@ -20307,23 +25402,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
-					readonly name: "newBlockReward";
-					readonly type: "uint256";
-				}
-			];
-			readonly name: "updateRewardPerBlock";
-			readonly outputs: readonly [
-			];
-			readonly stateMutability: "nonpayable";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -20357,9 +25438,9 @@ export declare class IMasterPool__factory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -20377,8 +25458,22 @@ export declare class IMasterPool__factory {
 	static createInterface(): IMasterPoolInterface;
 	static connect(address: string, runner?: ContractRunner | null): IMasterPool;
 }
-export declare class IRewardVault__factory {
+declare class IRewardVault__factory {
 	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "rewardPerSec";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
 		{
 			readonly inputs: readonly [
 				{
@@ -20407,7 +25502,1279 @@ export declare class IRewardVault__factory {
 	static createInterface(): IRewardVaultInterface;
 	static connect(address: string, runner?: ContractRunner | null): IRewardVault;
 }
-export declare class IWETH__factory {
+declare class IUniswapV2Factory__factory {
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "allPairs";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "pair";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "allPairsLength";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "tokenA";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "tokenB";
+					readonly type: "address";
+				}
+			];
+			readonly name: "createPair";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "pair";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "feeTo";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "feeToSetter";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "tokenA";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "tokenB";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getPair";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "pair";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setFeeTo";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setFeeToSetter";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): IUniswapV2FactoryInterface;
+	static connect(address: string, runner?: ContractRunner | null): IUniswapV2Factory;
+}
+declare class IUniswapV2Pair__factory {
+	static readonly abi: readonly [
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Approval";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "from";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Transfer";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "DOMAIN_SEPARATOR";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bytes32";
+					readonly name: "";
+					readonly type: "bytes32";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "MINIMUM_LIQUIDITY";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "pure";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				}
+			];
+			readonly name: "allowance";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "approve";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "balanceOf";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				}
+			];
+			readonly name: "burn";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "amount0";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "amount1";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "factory";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "getReserves";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint112";
+					readonly name: "reserve0";
+					readonly type: "uint112";
+				},
+				{
+					readonly internalType: "uint112";
+					readonly name: "reserve1";
+					readonly type: "uint112";
+				},
+				{
+					readonly internalType: "uint32";
+					readonly name: "blockTimestampLast";
+					readonly type: "uint32";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "kLast";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				}
+			];
+			readonly name: "mint";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "liquidity";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "name";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "nonces";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "deadline";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint8";
+					readonly name: "v";
+					readonly type: "uint8";
+				},
+				{
+					readonly internalType: "bytes32";
+					readonly name: "r";
+					readonly type: "bytes32";
+				},
+				{
+					readonly internalType: "bytes32";
+					readonly name: "s";
+					readonly type: "bytes32";
+				}
+			];
+			readonly name: "permit";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "price0CumulativeLast";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "price1CumulativeLast";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				}
+			];
+			readonly name: "skim";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "amount0Out";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "amount1Out";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "bytes";
+					readonly name: "data";
+					readonly type: "bytes";
+				}
+			];
+			readonly name: "swap";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "symbol";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "sync";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "token0";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "token1";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "totalSupply";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "transfer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "from";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "transferFrom";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): IUniswapV2PairInterface;
+	static connect(address: string, runner?: ContractRunner | null): IUniswapV2Pair;
+}
+declare class IV2SwapFeed__factory {
+	static readonly abi: readonly [
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "int256";
+					readonly name: "current";
+					readonly type: "int256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "AnswerUpdated";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "NewAsset";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "NewDescription";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "startedBy";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "NewRound";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "USD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "V2Price";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "WETH";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "asset";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "deploymentTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "description";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "ethUsdPrice";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_roundId";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_pair";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getLPTVL";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_pair";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getLPUSD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "baseToken";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getPairByToken";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "_roundId";
+					readonly type: "uint80";
+				}
+			];
+			readonly name: "getRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "roundId";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "answeredInRound";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_roundId";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "timestamp";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_timestamp";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestampAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "baseToken";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getTokenUSD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "_initAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "initializeFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_feedImplementation";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_swapFactory";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_WETH";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_USD";
+					readonly type: "address";
+				}
+			];
+			readonly name: "initializeSwapFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRound";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setAsset";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "setDescription";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_version";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setVersion";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "swapFactory";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "newAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "updateAnswer";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "version";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "wethUsdPair";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): IV2SwapFeedInterface;
+	static connect(address: string, runner?: ContractRunner | null): IV2SwapFeed;
+}
+declare class IWETH__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -20436,10 +26803,119 @@ export declare class IWETH__factory {
 	static createInterface(): IWETHInterface;
 	static connect(address: string, runner?: ContractRunner | null): IWETH;
 }
+declare class Ownable__factory$1 {
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "NotInitializing";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableInvalidOwner";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableUnauthorizedAccount";
+			readonly type: "error";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "version";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "Initialized";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "previousOwner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnershipTransferred";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "owner";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "renounceOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "transferOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): OwnableInterface$1;
+	static connect(address: string, runner?: ContractRunner | null): Ownable$1;
+}
 export type SigLibConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class SigLib__factory extends ContractFactory {
+declare class SigLib__factory extends ContractFactory {
 	constructor(...args: SigLibConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -20450,7 +26926,7 @@ export declare class SigLib__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): SigLib__factory;
-	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122016cd4f9d373628b43b9eb2be47e18b7f198be8786875ae3d6004579b6f510a2764736f6c634300081e0033";
+	static readonly bytecode = "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212204dc258daf60e4be456840afd8375a52fb8db880564f27f93434bb0343f155e7864736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -20462,10 +26938,1753 @@ export declare class SigLib__factory extends ContractFactory {
 	static createInterface(): SigLibInterface;
 	static connect(address: string, runner?: ContractRunner | null): SigLib;
 }
+export type WithSettlerConstructorParams = [
+	signer?: Signer
+] | ConstructorParameters<typeof ContractFactory>;
+declare class WithSettler__factory extends ContractFactory {
+	constructor(...args: WithSettlerConstructorParams);
+	getDeployTransaction(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<ContractDeployTransaction>;
+	deploy(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<WithSettler & {
+		deploymentTransaction(): ContractTransactionResponse;
+	}>;
+	connect(runner: ContractRunner | null): WithSettler__factory;
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b506108828061001f6000396000f3fe608060405234801561001057600080fd5b506004361061007c5760003560e01c8063715018a61161005b578063715018a6146100bc5780638da5cb5b146100c4578063b1da41fe14610103578063f2fde38b1461011857600080fd5b8062b105e61461008157806314d3940d14610096578063329bad17146100a9575b600080fd5b61009461008f36600461078a565b61012b565b005b6100946100a436600461078a565b6101cd565b6100946100b736600461078a565b610266565b6100946103bc565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546040516001600160a01b0390911681526020015b60405180910390f35b61010b6103d0565b6040516100fa91906107b3565b61009461012636600461078a565b6103e1565b61013361041f565b61013e600082610495565b6101815760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a2aa2a2622a960891b60448201526064015b60405180910390fd5b61018c6000826104bc565b506040516001600160a01b03821681527fc75b24622d5a8552bcfe775a11d9009ac47d4c050a3af79686aebe33f902fc03906020015b60405180910390a150565b6101d561041f565b6101e0600082610495565b156102215760405162461bcd60e51b8152602060048201526011602482015270222aa82624a1a0aa22afa9a2aa2a2622a960791b6044820152606401610178565b61022c6000826104d1565b506040516001600160a01b03821681527f0e8d4de8d62b8ad5b1837a4a13009121b82a40e3bdcd6e6f454a72418cc86b0e906020016101c2565b60006102706104e6565b805490915060ff600160401b820416159067ffffffffffffffff166000811580156102985750825b905060008267ffffffffffffffff1660011480156102b55750303b155b9050811580156102c3575080155b156102e15760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561030b57845460ff60401b1916600160401b1785555b6001600160a01b03861661031d573395505b6103268661050f565b6103316000876104d1565b506040516001600160a01b03871681527f0e8d4de8d62b8ad5b1837a4a13009121b82a40e3bdcd6e6f454a72418cc86b0e9060200160405180910390a183156103b457845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050565b6103c461041f565b6103ce6000610520565b565b60606103dc6000610591565b905090565b6103e961041f565b6001600160a01b03811661041357604051631e4fbdf760e01b815260006004820152602401610178565b61041c81610520565b50565b60006104527f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b0381161580159061047557506001600160a01b0381163314155b1561041c5760405163118cdaa760e01b8152336004820152602401610178565b6001600160a01b038116600090815260018301602052604081205415155b90505b92915050565b60006104b3836001600160a01b0384166105a5565b60006104b3836001600160a01b038416610698565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006104b6565b6105176106e7565b61041c8161070c565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b6060600061059e83610714565b9392505050565b6000818152600183016020526040812054801561068e5760006105c96001836107ff565b85549091506000906105dd906001906107ff565b90508082146106425760008660000182815481106105fd576105fd610820565b906000526020600020015490508087600001848154811061062057610620610820565b6000918252602080832090910192909255918252600188019052604090208390555b855486908061065357610653610836565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506104b6565b60009150506104b6565b60008181526001830160205260408120546106df575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556104b6565b5060006104b6565b6106ef610770565b6103ce57604051631afcd79f60e31b815260040160405180910390fd5b6103e96106e7565b60608160000180548060200260200160405190810160405280929190818152602001828054801561076457602002820191906000526020600020905b815481526020019060010190808311610750575b50505050509050919050565b600061077a6104e6565b54600160401b900460ff16919050565b60006020828403121561079c57600080fd5b81356001600160a01b038116811461059e57600080fd5b602080825282518282018190526000918401906040840190835b818110156107f45783516001600160a01b03168352602093840193909201916001016107cd565b509095945050505050565b818103818111156104b657634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052603160045260246000fdfea264697066735822122084a731e79a5b20357ba9e8e405ad3e2953b89382fe353d5b5fc6c45cd88fc06864736f6c634300081e0033";
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "NotInitializing";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableInvalidOwner";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableUnauthorizedAccount";
+			readonly type: "error";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "newSettler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "AddSettler";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "version";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "Initialized";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "previousOwner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnershipTransferred";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "oldSettler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "RemoveSettler";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_settler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "addSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "initializeSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "owner";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_settler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "removeSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "renounceOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "settlers";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address[]";
+					readonly name: "";
+					readonly type: "address[]";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "transferOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): WithSettlerInterface;
+	static connect(address: string, runner?: ContractRunner | null): WithSettler;
+}
+export type DataFeedConstructorParams = [
+	signer?: Signer
+] | ConstructorParameters<typeof ContractFactory>;
+declare class DataFeed__factory extends ContractFactory {
+	constructor(...args: DataFeedConstructorParams);
+	getDeployTransaction(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<ContractDeployTransaction>;
+	deploy(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<DataFeed & {
+		deploymentTransaction(): ContractTransactionResponse;
+	}>;
+	connect(runner: ContractRunner | null): DataFeed__factory;
+	static readonly bytecode = "0x60806040526006600455348015601457600080fd5b506111d5806100246000396000f3fe608060405234801561001057600080fd5b50600436106101725760003560e01c80637dbaadf6116100de578063b1da41fe11610097578063bfc12c0511610071578063bfc12c0514610383578063d0d552dd1461038c578063f2fde38b1461039f578063feaf968c146103b257600080fd5b8063b1da41fe1461032e578063b5ab58dc14610343578063b633620c1461036357600080fd5b80637dbaadf6146102755780638205bf6a146102885780638da5cb5b1461029157806390c3f38f146102c15780639a6fc8f5146102d4578063a87a20ce1461031b57600080fd5b8063408def1e11610130578063408def1e1461022a57806350d25bcd1461023d57806354fd4d5014610246578063668a0f021461024f578063715018a6146102585780637284e4161461026057600080fd5b8062b105e61461017757806314d3940d1461018c578063313ce5671461019f578063329bad17146101be57806338d52e0f146101d15780633b2235fc146101fc575b600080fd5b61018a610185366004610db0565b6103ba565b005b61018a61019a366004610db0565b61045c565b6101a7600881565b60405160ff90911681526020015b60405180910390f35b61018a6101cc366004610db0565b6104f5565b6002546101e4906001600160a01b031681565b6040516001600160a01b0390911681526020016101b5565b61021c61020a366004610dcb565b600b6020526000908152604090205481565b6040519081526020016101b5565b61018a610238366004610dcb565b61064b565b61021c60065481565b61021c60045481565b61021c60085481565b61018a610658565b61026861066c565b6040516101b59190610de4565b61018a610283366004610ed7565b6106fa565b61021c60075481565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b03166101e4565b61018a6102cf366004610f3d565b610736565b6102e76102e2366004610f7a565b61077a565b604080516001600160501b03968716815260208101959095528401929092526060830152909116608082015260a0016101b5565b61018a610329366004610dcb565b6107f8565b61033661088e565b6040516101b59190610fa3565b61021c610351366004610dcb565b60096020526000908152604090205481565b61021c610371366004610dcb565b600a6020526000908152604090205481565b61021c60055481565b61018a61039a366004610db0565b61089f565b61018a6103ad366004610db0565b6108f1565b6102e761092f565b6103c2610953565b6103cd6000826109c9565b6104105760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a2aa2a2622a960891b60448201526064015b60405180910390fd5b61041b6000826109f0565b506040516001600160a01b03821681527fc75b24622d5a8552bcfe775a11d9009ac47d4c050a3af79686aebe33f902fc03906020015b60405180910390a150565b610464610953565b61046f6000826109c9565b156104b05760405162461bcd60e51b8152602060048201526011602482015270222aa82624a1a0aa22afa9a2aa2a2622a960791b6044820152606401610407565b6104bb600082610a05565b506040516001600160a01b03821681527f0e8d4de8d62b8ad5b1837a4a13009121b82a40e3bdcd6e6f454a72418cc86b0e90602001610451565b60006104ff610a1a565b805490915060ff600160401b820416159067ffffffffffffffff166000811580156105275750825b905060008267ffffffffffffffff1660011480156105445750303b155b905081158015610552575080155b156105705760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561059a57845460ff60401b1916600160401b1785555b6001600160a01b0386166105ac573395505b6105b586610a43565b6105c0600087610a05565b506040516001600160a01b03871681527f0e8d4de8d62b8ad5b1837a4a13009121b82a40e3bdcd6e6f454a72418cc86b0e9060200160405180910390a1831561064357845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050565b610653610953565b600455565b610660610953565b61066a6000610a54565b565b6003805461067990610fef565b80601f01602080910402602001604051908101604052809291908181526020018280546106a590610fef565b80156106f25780601f106106c7576101008083540402835291602001916106f2565b820191906000526020600020905b8154815290600101906020018083116106d557829003601f168201915b505050505081565b42600555600660045561070c8361089f565b61071582610736565b80156107275761072781600042610ac5565b610730846104f5565b50505050565b61073e610953565b600361074a8282611078565b507f16fbb51445345dabaa215e5f99a4bd4d8ba9818b508c76d5cd0ea30abcc491c6816040516104519190610de4565b6001600160501b0381166000818152600960205260408120548392909190819081906107a8576005546107d0565b600a60006107c060016001600160501b038a1661114d565b8152602001908152602001600020545b6001600160501b0387166000908152600a602052604090205495979496909594909350915050565b6108036000336109c9565b8061081557506108136000610b91565b155b61084f5760405162461bcd60e51b815260206004820152600b60248201526a2727aa2fa9a2aa2a2622a960a91b6044820152606401610407565b60006008546000141580610864575060065415155b61086f57600061087d565b60085461087d906001611160565b905061088a828242610ac5565b5050565b606061089a6000610b9b565b905090565b6108a7610953565b600280546001600160a01b0319166001600160a01b0383169081179091556040517fc7d9598af6004de7fa9c489a50a55414c75cfbce9fe56fe46956970744d6bc2c90600090a250565b6108f9610953565b6001600160a01b03811661092357604051631e4fbdf760e01b815260006004820152602401610407565b61092c81610a54565b50565b600080600080600061094260085461077a565b945094509450945094509091929394565b60006109867f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b038116158015906109a957506001600160a01b0381163314155b1561092c5760405163118cdaa760e01b8152336004820152602401610407565b6001600160a01b038116600090815260018301602052604081205415155b90505b92915050565b60006109e7836001600160a01b038416610baf565b60006109e7836001600160a01b038416610ca2565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006109ea565b610a4b610cf1565b61092c81610d16565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b8060075410610ad357505050565b6006839055600781905560088290556000828152600a6020908152604080832080546009845282852088905590859055848452600b909252909120849055151580610b5057604051828152339084907f0109fc6f55cf40689f02fbaad7af7fe7bbac8a3d2186600afc7d3e10cac602719060200160405180910390a35b82847f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f84604051610b8391815260200190565b60405180910390a350505050565b60006109ea825490565b60606000610ba883610d1e565b9392505050565b60008181526001830160205260408120548015610c98576000610bd360018361114d565b8554909150600090610be79060019061114d565b9050808214610c4c576000866000018281548110610c0757610c07611173565b9060005260206000200154905080876000018481548110610c2a57610c2a611173565b6000918252602080832090910192909255918252600188019052604090208390555b8554869080610c5d57610c5d611189565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506109ea565b60009150506109ea565b6000818152600183016020526040812054610ce9575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556109ea565b5060006109ea565b610cf9610d7a565b61066a57604051631afcd79f60e31b815260040160405180910390fd5b6108f9610cf1565b606081600001805480602002602001604051908101604052809291908181526020018280548015610d6e57602002820191906000526020600020905b815481526020019060010190808311610d5a575b50505050509050919050565b6000610d84610a1a565b54600160401b900460ff16919050565b80356001600160a01b0381168114610dab57600080fd5b919050565b600060208284031215610dc257600080fd5b6109e782610d94565b600060208284031215610ddd57600080fd5b5035919050565b602081526000825180602084015260005b81811015610e125760208186018101516040868401015201610df5565b506000604082850101526040601f19601f83011684010191505092915050565b634e487b7160e01b600052604160045260246000fd5b600082601f830112610e5957600080fd5b813567ffffffffffffffff811115610e7357610e73610e32565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715610ea257610ea2610e32565b604052818152838201602001851015610eba57600080fd5b816020850160208301376000918101602001919091529392505050565b60008060008060808587031215610eed57600080fd5b610ef685610d94565b9350610f0460208601610d94565b9250604085013567ffffffffffffffff811115610f2057600080fd5b610f2c87828801610e48565b949793965093946060013593505050565b600060208284031215610f4f57600080fd5b813567ffffffffffffffff811115610f6657600080fd5b610f7284828501610e48565b949350505050565b600060208284031215610f8c57600080fd5b81356001600160501b0381168114610ba857600080fd5b602080825282518282018190526000918401906040840190835b81811015610fe45783516001600160a01b0316835260209384019390920191600101610fbd565b509095945050505050565b600181811c9082168061100357607f821691505b60208210810361102357634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561107357806000526020600020601f840160051c810160208510156110505750805b601f840160051c820191505b81811015611070576000815560010161105c565b50505b505050565b815167ffffffffffffffff81111561109257611092610e32565b6110a6816110a08454610fef565b84611029565b6020601f8211600181146110da57600083156110c25750848201515b600019600385901b1c1916600184901b178455611070565b600084815260208120601f198516915b8281101561110a57878501518255602094850194600190920191016110ea565b50848210156111285786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b634e487b7160e01b600052601160045260246000fd5b818103818111156109ea576109ea611137565b808201808211156109ea576109ea611137565b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052603160045260246000fdfea264697066735822122028f1af345f886c0325e9fd7aafbc0455f72dc32a79a031532c724db51f492dc164736f6c634300081e0033";
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "NotInitializing";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableInvalidOwner";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableUnauthorizedAccount";
+			readonly type: "error";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "newSettler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "AddSettler";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "int256";
+					readonly name: "current";
+					readonly type: "int256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "AnswerUpdated";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "version";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "Initialized";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "NewAsset";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "NewDescription";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "startedBy";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "NewRound";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "previousOwner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnershipTransferred";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "oldSettler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "RemoveSettler";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_settler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "addSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "asset";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "deploymentTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "description";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "_roundId";
+					readonly type: "uint80";
+				}
+			];
+			readonly name: "getRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "roundId";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "answer";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "answeredInRound";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "getTimestampAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "_initAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "initializeFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "initializeSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRound";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRoundData";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				},
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint80";
+					readonly name: "";
+					readonly type: "uint80";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "owner";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_settler";
+					readonly type: "address";
+				}
+			];
+			readonly name: "removeSettler";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "renounceOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setAsset";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "setDescription";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_version";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setVersion";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "settlers";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address[]";
+					readonly name: "";
+					readonly type: "address[]";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "transferOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "newAnswer";
+					readonly type: "int256";
+				}
+			];
+			readonly name: "updateAnswer";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "version";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): DataFeedInterface;
+	static connect(address: string, runner?: ContractRunner | null): DataFeed;
+}
+export type V2SwapFeedConstructorParams = [
+	signer?: Signer
+] | ConstructorParameters<typeof ContractFactory>;
+declare class V2SwapFeed__factory extends ContractFactory {
+	constructor(...args: V2SwapFeedConstructorParams);
+	getDeployTransaction(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<ContractDeployTransaction>;
+	deploy(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<V2SwapFeed & {
+		deploymentTransaction(): ContractTransactionResponse;
+	}>;
+	connect(runner: ContractRunner | null): V2SwapFeed__factory;
+	static readonly bytecode = "0x60a060405260086080526006600255348015601957600080fd5b506080516119e061004a6000396000818161018f01528181610a2501528181610cf50152610d5201526119e06000f3fe608060405234801561001057600080fd5b506004361061012c5760003560e01c806363e16a82116100ad5780638205bf6a116100715780638205bf6a146102765780639478ab8c1461027c578063ad5c464814610284578063bfc12c0514610297578063d4d3e9a5146102a057600080fd5b806363e16a8214610220578063668a0f02146102355780636c3721ed1461023b5780637284e4161461024e5780637944f9441461026357600080fd5b806338d52e0f116100f457806338d52e0f146101d657806338e9781b146101e957806350d25bcd146101fc57806352ef619b1461020457806354fd4d501461021757600080fd5b8063178bc56e146101315780631bf6c21b14610161578063287bd79e14610174578063313ce5671461018a578063320eb93c146101c3575b600080fd5b600454610144906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b600854610144906001600160a01b031681565b61017c6102b3565b604051908152602001610158565b6101b17f000000000000000000000000000000000000000000000000000000000000000081565b60405160ff9091168152602001610158565b61017c6101d136600461138c565b6102fc565b600054610144906001600160a01b031681565b61017c6101f736600461138c565b610316565b61017c6103d3565b600654610144906001600160a01b031681565b61017c60025481565b61023361022e3660046113b0565b6103dd565b005b4361017c565b61014461024936600461138c565b61072c565b610256610990565b6040516101589190611445565b600554610144906001600160a01b031681565b4261017c565b61017c610a1e565b600754610144906001600160a01b031681565b61017c60035481565b61017c6102ae36600461138c565b610a7c565b600080546102c9906001600160a01b0316610b6a565b6102e7576000546102e2906001600160a01b03166102fc565b905090565b6000546102e2906001600160a01b0316610a7c565b600061031061030a8361072c565b83610c41565b92915050565b60008061032283610dea565b905060006103308483610e8f565b50915050816001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610372573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906103969190611478565b6103a190600a611598565b816103ac8685610c41565b6103b691906115a7565b6103c19060026115a7565b6103cb91906115be565b949350505050565b60006102e26102b3565b60006103e7610f49565b805490915060ff600160401b820416159067ffffffffffffffff1660008115801561040f5750825b905060008267ffffffffffffffff16600114801561042c5750303b155b90508115801561043a575080155b156104585760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561048257845460ff60401b1916600160401b1785555b600080546001600160a01b0319166001600160a01b038c169081178255604080516395d89b4160e01b81529051610592936395d89b4192600480820193918290030181865afa1580156104d9573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261050191908101906115f6565b604080518082018252600381526201017960ed1b602082015260085482516395d89b4160e01b8152925161058d936001600160a01b03909216916395d89b419160048083019260009291908290030181865afa158015610565573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261058d91908101906115f6565b610f72565b60019061059f9082611734565b50600660025542600355600480546001600160a01b038b81166001600160a01b0319928316178355600580548c831693168317905560405163e6a4390560e01b81528a821693810193909352881660248301529063e6a4390590604401602060405180830381865afa158015610619573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061063d91906117f3565b600680546001600160a01b03199081166001600160a01b03938416179091556007805482168a841617905560088054909116888316179055604051908b16907fc7d9598af6004de7fa9c489a50a55414c75cfbce9fe56fe46956970744d6bc2c90600090a27f16fbb51445345dabaa215e5f99a4bd4d8ba9818b508c76d5cd0ea30abcc491c660016040516106d29190611810565b60405180910390a1831561072057845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050565b60055460085460405163e6a4390560e01b81526001600160a01b03848116600483015291821660248201526000928392169063e6a4390590604401602060405180830381865afa158015610784573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107a891906117f3565b60055460075460405163e6a4390560e01b81526001600160a01b038781166004830152918216602482015292935060009291169063e6a4390590604401602060405180830381865afa158015610802573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061082691906117f3565b905060006001600160a01b03831661083f5760006108a9565b6040516370a0823160e01b81526001600160a01b0384811660048301528616906370a0823190602401602060405180830381865afa158015610885573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906108a9919061189c565b905060006001600160a01b0383166108c257600061092c565b6040516370a0823160e01b81526001600160a01b0384811660048301528716906370a0823190602401602060405180830381865afa158015610908573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061092c919061189c565b90508115801561093a575080155b156109765760405162461bcd60e51b81526020600482015260076024820152662727afa820a4a960c91b60448201526064015b60405180910390fd5b808210156109845782610986565b835b9695505050505050565b6001805461099d906116ab565b80601f01602080910402602001604051908101604052809291908181526020018280546109c9906116ab565b8015610a165780601f106109eb57610100808354040283529160200191610a16565b820191906000526020600020905b8154815290600101906020018083116109f957829003601f168201915b505050505081565b6000610a4b7f000000000000000000000000000000000000000000000000000000000000000060126118b5565b610a5690600a611598565b600654600754610a72916001600160a01b039081169116610f9e565b6102e291906115be565b6000816001600160a01b03166318160ddd6040518163ffffffff1660e01b8152600401602060405180830381865afa158015610abc573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610ae0919061189c565b826001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610b1e573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b429190611478565b610b4d90600a611598565b610b5684610316565b610b6091906115a7565b61031091906115be565b60408051600481526024810182526020810180516001600160e01b031663c45a015560e01b1790529051600091829182916001600160a01b0386169161c35091610bb3916118ce565b6000604051808303818686fa925050503d8060008114610bef576040519150601f19603f3d011682016040523d82523d6000602084013e610bf4565b606091505b5091509150811580610c0557508051155b15610c14575060009392505050565b80806020019051810190610c2891906117f3565b6005546001600160a01b03908116911614949350505050565b6000806000610c4f8561125c565b90925090506001600160a01b03848116908316148080610c805750816001600160a01b0316856001600160a01b0316145b610cc15760405162461bcd60e51b815260206004820152601260248201527124a72b20a624a22fa820a4a92faa27a5a2a760711b604482015260640161096d565b6000610cce86858561132c565b6008546007549192506001600160a01b0380841691811682149216148115610d4757610d1b7f000000000000000000000000000000000000000000000000000000000000000060126118b5565b610d2690600a611598565b610d308a8a610f9e565b610d3a91906115be565b9650505050505050610310565b8015610db357610d787f000000000000000000000000000000000000000000000000000000000000000060246118b5565b610d8390600a611598565b600654600754610d9f916001600160a01b039081169116610f9e565b610da98b8b610f9e565b610d3091906115a7565b60405162461bcd60e51b815260206004820152600c60248201526b24a72b20a624a22fa820a4a960a11b604482015260640161096d565b6000806000610df88461125c565b6008549193509150610e14906001600160a01b0316838361132c565b92506001600160a01b038316610e3e57600754610e3b906001600160a01b0316838361132c565b92505b6001600160a01b038316610e885760405162461bcd60e51b8152602060048201526011602482015270494e56414c49445f504149525f4241534560781b604482015260640161096d565b5050919050565b600080600080610e9e8661125c565b509050600080876001600160a01b0316630902f1ac6040518163ffffffff1660e01b8152600401606060405180830381865afa158015610ee2573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610f069190611906565b5090925090506001600160a01b038781169084161480610f2857808284610f2c565b8083835b919b6001600160701b039182169b50911698509650505050505050565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00610310565b60608282604051602001610f87929190611956565b604051602081830303815290604052905092915050565b6000806000610fac8561125c565b915091506000806000610fbf8888610e8f565b9250925092508280610fe25750836001600160a01b0316876001600160a01b0316145b6110235760405162461bcd60e51b815260206004820152601260248201527124a72b20a624a22fa820a4a92faa27a5a2a760711b604482015260640161096d565b811580159061103157508015155b61106c5760405162461bcd60e51b815260206004820152600c60248201526b4e4f5f4c495155494449545960a01b604482015260640161096d565b60008361115157856001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa1580156110b1573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906110d59190611478565b856001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015611113573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906111379190611478565b611142906012611985565b61114c91906118b5565b61122a565b846001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa15801561118f573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906111b39190611478565b866001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa1580156111f1573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906112159190611478565b611220906012611985565b61122a91906118b5565b60ff1690508261123b82600a61199e565b61124590846115a7565b61124f91906115be565b9998505050505050505050565b600080826001600160a01b0316630dfe16816040518163ffffffff1660e01b8152600401602060405180830381865afa15801561129d573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906112c191906117f3565b836001600160a01b031663d21220a76040518163ffffffff1660e01b8152600401602060405180830381865afa1580156112ff573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061132391906117f3565b91509150915091565b6000826001600160a01b0316846001600160a01b03161461136d57816001600160a01b0316846001600160a01b0316146113675760006103cb565b826103cb565b5092915050565b6001600160a01b038116811461138957600080fd5b50565b60006020828403121561139e57600080fd5b81356113a981611374565b9392505050565b600080600080600060a086880312156113c857600080fd5b85356113d381611374565b945060208601356113e381611374565b935060408601356113f381611374565b9250606086013561140381611374565b9150608086013561141381611374565b809150509295509295909350565b60005b8381101561143c578181015183820152602001611424565b50506000910152565b6020815260008251806020840152611464816040850160208701611421565b601f01601f19169190910160400192915050565b60006020828403121561148a57600080fd5b815160ff811681146113a957600080fd5b634e487b7160e01b600052601160045260246000fd5b6001815b60018411156114ec578085048111156114d0576114d061149b565b60018416156114de57908102905b60019390931c9280026114b5565b935093915050565b60008261150357506001610310565b8161151057506000610310565b816001811461152657600281146115305761154c565b6001915050610310565b60ff8411156115415761154161149b565b50506001821b610310565b5060208310610133831016604e8410600b841016171561156f575081810a610310565b61157c60001984846114b1565b80600019048211156115905761159061149b565b029392505050565b60006113a960ff8416836114f4565b80820281158282048414176103105761031061149b565b6000826115db57634e487b7160e01b600052601260045260246000fd5b500490565b634e487b7160e01b600052604160045260246000fd5b60006020828403121561160857600080fd5b815167ffffffffffffffff81111561161f57600080fd5b8201601f8101841361163057600080fd5b805167ffffffffffffffff81111561164a5761164a6115e0565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715611679576116796115e0565b60405281815282820160200186101561169157600080fd5b6116a2826020830160208601611421565b95945050505050565b600181811c908216806116bf57607f821691505b6020821081036116df57634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561172f57806000526020600020601f840160051c8101602085101561170c5750805b601f840160051c820191505b8181101561172c5760008155600101611718565b50505b505050565b815167ffffffffffffffff81111561174e5761174e6115e0565b6117628161175c84546116ab565b846116e5565b6020601f821160018114611796576000831561177e5750848201515b600019600385901b1c1916600184901b17845561172c565b600084815260208120601f198516915b828110156117c657878501518255602094850194600190920191016117a6565b50848210156117e45786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b60006020828403121561180557600080fd5b81516113a981611374565b602081526000808354611822816116ab565b8060208601526001821660008114611841576001811461185d57611891565b60ff1983166040870152604082151560051b8701019350611891565b86600052602060002060005b8381101561188857815488820160400152600190910190602001611869565b87016040019450505b509195945050505050565b6000602082840312156118ae57600080fd5b5051919050565b60ff82811682821603908111156103105761031061149b565b600082516118e0818460208701611421565b9190910192915050565b80516001600160701b038116811461190157600080fd5b919050565b60008060006060848603121561191b57600080fd5b611924846118ea565b9250611932602085016118ea565b9150604084015163ffffffff8116811461194b57600080fd5b809150509250925092565b60008351611968818460208801611421565b83519083019061197c818360208801611421565b01949350505050565b60ff81811683821601908111156103105761031061149b565b60006113a983836114f456fea26469706673582212202e8df71008286ab23ddebb517b02ad7258839f5195f99f14654c6e878561eced64736f6c634300081e0033";
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "NotInitializing";
+			readonly type: "error";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "int256";
+					readonly name: "current";
+					readonly type: "int256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "updatedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "AnswerUpdated";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "version";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "Initialized";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "NewAsset";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "NewDescription";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "uint256";
+					readonly name: "roundId";
+					readonly type: "uint256";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "startedBy";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "startedAt";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "NewRound";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "USD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IERC20Exp";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "V2Price";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "WETH";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IERC20Exp";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "asset";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "decimals";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint8";
+					readonly name: "";
+					readonly type: "uint8";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "deploymentTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "description";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "ethUsdPrice";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "feedImplementation";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "contract IUniswapV2Pair";
+					readonly name: "_pair";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getLPTVL";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "contract IUniswapV2Pair";
+					readonly name: "_pair";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getLPUSD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "baseToken";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getPairByToken";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IUniswapV2Pair";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "baseToken";
+					readonly type: "address";
+				}
+			];
+			readonly name: "getTokenUSD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_feedImplementation";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_swapFactory";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_WETH";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_USD";
+					readonly type: "address";
+				}
+			];
+			readonly name: "initializeSwapFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestRound";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "latestTimestamp";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "swapFactory";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IUniswapV2Factory";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "version";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "wethUsdPair";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IUniswapV2Pair";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): V2SwapFeedInterface;
+	static connect(address: string, runner?: ContractRunner | null): V2SwapFeed;
+}
+export type V2SwapFeedFactoryConstructorParams = [
+	signer?: Signer
+] | ConstructorParameters<typeof ContractFactory>;
+declare class V2SwapFeedFactory__factory extends ContractFactory {
+	constructor(...args: V2SwapFeedFactoryConstructorParams);
+	getDeployTransaction(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<ContractDeployTransaction>;
+	deploy(overrides?: NonPayableOverrides & {
+		from?: string;
+	}): Promise<V2SwapFeedFactory & {
+		deploymentTransaction(): ContractTransactionResponse;
+	}>;
+	connect(runner: ContractRunner | null): V2SwapFeedFactory__factory;
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b50610af18061001f6000396000f3fe608060405234801561001057600080fd5b50600436106101005760003560e01c80636e135eec11610097578063ad5c464811610066578063ad5c46481461024c578063c34e596f1461025f578063dbc4d32d14610272578063f2fde38b1461028557600080fd5b80636e135eec146101ee578063715018a6146102015780637944f944146102095780638da5cb5b1461021c57600080fd5b80634486b1c7116100d35780634486b1c714610186578063580a560e1461019957806358303b10146101ba5780635b769f3c146101db57600080fd5b8063178bc56e146101055780631bf6c21b146101355780632c626de5146101485780632fba4aa91461015d575b600080fd5b600254610118906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b600554610118906001600160a01b031681565b61015b610156366004610a22565b610298565b005b61011861016b366004610a87565b6001602052600090815260409020546001600160a01b031681565b61015b610194366004610a87565b6103d0565b6101ac6101a7366004610a87565b61042d565b60405190815260200161012c565b6000546101c89061ffff1681565b60405161ffff909116815260200161012c565b61015b6101e9366004610a87565b6104bf565b61015b6101fc366004610a87565b610515565b61015b610715565b600354610118906001600160a01b031681565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b0316610118565b600454610118906001600160a01b031681565b61015b61026d366004610a87565b610729565b61015b610280366004610a87565b61077f565b61015b610293366004610a87565b6107d5565b7ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a008054600160401b810460ff16159067ffffffffffffffff166000811580156102de5750825b905060008267ffffffffffffffff1660011480156102fb5750303b155b905081158015610309575080155b156103275760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561035157845460ff60401b1916600160401b1785555b61035a896103d0565b61036388610729565b61036c876104bf565b6103758661077f565b61037e8a610818565b83156103c457845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050565b6103d8610829565b600280546001600160a01b0319166001600160a01b0383169081179091556040519081527fce025e89252f6ab5a030250b37df78e66a1d92854226981373dff41586821a6d906020015b60405180910390a150565b6001600160a01b03808216600090815260016020526040812054909116806104565760006104b8565b806001600160a01b03166350d25bcd6040518163ffffffff1660e01b8152600401602060405180830381865afa158015610494573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906104b89190610aa2565b9392505050565b6104c7610829565b600480546001600160a01b0319166001600160a01b0383169081179091556040519081527fe390bcec6614d6b1f8ae47a4d9d46531ce328e3d293ecd6ddd015cb01eff030090602001610422565b61051d610829565b6001600160a01b0381811660009081526001602090815260408083205460025460035460045460055494516bffffffffffffffffffffffff1960608b811b82169883019890985284881b8116603483015292871b8316604882015290861b8216605c8201529390941b90931660708301528416936105b59216906084016040516020818303038152906040528051906020012061089f565b600254600354600480546005546040516331f0b54160e11b81526001600160a01b038a81169482019490945294831660248601529282166044850152811660648401529081166084830152919250908216906363e16a829060a401600060405180830381600087803b15801561062a57600080fd5b505af115801561063e573d6000803e3d6000fd5b505050506001600160a01b0383811660008181526001602090815260409182902080546001600160a01b0319168686169081179091558251948716855233918501919091529261034892917fb56c4f88c3e344891ef92e51f036d7116e886f4ea57f5ba93e28b5f44925b9ce910160405180910390a4600054604080516001600160a01b03858116825261ffff9093166020820152338183015290518383169261034892908716917f27a180c70f2642f63d1694eb252b7df52e7ab2565e3f67adf7748acb7d82b9bc9181900360600190a4505050565b61071d610829565b61072760006108ad565b565b610731610829565b600380546001600160a01b0319166001600160a01b0383169081179091556040519081527f07925669a65c6cfe24a7577e4b501bf561d0ffe36d8d6707802d2d17e596076790602001610422565b610787610829565b600580546001600160a01b0319166001600160a01b0383169081179091556040519081527f0760150a180a9ab0096f89d108362c0cf356435a5f98f4359e45dd152761dccc90602001610422565b6107dd610829565b6001600160a01b03811661080c57604051631e4fbdf760e01b8152600060048201526024015b60405180910390fd5b610815816108ad565b50565b61082061091e565b61081581610967565b600061085c7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b0381161580159061087f57506001600160a01b0381163314155b156108155760405163118cdaa760e01b8152336004820152602401610803565b60006104b88383600061096f565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b7ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a0054600160401b900460ff1661072757604051631afcd79f60e31b815260040160405180910390fd5b6107dd61091e565b60008147101561099b5760405163cf47918160e01b815247600482015260248101839052604401610803565b763d602d80600a3d3981f3363d3d373d3d3d363d730000008460601b60e81c176000526e5af43d82803e903d91602b57fd5bf38460781b17602052826037600984f590506001600160a01b0381166104b85760405163b06ebf3d60e01b815260040160405180910390fd5b80356001600160a01b0381168114610a1d57600080fd5b919050565b600080600080600060a08688031215610a3a57600080fd5b610a4386610a06565b9450610a5160208701610a06565b9350610a5f60408701610a06565b9250610a6d60608701610a06565b9150610a7b60808701610a06565b90509295509295909350565b600060208284031215610a9957600080fd5b6104b882610a06565b600060208284031215610ab457600080fd5b505191905056fea2646970667358221220df9e4fb0d226a8c83669a385839c800c95889fc9406a1fb21dbee6e4228d1de464736f6c634300081e0033";
+	static readonly abi: readonly [
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "FailedDeployment";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "balance";
+					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "needed";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "InsufficientBalance";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "NotInitializing";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "owner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableInvalidOwner";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "account";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnableUnauthorizedAccount";
+			readonly type: "error";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "denomination";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "latestAggregator";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "previousAggregator";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint16";
+					readonly name: "nextPhaseId";
+					readonly type: "uint16";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "sender";
+					readonly type: "address";
+				}
+			];
+			readonly name: "FeedConfirmed";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "asset";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "denomination";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "proposedAggregator";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "currentAggregator";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "sender";
+					readonly type: "address";
+				}
+			];
+			readonly name: "FeedProposed";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "version";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "Initialized";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "previousOwner";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "OwnershipTransferred";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "feedImplementation";
+					readonly type: "address";
+				}
+			];
+			readonly name: "SetFeedImplementation";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "factory";
+					readonly type: "address";
+				}
+			];
+			readonly name: "SetSwapFactory";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "usd";
+					readonly type: "address";
+				}
+			];
+			readonly name: "SetUSD";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "address";
+					readonly name: "weth";
+					readonly type: "address";
+				}
+			];
+			readonly name: "SetWETH";
+			readonly type: "event";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "USD";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "WETH";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "createFeed";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "feedImplementation";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly name: "feeds";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "contract IV2SwapFeed";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_initOwner";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_feedImplementation";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_swapFactory";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_WETH";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "_USD";
+					readonly type: "address";
+				}
+			];
+			readonly name: "initializeFactory";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_asset";
+					readonly type: "address";
+				}
+			];
+			readonly name: "latestAnswer";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "int256";
+					readonly name: "";
+					readonly type: "int256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "owner";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "phaseId";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "";
+					readonly type: "uint16";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "renounceOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_feedImplementation";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setFeedImplementation";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_swapFactory";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setSwapFactory";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_USD";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setUSD";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "_WETH";
+					readonly type: "address";
+				}
+			];
+			readonly name: "setWETH";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "swapFactory";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "newOwner";
+					readonly type: "address";
+				}
+			];
+			readonly name: "transferOwnership";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		}
+	];
+	static createInterface(): V2SwapFeedFactoryInterface;
+	static connect(address: string, runner?: ContractRunner | null): V2SwapFeedFactory;
+}
 export type MasterChefConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class MasterChef__factory extends ContractFactory {
+declare class MasterChef__factory extends ContractFactory {
 	constructor(...args: MasterChefConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -20476,12 +28695,18 @@ export declare class MasterChef__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): MasterChef__factory;
-	static readonly bytecode = "0x6080604052348015600f57600080fd5b50611ccf8061001f6000396000f3fe60806040526004361061014f5760003560e01c80637bafb029116100b6578063d18df53c1161006f578063d18df53c14610476578063d7c5edf214610496578063e2bbb158146104b6578063f2fde38b146104c9578063f7c618c1146104e9578063ff51a2721461050957600080fd5b80637bafb0291461036f5780638ae39cac1461038f5780638da5cb5b146103a557806393f1a40b146103e2578063a17804b114610436578063ad5c46481461045657600080fd5b8063441a3e7011610108578063441a3e70146102c557806351eb05a6146102e55780635da7c1691461030557806360e4c4ce14610325578063630b5ba114610345578063715018a61461035a57600080fd5b806301f8a976146101ac578063081e3eda146101cc5780631246dbf5146101f05780631526fe271461022057806317caf6f1146102775780633a2c67771461028d57600080fd5b366101a7576000546001600160a01b0316330361016857005b60005461017d906001600160a01b0316610536565b156101a557600080546001600160a01b03168152600460205260409020546101a590346105a4565b005b600080fd5b3480156101b857600080fd5b506101a56101c73660046119e6565b610620565b3480156101d857600080fd5b506005545b6040519081526020015b60405180910390f35b3480156101fc57600080fd5b5061021061020b366004611a1b565b610536565b60405190151581526020016101e7565b34801561022c57600080fd5b5061024061023b3660046119e6565b610663565b604080516001600160a01b0390971687526020870195909552938501929092526060840152608083015260a082015260c0016101e7565b34801561028357600080fd5b506101dd60075481565b34801561029957600080fd5b506003546102ad906001600160a01b031681565b6040516001600160a01b0390911681526020016101e7565b3480156102d157600080fd5b506101a56102e0366004611a36565b6106b3565b3480156102f157600080fd5b506101a56103003660046119e6565b6106f7565b34801561031157600080fd5b506101dd610320366004611a68565b610734565b34801561033157600080fd5b506101a5610340366004611ab8565b610953565b34801561035157600080fd5b506101a5610abf565b34801561036657600080fd5b506101a5610ade565b34801561037b57600080fd5b506101dd61038a366004611af5565b610af2565b34801561039b57600080fd5b506101dd60025481565b3480156103b157600080fd5b507f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b03166102ad565b3480156103ee57600080fd5b506104216103fd366004611b21565b60066020908152600092835260408084209091529082529020805460019091015482565b604080519283526020830191909152016101e7565b34801561044257600080fd5b506101a5610451366004611b4d565b610c80565b34801561046257600080fd5b506000546102ad906001600160a01b031681565b34801561048257600080fd5b506101dd610491366004611b21565b610d8a565b3480156104a257600080fd5b506101dd6104b13660046119e6565b610de8565b6101a56104c4366004611a36565b6105a4565b3480156104d557600080fd5b506101a56104e4366004611a1b565b610f4b565b3480156104f557600080fd5b506001546102ad906001600160a01b031681565b34801561051557600080fd5b506101dd610524366004611a1b565b60046020526000908152604090205481565b6001600160a01b03811660009081526004602052604081205415158061059e5750600554600114801561059e5750816001600160a01b0316600560008154811061058257610582611bcf565b60009182526020909120600690910201546001600160a01b0316145b92915050565b6105ac610f89565b60055482106105d65760405162461bcd60e51b81526004016105cd90611be5565b60405180910390fd5b6105e08233610fd3565b80156105f3576105f1823383611164565b505b61061c60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b5050565b6106286113c4565b60028190556040518181527fb0864f3dd8e8d4f8f298a778d03bccfb0bc1114b8e89b686ae5a58c7d78a58759060200160405180910390a150565b6005818154811061067357600080fd5b60009182526020909120600690910201805460018201546002830154600384015460048501546005909501546001600160a01b0390941695509193909286565b6106bb610f89565b60055482106106dc5760405162461bcd60e51b81526004016105cd90611be5565b6106e68233610fd3565b80156105f3576105f182338361141f565b60006005828154811061070c5761070c611bcf565b9060005260206000209060060201905061072582610de8565b60058201554360049091015550565b600061073e6113c4565b61074786610536565b156107865760405162461bcd60e51b815260206004820152600f60248201526e111d5c1b1a58d85d195908141bdbdb608a1b60448201526064016105cd565b811561079457610794610abf565b50600554600780548691906000906107ad908490611c21565b90915550506001600160a01b038681166000818152600460209081526040808320869055805160c0810182528481528083018b81528183018b815260608084018c81526080850188815260a08601898152600580546001810182559a5295517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db06006909a02998a0180546001600160a01b03191691909c1617909a5592517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db188015590517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db287015590517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db386015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db4850155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db5909301929092558151898152908101889052908101869052909183917fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c1631910160405180910390a395945050505050565b61095b6113c4565b600554851061097c5760405162461bcd60e51b81526004016105cd90611be5565b801561098a5761098a610abf565b836005868154811061099e5761099e611bcf565b9060005260206000209060060201600101546007546109bd9190611c34565b6109c79190611c21565b60078190555083600586815481106109e1576109e1611bcf565b9060005260206000209060060201600101819055508260058681548110610a0a57610a0a611bcf565b9060005260206000209060060201600201819055508160058681548110610a3357610a33611bcf565b90600052602060002090600602016003018190555060058581548110610a5b57610a5b611bcf565b6000918252602091829020600690910201546040805187815292830186905282018490526001600160a01b03169086907fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c16319060600160405180910390a35050505050565b60055460005b8181101561061c57610ad6816106f7565b600101610ac5565b610ae66113c4565b610af060006114d9565b565b60008060058581548110610b0857610b08611bcf565b60009182526020918290206040805160c081018252600690930290910180546001600160a01b0316835260018101549383019390935260028084015491830191909152600383015460608301526004830154608083015260059092015460a082015290549091501580610b7d57506020810151155b80610b885750600754155b15610b97576000915050610c79565b828410610ba8576000915050610c79565b80604001518311610bbd576000915050610c79565b80604001518411158015610bd5575080606001518311155b15610bf1576040810151610be99084611c34565b915050610c79565b80604001518411158015610c085750806060015183115b15610c215780604001518160600151610be99190611c34565b806040015184118015610c38575080606001518311155b15610c4757610be98484611c34565b80606001518411158015610c5e5750806060015183115b15610c7357838160600151610be99190611c34565b60009150505b9392505050565b6000610c8a61154a565b805490915060ff600160401b820416159067ffffffffffffffff16600081158015610cb25750825b905060008267ffffffffffffffff166001148015610ccf5750303b155b905081158015610cdd575080155b15610cfb5760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff191660011785558315610d2557845460ff60401b1916600160401b1785555b610d358d8d8d8d8d8d8d8d611573565b8315610d7b57845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050505050565b60008281526006602090815260408083206001600160a01b03851684529091528120600181015464e8d4a51000610dc086610de8565b8354610dcc9190611c47565b610dd69190611c5e565b610de09190611c34565b949350505050565b60008060058381548110610dfe57610dfe611bcf565b600091825260208083206040805160c08101825260069490940290910180546001600160a01b031680855260018201549385019390935260028101548483015260038101546060850152600480820154608086015260059091015460a0850181905291516370a0823160e01b8152309181019190915292945092916370a0823190602401602060405180830381865afa158015610e9f573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610ec39190611c80565b90506000610ed686856080015143610af2565b90508115801590610ee657508015155b15610f41576000600754856020015160025484610f039190611c47565b610f0d9190611c47565b610f179190611c5e565b905082610f298264e8d4a51000611c47565b610f339190611c5e565b610f3d9085611c21565b9350505b5090949350505050565b610f536113c4565b6001600160a01b038116610f7d57604051631e4fbdf760e01b8152600060048201526024016105cd565b610f86816114d9565b50565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00805460011901610fcd57604051633ee5aeb560e01b815260040160405180910390fd5b60029055565b600060058381548110610fe857610fe8611bcf565b60009182526020808320868452600680835260408086206001600160a01b03891687529093529190932091029091019150611022846106f7565b805415611154576000816001015464e8d4a510008460050154846000015461104a9190611c47565b6110549190611c5e565b61105e9190611c34565b90508015611152576003546001600160a01b03166110e1576001546040516340c10f1960e01b81526001600160a01b03868116600483015260248201849052909116906340c10f1990604401600060405180830381600087803b1580156110c457600080fd5b505af11580156110d8573d6000803e3d6000fd5b50505050611152565b60035460015460405163ae63932960e01b81526001600160a01b03918216600482015286821660248201526044810184905291169063ae63932990606401600060405180830381600087803b15801561113957600080fd5b505af115801561114d573d6000803e3d6000fd5b505050505b505b61115e84846117f4565b50505050565b6000806005858154811061117a5761117a611bcf565b60009182526020808320888452600680835260408086206001600160a01b03808c1688529452852094549302018054909450811691161480156111bc57508334145b1561122d5760008054906101000a90046001600160a01b03166001600160a01b031663d0e30db0856040518263ffffffff1660e01b81526004016000604051808303818588803b15801561120f57600080fd5b505af1158015611223573d6000803e3d6000fd5b505050505061132c565b81546040516370a0823160e01b81523060048201526000916001600160a01b0316906370a0823190602401602060405180830381865afa158015611275573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906112999190611c80565b83549091506112b3906001600160a01b0316873088611868565b82546040516370a0823160e01b815230600482015282916001600160a01b0316906370a0823190602401602060405180830381865afa1580156112fa573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061131e9190611c80565b6113289190611c34565b9450505b838160000160008282546113409190611c21565b90915550611350905086866117f4565b85856001600160a01b03167f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a158660405161138c91815260200190565b60405180910390a35091949350505050565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b336113f67f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b6001600160a01b031614610af05760405163118cdaa760e01b81523360048201526024016105cd565b6000806005858154811061143557611435611bcf565b60009182526020808320888452600680835260408086206001600160a01b038b168752909352918420805493909202019350918591839190611478908490611c34565b90915550508154611493906001600160a01b031686866118cf565b61149d86866117f4565b85856001600160a01b03167ff279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b5688660405161138c91815260200190565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a0061059e565b61157c88611905565b611584611916565b600080546001600160a01b038981166001600160a01b03199283161790925560018054898416908316179055600287905560038054928716929091169190911790556040518581527fb0864f3dd8e8d4f8f298a778d03bccfb0bc1114b8e89b686ae5a58c7d78a58759060200160405180910390a1604080516001600160a01b038981168252888116602083015286168183015290517fe86209b390e8076baf4c4a616512319eb81d91e8b1f8ca206e88c5ff1c264e149181900360600190a180156117ea576103e86007819055600580546001600160a01b038981166000818152600460209081526040808320869055805160c0810182528481528083018981528183018d815260608084018e81526080850188815260a0860189815260018d018e559c895294517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db06006909c029b8c0180546001600160a01b03191691909b161790995591517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db18a0155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db289015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db3880155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db487015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db590950194909455845186815293840189905293830187905292917fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c1631910160405180910390a3505b5050505050505050565b60006005838154811061180957611809611bcf565b60009182526020808320868452600680835260408086206001600160a01b03891687529093529190932091029091016005810154825491935064e8d4a51000916118539190611c47565b61185d9190611c5e565b600190910155505050565b6040516001600160a01b03848116602483015283811660448301526064820183905261115e9186918216906323b872dd906084015b604051602081830303815290604052915060e01b6020820180516001600160e01b038381831617835250505050611926565b6040516001600160a01b0383811660248301526044820183905261190091859182169063a9059cbb9060640161189d565b505050565b61190d611997565b610f86816119bc565b61191e611997565b610af06119c4565b600080602060008451602086016000885af180611949576040513d6000823e3d81fd5b50506000513d9150811561196157806001141561196e565b6001600160a01b0384163b155b1561115e57604051635274afe760e01b81526001600160a01b03851660048201526024016105cd565b61199f6119cc565b610af057604051631afcd79f60e31b815260040160405180910390fd5b610f53611997565b61139e611997565b60006119d661154a565b54600160401b900460ff16919050565b6000602082840312156119f857600080fd5b5035919050565b80356001600160a01b0381168114611a1657600080fd5b919050565b600060208284031215611a2d57600080fd5b610c79826119ff565b60008060408385031215611a4957600080fd5b50508035926020909101359150565b80358015158114611a1657600080fd5b600080600080600060a08688031215611a8057600080fd5b611a89866119ff565b9450602086013593506040860135925060608601359150611aac60808701611a58565b90509295509295909350565b600080600080600060a08688031215611ad057600080fd5b85359450602086013593506040860135925060608601359150611aac60808701611a58565b600080600060608486031215611b0a57600080fd5b505081359360208301359350604090920135919050565b60008060408385031215611b3457600080fd5b82359150611b44602084016119ff565b90509250929050565b600080600080600080600080610100898b031215611b6a57600080fd5b611b73896119ff565b9750611b8160208a016119ff565b9650611b8f60408a016119ff565b955060608901359450611ba460808a016119ff565b935060a0890135925060c08901359150611bc060e08a01611a58565b90509295985092959890939650565b634e487b7160e01b600052603260045260246000fd5b6020808252600c908201526b125b9d985b1a5908141bdbdb60a21b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b8082018082111561059e5761059e611c0b565b8181038181111561059e5761059e611c0b565b808202811582820484141761059e5761059e611c0b565b600082611c7b57634e487b7160e01b600052601260045260246000fd5b500490565b600060208284031215611c9257600080fd5b505191905056fea26469706673582212209fbf19ae1bb324acf04b91a08112db64bbc01563f6de180caba02c3f5373c9df64736f6c634300081e0033";
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b506120ae8061001f6000396000f3fe60806040526004361061019f5760003560e01c80638da5cb5b116100ec578063e907d8c01161008a578063f64ba28b11610064578063f64ba28b146105b8578063f7c618c1146105d8578063fc7e4227146105f8578063ff51a2721461061857600080fd5b8063e907d8c014610524578063efaf059714610544578063f2fde38b1461059857600080fd5b8063ad5c4648116100c6578063ad5c4648146104a4578063b072797e146104c4578063cf2770d6146104e4578063d024fe7b1461050457600080fd5b80638da5cb5b146104275780638ef3d24d14610464578063a373e68d1461048457600080fd5b80633a2c677711610159578063630b5ba111610133578063630b5ba1146103b2578063715018a6146103c7578063859fe6c7146103dc5780638ae74894146103ef57600080fd5b80633a2c67771461033a5780633d9120331461037257806361249d861461039257600080fd5b8062893452146102005780630407539914610229578063081e3eda146102495780631246dbf51461026d5780631526fe271461029d57806317caf6f11461030857600080fd5b366101fb576000546001600160a01b031633036101b857005b6000546101cd906001600160a01b0316610649565b156101f957600080546001600160a01b03168152600460205260409020546101f99061ffff16346106bb565b005b600080fd5b34801561020c57600080fd5b5061021660035481565b6040519081526020015b60405180910390f35b34801561023557600080fd5b506101f9610244366004611bd1565b61073b565b34801561025557600080fd5b506005545b60405161ffff9091168152602001610220565b34801561027957600080fd5b5061028d610288366004611c06565b610649565b6040519015158152602001610220565b3480156102a957600080fd5b506102bd6102b8366004611bd1565b61077e565b604080516001600160a01b03909716875263ffffffff90951660208701526001600160401b0393841694860194909452908216606085015216608083015260a082015260c001610220565b34801561031457600080fd5b506007546103259063ffffffff1681565b60405163ffffffff9091168152602001610220565b34801561034657600080fd5b5060025461035a906001600160a01b031681565b6040516001600160a01b039091168152602001610220565b34801561037e57600080fd5b506101f961038d366004611c33565b6107e9565b34801561039e57600080fd5b506102166103ad366004611c5d565b610831565b3480156103be57600080fd5b506101f9610848565b3480156103d357600080fd5b506101f9610873565b6101f96103ea366004611c33565b6106bb565b3480156103fb57600080fd5b5061040f61040a366004611c8f565b610887565b6040516001600160401b039091168152602001610220565b34801561043357600080fd5b507f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031661035a565b34801561047057600080fd5b506101f961047f366004611ce8565b61096b565b34801561049057600080fd5b5061021661049f366004611c8f565b610a47565b3480156104b057600080fd5b5060005461035a906001600160a01b031681565b3480156104d057600080fd5b506101f96104df366004611dd9565b610ae5565b3480156104f057600080fd5b506101f96104ff366004611c5d565b610c97565b34801561051057600080fd5b506101f961051f366004611e7d565b610cfc565b34801561053057600080fd5b5061021661053f366004611ee2565b610f1b565b34801561055057600080fd5b5061058361055f366004611ee2565b60066020908152600092835260408084209091529082529020805460019091015482565b60408051928352602083019190915201610220565b3480156105a457600080fd5b506101f96105b3366004611c06565b610f7e565b3480156105c457600080fd5b506102166105d3366004611c5d565b610fbc565b3480156105e457600080fd5b5060015461035a906001600160a01b031681565b34801561060457600080fd5b5061025a610613366004611f15565b6110fd565b34801561062457600080fd5b5061025a610633366004611c06565b60046020526000908152604090205461ffff1681565b6001600160a01b03811660009081526004602052604081205461ffff161515806106b5575060055460011480156106b55750816001600160a01b0316600560008154811061069957610699611f36565b60009182526020909120600390910201546001600160a01b0316145b92915050565b6106c3611363565b60055461ffff8316106106f15760405162461bcd60e51b81526004016106e890611f4c565b60405180910390fd5b6106fb82336113ad565b801561070e5761070c823383611546565b505b61073760017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b5050565b6107436117b4565b60038190556040518181527f403d953100676c530ee357c0fe9f352dc6c18bd4e8594c49d2107ecbad6a6f099060200160405180910390a150565b6005818154811061078e57600080fd5b60009182526020909120600390910201805460018201546002909201546001600160a01b038216935063ffffffff600160a01b830416926001600160401b03600160c01b90930483169281811692600160401b909204169086565b6107f1611363565b60055461ffff8316106108165760405162461bcd60e51b81526004016106e890611f4c565b61082082336113ad565b801561070e5761070c82338361182a565b60006106b582610842600142611f88565b42610a47565b60055460005b818161ffff1610156107375761086381610c97565b61086c81611f9b565b905061084e565b61087b6117b4565b61088560006118f2565b565b6000816001600160401b0316836001600160401b0316106108aa57506000610964565b600060058561ffff16815481106108c3576108c3611f36565b600091825260208220600390910201805460018201549193506001600160401b03600160c01b9091048116929181169190871683106109025782610904565b865b90506000826001600160401b0316876001600160401b0316106109275782610929565b865b9050806001600160401b0316826001600160401b03161061095257600095505050505050610964565b61095c8282611fbc565b955050505050505b9392505050565b600080600061097984611963565b92509250925060058761ffff168154811061099657610996611f36565b600091825260209091206003909102015460405163d505accf60e01b8152336004820152306024820152604481018890526001600160401b038716606482015260ff8516608482015260a4810184905260c481018390526001600160a01b039091169063d505accf9060e401600060405180830381600087803b158015610a1c57600080fd5b505af1158015610a30573d6000803e3d6000fd5b50505050610a3e87876106bb565b50505050505050565b60075460009063ffffffff168103610a6157506000610964565b600060058561ffff1681548110610a7a57610a7a611f36565b6000918252602090912060075460039283029091018054925490935063ffffffff91821692600160a01b900490911690610ab5888888610887565b6001600160401b0316610ac89190611fdb565b610ad29190611fdb565b610adc9190611ff2565b95945050505050565b6000610aef6119ad565b805490915060ff600160401b82041615906001600160401b0316600081158015610b165750825b90506000826001600160401b03166001148015610b325750303b155b905081158015610b40575080155b15610b5e5760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff191660011785558315610b8857845460ff60401b1916600160401b1785555b610b906119d6565b600080546001600160a01b03808f166001600160a01b031992831617909255600180548e841690831617905560028054928d1692909116919091179055610bd68961073b565b8515610bee57610bec8b6103e88a8a60006110fd565b505b610bf78d6119e6565b604080516001600160a01b038e811682528d811660208301528c168183015290517fe86209b390e8076baf4c4a616512319eb81d91e8b1f8ca206e88c5ff1c264e149181900360600190a18315610c8857845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050505050565b600060058261ffff1681548110610cb057610cb0611f36565b90600052602060002090600302019050610cc982610fbc565b600282015560010180546fffffffffffffffff00000000000000001916600160401b426001600160401b03160217905550565b610d046117b4565b60055461ffff861610610d295760405162461bcd60e51b81526004016106e890611f4c565b8015610d3757610d37610848565b8360058661ffff1681548110610d4f57610d4f611f36565b6000918252602090912060039091020154600754610d7d9163ffffffff600160a01b90910481169116612014565b610d879190612030565b600760006101000a81548163ffffffff021916908363ffffffff1602179055508360058661ffff1681548110610dbf57610dbf611f36565b906000526020600020906003020160000160146101000a81548163ffffffff021916908363ffffffff1602179055508260058661ffff1681548110610e0657610e06611f36565b906000526020600020906003020160000160186101000a8154816001600160401b0302191690836001600160401b031602179055508160058661ffff1681548110610e5357610e53611f36565b906000526020600020906003020160010160006101000a8154816001600160401b0302191690836001600160401b0316021790555060058561ffff1681548110610e9f57610e9f611f36565b6000918252602091829020600390910201546040805163ffffffff881681526001600160401b0380881694820194909452928516908301526001600160a01b03169061ffff8716907f8d79088268352e1a4ae18346d3aa40ff9d49bb8ec82b846a0bc32d12a7e477e39060600160405180910390a35050505050565b61ffff821660009081526006602090815260408083206001600160a01b03851684529091528120600181015464e8d4a51000610f5686610fbc565b8354610f629190611fdb565b610f6c9190611ff2565b610f769190611f88565b949350505050565b610f866117b4565b6001600160a01b038116610fb057604051631e4fbdf760e01b8152600060048201526024016106e8565b610fb9816118f2565b50565b60008060058361ffff1681548110610fd657610fd6611f36565b600091825260208083206040805160c08101825260039490940290910180546001600160a01b038116808652600160a01b820463ffffffff1694860194909452600160c01b90046001600160401b039081168584015260018201548082166060870152600160401b90041660808501526002015460a0840181905290516370a0823160e01b815230600482015292945092916370a0823190602401602060405180830381865afa15801561108e573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906110b2919061204c565b905080156110f55760006110cb86856080015142610a47565b9050816110dd8264e8d4a51000611fdb565b6110e79190611ff2565b6110f19084612065565b9250505b509392505050565b60006111076117b4565b61111086610649565b1561114f5760405162461bcd60e51b815260206004820152600f60248201526e111d5c1b1a58d85d195908141bdbdb608a1b60448201526064016106e8565b811561115d5761115d610848565b506005546007805486919060009061117c90849063ffffffff16612030565b825463ffffffff9182166101009390930a9283029282021916919091179091556001600160a01b038089166000818152600460209081526040808320805461ffff8a1661ffff199091168117909155815160c0810183528581528d88169381019384526001600160401b03808e168285019081528d8216606084019081526080840188815260a08501898152600580546001810182559a52945160039099027f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db081018054995194518616600160c01b026001600160c01b0395909e16600160a01b026001600160c01b0319909a169a909c169990991797909717919091169990991790975596517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db18501805494518816600160401b026fffffffffffffffffffffffffffffffff1990951691909716179290921790945593517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db29091015590519092507f8d79088268352e1a4ae18346d3aa40ff9d49bb8ec82b846a0bc32d12a7e477e3906113529089908990899063ffffffff9390931683526001600160401b03918216602084015216604082015260600190565b60405180910390a395945050505050565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f008054600119016113a757604051633ee5aeb560e01b815260040160405180910390fd5b60029055565b600060058361ffff16815481106113c6576113c6611f36565b6000918252602080832061ffff871684526006825260408085206001600160a01b038816865290925292206003909102909101915061140484610c97565b805415611536576000816001015464e8d4a510008460020154846000015461142c9190611fdb565b6114369190611ff2565b6114409190611f88565b90508015611534576002546001600160a01b03166114c3576001546040516340c10f1960e01b81526001600160a01b03868116600483015260248201849052909116906340c10f1990604401600060405180830381600087803b1580156114a657600080fd5b505af11580156114ba573d6000803e3d6000fd5b50505050611534565b60025460015460405163ae63932960e01b81526001600160a01b03918216600482015286821660248201526044810184905291169063ae63932990606401600060405180830381600087803b15801561151b57600080fd5b505af115801561152f573d6000803e3d6000fd5b505050505b505b61154084846119f7565b50505050565b60008060058561ffff168154811061156057611560611f36565b6000918252602080832061ffff891684526006825260408085206001600160a01b03808b1687529352842093546003909302018054909450811691161480156115a857508334145b156116195760008054906101000a90046001600160a01b03166001600160a01b031663d0e30db0856040518263ffffffff1660e01b81526004016000604051808303818588803b1580156115fb57600080fd5b505af115801561160f573d6000803e3d6000fd5b5050505050611718565b81546040516370a0823160e01b81523060048201526000916001600160a01b0316906370a0823190602401602060405180830381865afa158015611661573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611685919061204c565b835490915061169f906001600160a01b0316873088611a74565b82546040516370a0823160e01b815230600482015282916001600160a01b0316906370a0823190602401602060405180830381865afa1580156116e6573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061170a919061204c565b6117149190611f88565b9450505b8381600001600082825461172c9190612065565b9091555061173c905086866119f7565b8561ffff16856001600160a01b03167f2c00706df3fbb4a8ead830d4c0a7f278823843af15ad7e680c4f7db763dd779c8660405161177c91815260200190565b60405180910390a35091949350505050565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b60006117e77f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b0381161580159061180a57506001600160a01b0381163314155b15610fb95760405163118cdaa760e01b81523360048201526024016106e8565b60008060058561ffff168154811061184457611844611f36565b6000918252602080832061ffff891684526006825260408085206001600160a01b038a16865290925290832080546003909302909101935091859183919061188d908490611f88565b909155505081546118a8906001600160a01b03168686611adb565b6118b286866119f7565b8561ffff16856001600160a01b03167f4e2ebfe79f50514ade8e774c7f3c01250d6aa3a91cd1f5c33a78df9c459f6e9d8660405161177c91815260200190565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b6000806000835160410361198d5750505060208101516040820151606083015160001a91906119a6565b604051634be6321b60e01b815260040160405180910390fd5b9193909250565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006106b5565b6119de611b11565b610885611b36565b6119ee611b11565b610fb981611b3e565b600060058361ffff1681548110611a1057611a10611f36565b6000918252602080832061ffff871684526006825260408085206001600160a01b038816865290925292206002600390920290920190810154825491935064e8d4a5100091611a5f9190611fdb565b611a699190611ff2565b600190910155505050565b6040516001600160a01b0384811660248301528381166044830152606482018390526115409186918216906323b872dd906084015b604051602081830303815290604052915060e01b6020820180516001600160e01b038381831617835250505050611b46565b6040516001600160a01b03838116602483015260448201839052611b0c91859182169063a9059cbb90606401611aa9565b505050565b611b19611bb7565b61088557604051631afcd79f60e31b815260040160405180910390fd5b61178e611b11565b610f86611b11565b600080602060008451602086016000885af180611b69576040513d6000823e3d81fd5b50506000513d91508115611b81578060011415611b8e565b6001600160a01b0384163b155b1561154057604051635274afe760e01b81526001600160a01b03851660048201526024016106e8565b6000611bc16119ad565b54600160401b900460ff16919050565b600060208284031215611be357600080fd5b5035919050565b80356001600160a01b0381168114611c0157600080fd5b919050565b600060208284031215611c1857600080fd5b61096482611bea565b803561ffff81168114611c0157600080fd5b60008060408385031215611c4657600080fd5b611c4f83611c21565b946020939093013593505050565b600060208284031215611c6f57600080fd5b61096482611c21565b80356001600160401b0381168114611c0157600080fd5b600080600060608486031215611ca457600080fd5b611cad84611c21565b9250611cbb60208501611c78565b9150611cc960408501611c78565b90509250925092565b634e487b7160e01b600052604160045260246000fd5b60008060008060808587031215611cfe57600080fd5b611d0785611c21565b935060208501359250611d1c60408601611c78565b915060608501356001600160401b03811115611d3757600080fd5b8501601f81018713611d4857600080fd5b80356001600160401b03811115611d6157611d61611cd2565b604051601f8201601f19908116603f011681016001600160401b0381118282101715611d8f57611d8f611cd2565b604052818152828201602001891015611da757600080fd5b8160208401602083013760006020838301015280935050505092959194509250565b80358015158114611c0157600080fd5b600080600080600080600080610100898b031215611df657600080fd5b611dff89611bea565b9750611e0d60208a01611bea565b9650611e1b60408a01611bea565b9550611e2960608a01611bea565b945060808901359350611e3e60a08a01611c78565b9250611e4c60c08a01611c78565b9150611e5a60e08a01611dc9565b90509295985092959890939650565b803563ffffffff81168114611c0157600080fd5b600080600080600060a08688031215611e9557600080fd5b611e9e86611c21565b9450611eac60208701611e69565b9350611eba60408701611c78565b9250611ec860608701611c78565b9150611ed660808701611dc9565b90509295509295909350565b60008060408385031215611ef557600080fd5b611efe83611c21565b9150611f0c60208401611bea565b90509250929050565b600080600080600060a08688031215611f2d57600080fd5b611e9e86611bea565b634e487b7160e01b600052603260045260246000fd5b6020808252600c908201526b125b9d985b1a5908141bdbdb60a21b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b818103818111156106b5576106b5611f72565b600061ffff821661ffff8103611fb357611fb3611f72565b60010192915050565b6001600160401b0382811682821603908111156106b5576106b5611f72565b80820281158282048414176106b5576106b5611f72565b60008261200f57634e487b7160e01b600052601260045260246000fd5b500490565b63ffffffff82811682821603908111156106b5576106b5611f72565b63ffffffff81811683821601908111156106b5576106b5611f72565b60006020828403121561205e57600080fd5b5051919050565b808201808211156106b5576106b5611f7256fea2646970667358221220d8c881200866abcc145accc9e0d2caad7c4a017dc90e26ad0f3ca1aaaab1e05f64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
 			];
 			readonly name: "InvalidInitialization";
+			readonly type: "error";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "InvalidSignatureLength";
 			readonly type: "error";
 		},
 		{
@@ -20540,9 +28765,9 @@ export declare class MasterChef__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -20616,9 +28841,9 @@ export declare class MasterChef__factory extends ContractFactory {
 			readonly inputs: readonly [
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: true;
@@ -20628,21 +28853,21 @@ export declare class MasterChef__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "newAllocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
-					readonly name: "startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "startTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
-					readonly name: "endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "endTime";
+					readonly type: "uint64";
 				}
 			];
 			readonly name: "SetPool";
@@ -20654,11 +28879,11 @@ export declare class MasterChef__factory extends ContractFactory {
 				{
 					readonly indexed: false;
 					readonly internalType: "uint256";
-					readonly name: "newReward";
+					readonly name: "rewardsPerSec";
 					readonly type: "uint256";
 				}
 			];
-			readonly name: "SetReward";
+			readonly name: "SetRewards";
 			readonly type: "event";
 		},
 		{
@@ -20672,9 +28897,9 @@ export declare class MasterChef__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -20708,19 +28933,19 @@ export declare class MasterChef__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -20731,9 +28956,9 @@ export declare class MasterChef__factory extends ContractFactory {
 			readonly name: "add";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "nonpayable";
@@ -20742,9 +28967,9 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -20761,12 +28986,80 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "_amount";
 					readonly type: "uint256";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_deadline";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "bytes";
+					readonly name: "_signature";
+					readonly type: "bytes";
 				}
 			];
-			readonly name: "getBlockRewardPerShare";
+			readonly name: "depositPermit";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getMultiplier";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint64";
+					readonly name: "";
+					readonly type: "uint64";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getPoolRewardsByTime";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
@@ -20780,22 +29073,31 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
-				},
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getPoolRewardsPerSec";
+			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
-					readonly name: "_fromBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "_toBlock";
+					readonly name: "";
 					readonly type: "uint256";
 				}
 			];
-			readonly name: "getMultiplier";
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getRewardsPerShare";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
@@ -20843,24 +29145,24 @@ export declare class MasterChef__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -20868,7 +29170,7 @@ export declare class MasterChef__factory extends ContractFactory {
 					readonly type: "bool";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeChef";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -20900,9 +29202,9 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -20932,9 +29234,9 @@ export declare class MasterChef__factory extends ContractFactory {
 			readonly name: "poolId";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -20956,28 +29258,28 @@ export declare class MasterChef__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "endTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "lastRewardTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "startBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "endBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "lastRewardBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "accRewardPerShare";
+					readonly name: "accRewardsPerShare";
 					readonly type: "uint256";
 				}
 			];
@@ -20990,9 +29292,9 @@ export declare class MasterChef__factory extends ContractFactory {
 			readonly name: "poolLength";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21005,20 +29307,6 @@ export declare class MasterChef__factory extends ContractFactory {
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-			];
-			readonly name: "rewardPerBlock";
-			readonly outputs: readonly [
-				{
-					readonly internalType: "uint256";
-					readonly name: "";
-					readonly type: "uint256";
-				}
-			];
-			readonly stateMutability: "view";
 			readonly type: "function";
 		},
 		{
@@ -21051,25 +29339,39 @@ export declare class MasterChef__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
+			];
+			readonly name: "rewardsPerSec";
+			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -21085,13 +29387,27 @@ export declare class MasterChef__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_rewardsPerSec";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setRewardsPerSec";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "totalAllocPoint";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21114,9 +29430,9 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "updatePool";
@@ -21128,23 +29444,9 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
-					readonly name: "newBlockReward";
-					readonly type: "uint256";
-				}
-			];
-			readonly name: "updateRewardPerBlock";
-			readonly outputs: readonly [
-			];
-			readonly stateMutability: "nonpayable";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -21171,9 +29473,9 @@ export declare class MasterChef__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -21198,7 +29500,7 @@ export declare class MasterChef__factory extends ContractFactory {
 export type MasterPoolConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class MasterPool__factory extends ContractFactory {
+declare class MasterPool__factory extends ContractFactory {
 	constructor(...args: MasterPoolConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -21209,7 +29511,7 @@ export declare class MasterPool__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): MasterPool__factory;
-	static readonly bytecode = "0x6080604052348015600f57600080fd5b50612a5d8061001f6000396000f3fe6080604052600436106101fd5760003560e01c80637bafb0291161010d578063cd09525d116100a0578063dced1a5a1161006f578063dced1a5a14610691578063e2bbb158146106c7578063f2fde38b146106da578063f7c618c1146106fa578063ff51a2721461071a57600080fd5b8063cd09525d14610611578063d18df53c14610631578063d7c5edf214610651578063db2aa1271461067157600080fd5b80639b27e3dd116100dc5780639b27e3dd14610584578063a17804b1146105a4578063aa020654146105c4578063ad5c4648146105f157600080fd5b80637bafb029146104bd5780638ae39cac146104dd5780638da5cb5b146104f357806393f1a40b1461053057600080fd5b8063441a3e701161019057806360e4c4ce1161015f57806360e4c4ce14610433578063630b5ba11461045357806369ff74f114610468578063715018a61461048857806377ba79501461049d57600080fd5b8063441a3e70146103b35780634fb4bb8c146103d357806351eb05a6146103f35780635da7c1691461041357600080fd5b806317caf6f1116101cc57806317caf6f114610325578063192e30f81461033b5780631b6fabce1461035b5780633a2c67771461037b57600080fd5b806301f8a9761461025a578063081e3eda1461027a5780631246dbf51461029e5780631526fe27146102ce57600080fd5b36610255576000546001600160a01b0316330361021657005b60005461022b906001600160a01b0316610747565b1561025357600080546001600160a01b031681526004602052604090205461025390346107b5565b005b600080fd5b34801561026657600080fd5b5061025361027536600461256c565b610831565b34801561028657600080fd5b506005545b6040519081526020015b60405180910390f35b3480156102aa57600080fd5b506102be6102b93660046125a1565b610747565b6040519015158152602001610295565b3480156102da57600080fd5b506102ee6102e936600461256c565b610874565b604080516001600160a01b0390971687526020870195909552938501929092526060840152608083015260a082015260c001610295565b34801561033157600080fd5b5061028b60075481565b34801561034757600080fd5b506102536103563660046125bc565b6108c4565b34801561036757600080fd5b50610253610376366004612609565b610a22565b34801561038757600080fd5b5060035461039b906001600160a01b031681565b6040516001600160a01b039091168152602001610295565b3480156103bf57600080fd5b506102536103ce36600461269c565b610b48565b3480156103df57600080fd5b506102be6103ee3660046125a1565b610b8c565b3480156103ff57600080fd5b5061025361040e36600461256c565b610bea565b34801561041f57600080fd5b5061028b61042e3660046126be565b610c27565b34801561043f57600080fd5b5061025361044e36600461270e565b610d83565b34801561045f57600080fd5b50610253610eef565b34801561047457600080fd5b5060085461039b906001600160a01b031681565b34801561049457600080fd5b50610253610f0e565b3480156104a957600080fd5b506102536104b836600461274b565b610f22565b3480156104c957600080fd5b5061028b6104d8366004612775565b610f79565b3480156104e957600080fd5b5061028b60025481565b3480156104ff57600080fd5b507f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031661039b565b34801561053c57600080fd5b5061056f61054b3660046127a1565b60066020908152600092835260408084209091529082529020805460019091015482565b60408051928352602083019190915201610295565b34801561059057600080fd5b5061025361059f3660046127e3565b611107565b3480156105b057600080fd5b506102536105bf3660046128b9565b6111d7565b3480156105d057600080fd5b5061028b6105df3660046125a1565b600a6020526000908152604090205481565b3480156105fd57600080fd5b5060005461039b906001600160a01b031681565b34801561061d57600080fd5b5061025361062c3660046125a1565b6112e1565b34801561063d57600080fd5b5061028b61064c3660046127a1565b61136c565b34801561065d57600080fd5b5061028b61066c36600461256c565b6113ca565b34801561067d57600080fd5b5061025361068c36600461274b565b61152d565b34801561069d57600080fd5b5061039b6106ac36600461256c565b6009602052600090815260409020546001600160a01b031681565b6102536106d536600461269c565b6107b5565b3480156106e657600080fd5b506102536106f53660046125a1565b61157d565b34801561070657600080fd5b5060015461039b906001600160a01b031681565b34801561072657600080fd5b5061028b6107353660046125a1565b60046020526000908152604090205481565b6001600160a01b0381166000908152600460205260408120541515806107af575060055460011480156107af5750816001600160a01b031660056000815481106107935761079361293b565b60009182526020909120600690910201546001600160a01b0316145b92915050565b6107bd6115bb565b60055482106107e75760405162461bcd60e51b81526004016107de90612951565b60405180910390fd5b6107f18233611605565b801561080457610802823383611790565b505b61082d60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b5050565b610839611843565b60028190556040518181527fb0864f3dd8e8d4f8f298a778d03bccfb0bc1114b8e89b686ae5a58c7d78a58759060200160405180910390a150565b6005818154811061088457600080fd5b60009182526020909120600690910201805460018201546002830154600384015460048501546005909501546001600160a01b0390941695509193909286565b6108cd33610b8c565b6108e95760405162461bcd60e51b81526004016107de90612977565b336000908152600a6020908152604080832054808452600683528184206001600160a01b03888116808752919094528285209387168552919093209015801590610934575081548411155b156109a2578382600001600082825461094d91906129af565b9091555061095d9050838761189e565b82866001600160a01b03167ff279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b5688660405161099991815260200190565b60405180910390a35b6001600160a01b03851615610a1a57838160000160008282546109c591906129c2565b909155506109d59050838661189e565b82856001600160a01b03167f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a1586604051610a1191815260200190565b60405180910390a35b505050505050565b6000610a2c611912565b805490915060ff600160401b820416159067ffffffffffffffff16600081158015610a545750825b905060008267ffffffffffffffff166001148015610a715750303b155b905081158015610a7f575080155b15610a9d5760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff191660011785558315610ac757845460ff60401b1916600160401b1785555b610ad78e8e8d8d8d8d8d8d61193b565b600880546001600160a01b0319166001600160a01b038e161790558315610b3857845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b5050505050505050505050505050565b610b506115bb565b6005548210610b715760405162461bcd60e51b81526004016107de90612951565b610b7b8233611605565b801561080457610802823383611bbc565b6001600160a01b0381166000908152600a60205260408120541515806107af5750506000805260096020527fec8156718a8372b1db44bb411437d0870f3e3790d4a08526d024ce1b0b668f6b546001600160a01b0391821691161490565b600060058281548110610bff57610bff61293b565b90600052602060002090600602019050610c18826113ca565b60058201554360049091015550565b6000610c31611843565b610c3e8686868686611c12565b6008546040516bffffffffffffffffffffffff1960608a901b166020820152919250600091610c8f916001600160a01b03169060340160405160208183030381529060405280519060200120611e31565b6001546040516306b0729b60e31b8152306004820152602481018590526001600160a01b038a81166044830152918216606482015291925082919082169063358394d890608401600060405180830381600087803b158015610cf057600080fd5b505af1158015610d04573d6000803e3d6000fd5b505050600084815260096020908152604080832080546001600160a01b0319166001600160a01b03878116919091179091558616808452600a835292819020879055519182528592507f274ed179d8e71c36d126f361d97e5aa18d1ffc307ec6a33f2809e4a861ea89d3910160405180910390a2505095945050505050565b610d8b611843565b6005548510610dac5760405162461bcd60e51b81526004016107de90612951565b8015610dba57610dba610eef565b8360058681548110610dce57610dce61293b565b906000526020600020906006020160010154600754610ded91906129af565b610df791906129c2565b6007819055508360058681548110610e1157610e1161293b565b9060005260206000209060060201600101819055508260058681548110610e3a57610e3a61293b565b9060005260206000209060060201600201819055508160058681548110610e6357610e6361293b565b90600052602060002090600602016003018190555060058581548110610e8b57610e8b61293b565b6000918252602091829020600690910201546040805187815292830186905282018490526001600160a01b03169086907fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c16319060600160405180910390a35050505050565b60055460005b8181101561082d57610f0681610bea565b600101610ef5565b610f16611843565b610f206000611e3f565b565b610f2b33610b8c565b610f475760405162461bcd60e51b81526004016107de90612977565b336000908152600a6020526040902054610f618184611605565b8115610f7457610f72818484611790565b505b505050565b60008060058581548110610f8f57610f8f61293b565b60009182526020918290206040805160c081018252600690930290910180546001600160a01b0316835260018101549383019390935260028084015491830191909152600383015460608301526004830154608083015260059092015460a08201529054909150158061100457506020810151155b8061100f5750600754155b1561101e576000915050611100565b82841061102f576000915050611100565b80604001518311611044576000915050611100565b8060400151841115801561105c575080606001518311155b1561107857604081015161107090846129af565b915050611100565b8060400151841115801561108f5750806060015183115b156110a8578060400151816060015161107091906129af565b8060400151841180156110bf575080606001518311155b156110ce5761107084846129af565b806060015184111580156110e55750806060015183115b156110fa5783816060015161107091906129af565b60009150505b9392505050565b600080600061111584611eb0565b9250925092506005878154811061112e5761112e61293b565b600091825260209091206006909102015460405163d505accf60e01b8152336004820152306024820152604481018890526064810187905260ff8516608482015260a4810184905260c481018390526001600160a01b039091169063d505accf9060e401600060405180830381600087803b1580156111ac57600080fd5b505af11580156111c0573d6000803e3d6000fd5b505050506111ce87876107b5565b50505050505050565b60006111e1611912565b805490915060ff600160401b820416159067ffffffffffffffff166000811580156112095750825b905060008267ffffffffffffffff1660011480156112265750303b155b905081158015611234575080155b156112525760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561127c57845460ff60401b1916600160401b1785555b61128c8d8d8d8d8d8d8d8d61193b565b83156112d257845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050505050565b6112ea33610b8c565b6113065760405162461bcd60e51b81526004016107de90612977565b336000908152600a6020526040902054600154600580546001600160a01b0390921691839081106113395761133961293b565b60009182526020909120600690910201546001600160a01b0316146113625761082d8183611605565b61082d8183611efa565b60008281526006602090815260408083206001600160a01b03851684529091528120600181015464e8d4a510006113a2866113ca565b83546113ae91906129d5565b6113b891906129ec565b6113c291906129af565b949350505050565b600080600583815481106113e0576113e061293b565b600091825260208083206040805160c08101825260069490940290910180546001600160a01b031680855260018201549385019390935260028101548483015260038101546060850152600480820154608086015260059091015460a0850181905291516370a0823160e01b8152309181019190915292945092916370a0823190602401602060405180830381865afa158015611481573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906114a59190612a0e565b905060006114b886856080015143610f79565b905081158015906114c857508015155b156115235760006007548560200151600254846114e591906129d5565b6114ef91906129d5565b6114f991906129ec565b90508261150b8264e8d4a510006129d5565b61151591906129ec565b61151f90856129c2565b9350505b5090949350505050565b61153633610b8c565b6115525760405162461bcd60e51b81526004016107de90612977565b336000908152600a602052604090205461156c8184611605565b8115610f7457610f72818484611bbc565b611585611843565b6001600160a01b0381166115af57604051631e4fbdf760e01b8152600060048201526024016107de565b6115b881611e3f565b50565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f008054600119016115ff57604051633ee5aeb560e01b815260040160405180910390fd5b60029055565b60006005838154811061161a5761161a61293b565b60009182526020808320868452600680835260408086206001600160a01b0389168752909352919093209102909101915061165484610bea565b805415611786576000816001015464e8d4a510008460050154846000015461167c91906129d5565b61168691906129ec565b61169091906129af565b90508015611784576003546001600160a01b0316611713576001546040516340c10f1960e01b81526001600160a01b03868116600483015260248201849052909116906340c10f1990604401600060405180830381600087803b1580156116f657600080fd5b505af115801561170a573d6000803e3d6000fd5b50505050611784565b60035460015460405163ae63932960e01b81526001600160a01b03918216600482015286821660248201526044810184905291169063ae63932990606401600060405180830381600087803b15801561176b57600080fd5b505af115801561177f573d6000803e3d6000fd5b505050505b505b610f72848461189e565b60008061179e858585612068565b60008681526009602052604090819020549051631b96b2f960e01b81526001600160a01b03878116600483015260248201849052929350911690631b96b2f9906044015b600060405180830381600087803b1580156117fc57600080fd5b505af1158015611810573d6000803e3d6000fd5b5092979650505050505050565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b336118757f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b6001600160a01b031614610f205760405163118cdaa760e01b81523360048201526024016107de565b6000600583815481106118b3576118b361293b565b60009182526020808320868452600680835260408086206001600160a01b03891687529093529190932091029091016005810154825491935064e8d4a51000916118fd91906129d5565b61190791906129ec565b600190910155505050565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006107af565b611944886122a2565b61194c6122b3565b600080546001600160a01b038981166001600160a01b03199283161790925560018054898416908316179055600287905560038054928716929091169190911790556040518581527fb0864f3dd8e8d4f8f298a778d03bccfb0bc1114b8e89b686ae5a58c7d78a58759060200160405180910390a1604080516001600160a01b038981168252888116602083015286168183015290517fe86209b390e8076baf4c4a616512319eb81d91e8b1f8ca206e88c5ff1c264e149181900360600190a18015611bb2576103e86007819055600580546001600160a01b038981166000818152600460209081526040808320869055805160c0810182528481528083018981528183018d815260608084018e81526080850188815260a0860189815260018d018e559c895294517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db06006909c029b8c0180546001600160a01b03191691909b161790995591517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db18a0155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db289015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db3880155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db487015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db590950194909455845186815293840189905293830187905292917fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c1631910160405180910390a3505b5050505050505050565b600080611bca8585856122c3565b60008681526009602052604090819020549051639fc8ae6d60e01b81526001600160a01b03878116600483015260248201849052929350911690639fc8ae6d906044016117e2565b6000611c1c611843565b611c2586610747565b15611c645760405162461bcd60e51b815260206004820152600f60248201526e111d5c1b1a58d85d195908141bdbdb608a1b60448201526064016107de565b8115611c7257611c72610eef565b5060055460078054869190600090611c8b9084906129c2565b90915550506001600160a01b038681166000818152600460209081526040808320869055805160c0810182528481528083018b81528183018b815260608084018c81526080850188815260a08601898152600580546001810182559a5295517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db06006909a02998a0180546001600160a01b03191691909c1617909a5592517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db188015590517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db287015590517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db386015595517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db4850155517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db5909301929092558151898152908101889052908101869052909183917fe7d0e18d4982c1e9b2d9b42996392d14cada23824467fbf84c9c34c9bc9c1631910160405180910390a395945050505050565b60006111008383600061237d565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b60008060008351604103611eda5750505060208101516040820151606083015160001a9190611ef3565b604051634be6321b60e01b815260040160405180910390fd5b9193909250565b600060058381548110611f0f57611f0f61293b565b60009182526020808320868452600680835260408086206001600160a01b03891687529093529190932091029091019150611f4984610bea565b805415611786576000816001015464e8d4a5100084600501548460000154611f7191906129d5565b611f7b91906129ec565b611f8591906129af565b905080156117845780826000016000828254611fa191906129c2565b909155505060008581526009602052604090819020549051631b96b2f960e01b81526001600160a01b0386811660048301526024820184905290911690631b96b2f990604401600060405180830381600087803b15801561200157600080fd5b505af1158015612015573d6000803e3d6000fd5b5050505084846001600160a01b03167f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a158360405161205591815260200190565b60405180910390a350610f72848461189e565b6000806005858154811061207e5761207e61293b565b60009182526020808320888452600680835260408086206001600160a01b03808c1688529452852094549302018054909450811691161480156120c057508334145b156121315760008054906101000a90046001600160a01b03166001600160a01b031663d0e30db0856040518263ffffffff1660e01b81526004016000604051808303818588803b15801561211357600080fd5b505af1158015612127573d6000803e3d6000fd5b5050505050612230565b81546040516370a0823160e01b81523060048201526000916001600160a01b0316906370a0823190602401602060405180830381865afa158015612179573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061219d9190612a0e565b83549091506121b7906001600160a01b0316873088612414565b82546040516370a0823160e01b815230600482015282916001600160a01b0316906370a0823190602401602060405180830381865afa1580156121fe573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906122229190612a0e565b61222c91906129af565b9450505b8381600001600082825461224491906129c2565b909155506122549050868661189e565b85856001600160a01b03167f90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a158660405161229091815260200190565b60405180910390a35091949350505050565b6122aa61247b565b6115b8816124a0565b6122bb61247b565b610f206124a8565b600080600585815481106122d9576122d961293b565b60009182526020808320888452600680835260408086206001600160a01b038b16875290935291842080549390920201935091859183919061231c9084906129af565b90915550508154612337906001600160a01b031686866124b0565b612341868661189e565b85856001600160a01b03167ff279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b5688660405161229091815260200190565b6000814710156123a95760405163cf47918160e01b8152476004820152602481018390526044016107de565b763d602d80600a3d3981f3363d3d373d3d3d363d730000008460601b60e81c176000526e5af43d82803e903d91602b57fd5bf38460781b17602052826037600984f590506001600160a01b0381166111005760405163b06ebf3d60e01b815260040160405180910390fd5b6040516001600160a01b038481166024830152838116604483015260648201839052610f729186918216906323b872dd906084015b604051602081830303815290604052915060e01b6020820180516001600160e01b0383818316178352505050506124e1565b612483612552565b610f2057604051631afcd79f60e31b815260040160405180910390fd5b61158561247b565b61181d61247b565b6040516001600160a01b03838116602483015260448201839052610f7491859182169063a9059cbb90606401612449565b600080602060008451602086016000885af180612504576040513d6000823e3d81fd5b50506000513d9150811561251c578060011415612529565b6001600160a01b0384163b155b15610f7257604051635274afe760e01b81526001600160a01b03851660048201526024016107de565b600061255c611912565b54600160401b900460ff16919050565b60006020828403121561257e57600080fd5b5035919050565b80356001600160a01b038116811461259c57600080fd5b919050565b6000602082840312156125b357600080fd5b61110082612585565b6000806000606084860312156125d157600080fd5b6125da84612585565b92506125e860208501612585565b929592945050506040919091013590565b8035801515811461259c57600080fd5b60008060008060008060008060006101208a8c03121561262857600080fd5b6126318a612585565b985061263f60208b01612585565b975061264d60408b01612585565b965061265b60608b01612585565b955060808a0135945061267060a08b01612585565b935060c08a0135925060e08a0135915061268d6101008b016125f9565b90509295985092959850929598565b600080604083850312156126af57600080fd5b50508035926020909101359150565b600080600080600060a086880312156126d657600080fd5b6126df86612585565b9450602086013593506040860135925060608601359150612702608087016125f9565b90509295509295909350565b600080600080600060a0868803121561272657600080fd5b85359450602086013593506040860135925060608601359150612702608087016125f9565b6000806040838503121561275e57600080fd5b61276783612585565b946020939093013593505050565b60008060006060848603121561278a57600080fd5b505081359360208301359350604090920135919050565b600080604083850312156127b457600080fd5b823591506127c460208401612585565b90509250929050565b634e487b7160e01b600052604160045260246000fd5b600080600080608085870312156127f957600080fd5b843593506020850135925060408501359150606085013567ffffffffffffffff81111561282557600080fd5b8501601f8101871361283657600080fd5b803567ffffffffffffffff811115612850576128506127cd565b604051601f8201601f19908116603f0116810167ffffffffffffffff8111828210171561287f5761287f6127cd565b60405281815282820160200189101561289757600080fd5b8160208401602083013760006020838301015280935050505092959194509250565b600080600080600080600080610100898b0312156128d657600080fd5b6128df89612585565b97506128ed60208a01612585565b96506128fb60408a01612585565b95506060890135945061291060808a01612585565b935060a0890135925060c0890135915061292c60e08a016125f9565b90509295985092959890939650565b634e487b7160e01b600052603260045260246000fd5b6020808252600c908201526b125b9d985b1a5908141bdbdb60a21b604082015260600190565b6020808252600890820152671393d517d413d3d360c21b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b818103818111156107af576107af612999565b808201808211156107af576107af612999565b80820281158282048414176107af576107af612999565b600082612a0957634e487b7160e01b600052601260045260246000fd5b500490565b600060208284031215612a2057600080fd5b505191905056fea26469706673582212202dc9e330af8b854869101c8cac9a0f7f94aaa72c9518db3fbb1f27e2b21c16fc64736f6c634300081e0033";
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b50612fac8061001f6000396000f3fe60806040526004361061023e5760003560e01c8063859fe6c71161012e578063cf2770d6116100ab578063f2fde38b1161006f578063f2fde38b14610807578063f64ba28b14610827578063f7c618c114610847578063fc7e422714610867578063ff51a2721461088757600080fd5b8063cf2770d614610733578063d024fe7b14610753578063db2aa12714610773578063e907d8c014610793578063efaf0597146107b357600080fd5b8063a373e68d116100f2578063a373e68d14610682578063aa020654146106a2578063ad5c4648146106d3578063b072797e146106f3578063cd09525d1461071357600080fd5b8063859fe6c7146105d25780638ae74894146105e55780638af96a66146106055780638da5cb5b146106255780638ef3d24d1461066257600080fd5b80633d912033116101bc57806369ff74f11161018057806369ff74f11461051c5780636a47aa0614610544578063715018a61461058257806377ba7950146105975780637e6335f4146105b757600080fd5b80633d912033146104715780634fb4bb8c1461049157806361249d86146104b1578063630b5ba1146104d157806369eb9cdb146104e657600080fd5b806317caf6f11161020357806317caf6f1146103a7578063192e30f8146103d95780631973aa47146103f9578063364a620e146104195780633a2c67771461043957600080fd5b80628934521461029f57806304075399146102c8578063081e3eda146102e85780631246dbf51461030c5780631526fe271461033c57600080fd5b3661029a576000546001600160a01b0316330361025757005b60005461026c906001600160a01b03166108b8565b1561029857600080546001600160a01b03168152600460205260409020546102989061ffff163461092a565b005b600080fd5b3480156102ab57600080fd5b506102b560035481565b6040519081526020015b60405180910390f35b3480156102d457600080fd5b506102986102e33660046128d4565b6109aa565b3480156102f457600080fd5b506005545b60405161ffff90911681526020016102bf565b34801561031857600080fd5b5061032c610327366004612909565b6108b8565b60405190151581526020016102bf565b34801561034857600080fd5b5061035c6103573660046128d4565b6109ee565b604080516001600160a01b03909716875263ffffffff90951660208701526001600160401b0393841694860194909452908216606085015216608083015260a082015260c0016102bf565b3480156103b357600080fd5b506007546103c49063ffffffff1681565b60405163ffffffff90911681526020016102bf565b3480156103e557600080fd5b506102986103f4366004612924565b610a59565b34801561040557600080fd5b5061029861041436600461299a565b610bc3565b34801561042557600080fd5b50610298610434366004612a5f565b610c1e565b34801561044557600080fd5b50600254610459906001600160a01b031681565b6040516001600160a01b0390911681526020016102bf565b34801561047d57600080fd5b5061029861048c366004612a7a565b610c7f565b34801561049d57600080fd5b5061032c6104ac366004612909565b610cc7565b3480156104bd57600080fd5b506102b56104cc366004612aa4565b610d29565b3480156104dd57600080fd5b50610298610d40565b3480156104f257600080fd5b50610459610501366004612aa4565b6008602052600090815260409020546001600160a01b031681565b34801561052857600080fd5b506007546104599064010000000090046001600160a01b031681565b34801561055057600080fd5b50600a5461056a906201000090046001600160401b031681565b6040516001600160401b0390911681526020016102bf565b34801561058e57600080fd5b50610298610d6b565b3480156105a357600080fd5b506102986105b2366004612abf565b610d7f565b3480156105c357600080fd5b50600a546102f99061ffff1681565b6102986105e0366004612a7a565b61092a565b3480156105f157600080fd5b5061056a610600366004612adb565b610dda565b34801561061157600080fd5b50610298610620366004612aa4565b610ebe565b34801561063157600080fd5b507f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b0316610459565b34801561066e57600080fd5b5061029861067d366004612b34565b610f0a565b34801561068e57600080fd5b506102b561069d366004612adb565b610fe6565b3480156106ae57600080fd5b506102f96106bd366004612909565b60096020526000908152604090205461ffff1681565b3480156106df57600080fd5b50600054610459906001600160a01b031681565b3480156106ff57600080fd5b5061029861070e366004612c15565b61128a565b34801561071f57600080fd5b5061029861072e366004612909565b61143c565b34801561073f57600080fd5b5061029861074e366004612aa4565b6114ce565b34801561075f57600080fd5b5061029861076e366004612cb9565b611533565b34801561077f57600080fd5b5061029861078e366004612abf565b611752565b34801561079f57600080fd5b506102b56107ae366004612d1e565b6117a6565b3480156107bf57600080fd5b506107f26107ce366004612d1e565b60066020908152600092835260408084209091529082529020805460019091015482565b604080519283526020830191909152016102bf565b34801561081357600080fd5b50610298610822366004612909565b611809565b34801561083357600080fd5b506102b5610842366004612aa4565b611847565b34801561085357600080fd5b50600154610459906001600160a01b031681565b34801561087357600080fd5b506102f9610882366004612d51565b611988565b34801561089357600080fd5b506102f96108a2366004612909565b60046020526000908152604090205461ffff1681565b6001600160a01b03811660009081526004602052604081205461ffff16151580610924575060055460011480156109245750816001600160a01b0316600560008154811061090857610908612d72565b60009182526020909120600390910201546001600160a01b0316145b92915050565b610932611afa565b60055461ffff8316106109605760405162461bcd60e51b815260040161095790612d88565b60405180910390fd5b61096a8233611b44565b801561097d5761097b823383611cd7565b505b6109a660017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b5050565b6109b2611d8f565b60038190556040518181527f403d953100676c530ee357c0fe9f352dc6c18bd4e8594c49d2107ecbad6a6f09906020015b60405180910390a150565b600581815481106109fe57600080fd5b60009182526020909120600390910201805460018201546002909201546001600160a01b038216935063ffffffff600160a01b830416926001600160401b03600160c01b90930483169281811692600160401b909204169086565b610a6233610cc7565b610a7e5760405162461bcd60e51b815260040161095790612dae565b3360009081526009602090815260408083205461ffff16808452600683528184206001600160a01b03888116808752919094528285209387168552919093209015801590610acd575081548411155b15610b3f5783826000016000828254610ae69190612de6565b90915550610af690508387611e05565b8261ffff16866001600160a01b03167f4e2ebfe79f50514ade8e774c7f3c01250d6aa3a91cd1f5c33a78df9c459f6e9d86604051610b3691815260200190565b60405180910390a35b6001600160a01b03851615610bbb5783816000016000828254610b629190612df9565b90915550610b7290508386611e05565b8261ffff16856001600160a01b03167f2c00706df3fbb4a8ead830d4c0a7f278823843af15ad7e680c4f7db763dd779c86604051610bb291815260200190565b60405180910390a35b505050505050565b610bcc85610ebe565b610bd584610c1e565b610be58b8b8a8a8a88888861128a565b5050600780546001600160a01b0390981664010000000002640100000000600160c01b0319909816979097179096555050505050505050565b610c26611d8f565b600a805469ffffffffffffffff00001916620100006001600160401b038416908102919091179091556040519081527fb392a7f1d54c25770aab00ccc58fb2c88bc54b543e8371b4673a7c9e0f2651ab906020016109e3565b610c87611afa565b60055461ffff831610610cac5760405162461bcd60e51b815260040161095790612d88565b610cb68233611b44565b801561097d5761097b823383611e82565b6001600160a01b03811660009081526009602052604081205461ffff161515806109245750506000805260086020527f5eff886ea0ce6ca488a3d6e336d6c0f75f46d19b42c06ce5ee98e42c96d256c7546001600160a01b0391821691161490565b600061092482610d3a600142612de6565b42610fe6565b60055460005b818161ffff1610156109a657610d5b816114ce565b610d6481612e0c565b9050610d46565b610d73611d8f565b610d7d6000611edd565b565b610d8833610cc7565b610da45760405162461bcd60e51b815260040161095790612dae565b3360009081526009602052604090205461ffff16610dc28184611b44565b8115610dd557610dd3818484611cd7565b505b505050565b6000816001600160401b0316836001600160401b031610610dfd57506000610eb7565b600060058561ffff1681548110610e1657610e16612d72565b600091825260208220600390910201805460018201549193506001600160401b03600160c01b909104811692918116919087168310610e555782610e57565b865b90506000826001600160401b0316876001600160401b031610610e7a5782610e7c565b865b9050806001600160401b0316826001600160401b031610610ea557600095505050505050610eb7565b610eaf8282612e2d565b955050505050505b9392505050565b610ec6611d8f565b600a805461ffff191661ffff83169081179091556040519081527f6c8d6880a607b5400f9b0ad0718c6c3c499da1d676ddfc670abbae188543112c906020016109e3565b6000806000610f1884611f4e565b92509250925060058761ffff1681548110610f3557610f35612d72565b600091825260209091206003909102015460405163d505accf60e01b8152336004820152306024820152604481018890526001600160401b038716606482015260ff8516608482015260a4810184905260c481018390526001600160a01b039091169063d505accf9060e401600060405180830381600087803b158015610fbb57600080fd5b505af1158015610fcf573d6000803e3d6000fd5b50505050610fdd878761092a565b50505050505050565b6000816001600160401b0316836001600160401b031610158061100f575060075463ffffffff16155b1561101c57506000610eb7565b600060058561ffff168154811061103557611035612d72565b600091825260208220600390910201805460018201549193506001600160401b03600160c01b9091048116929181169190871683106110745782611076565b865b90506000826001600160401b0316876001600160401b031610611099578261109b565b865b9050806001600160401b0316826001600160401b0316106110c457600095505050505050610eb7565b600a546201000090046001600160401b031660000361113757600754855460035463ffffffff92831692600160a01b909204909116906111048585612e2d565b6001600160401b03166111179190612e4c565b6111219190612e4c565b61112b9190612e79565b95505050505050610eb7565b600354600a5460009190849083906201000090046001600160401b031661115e8984612e2d565b6111689190612e8d565b90505b846001600160401b0316826001600160401b031610801561118b57508215155b1561124f57600a546000906201000090046001600160401b03166111b0836001612ebb565b6111ba9190612eda565b6111c4908a612ebb565b90506000816001600160401b0316876001600160401b0316106111e757816111e9565b865b9050846111f68583612e2d565b6001600160401b03166112099190612e4c565b6112139087612df9565b600a54909650909350839060649061122f9061ffff1687612e4c565b6112399190612e79565b94508261124581612f03565b935050505061116b565b600754895463ffffffff9182169161126f91600160a01b90041686612e4c565b6112799190612e79565b9d9c50505050505050505050505050565b6000611294611f98565b805490915060ff600160401b82041615906001600160401b03166000811580156112bb5750825b90506000826001600160401b031660011480156112d75750303b155b9050811580156112e5575080155b156113035760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561132d57845460ff60401b1916600160401b1785555b611335611fc1565b600080546001600160a01b03808f166001600160a01b031992831617909255600180548e841690831617905560028054928d169290911691909117905561137b896109aa565b8515611393576113918b6103e88a8a6000611988565b505b61139c8d611fd1565b604080516001600160a01b038e811682528d811660208301528c168183015290517fe86209b390e8076baf4c4a616512319eb81d91e8b1f8ca206e88c5ff1c264e149181900360600190a1831561142d57845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b50505050505050505050505050565b61144533610cc7565b6114615760405162461bcd60e51b815260040161095790612dae565b336000908152600960205260409020546001546005805461ffff909316926001600160a01b03909216918390811061149b5761149b612d72565b60009182526020909120600390910201546001600160a01b0316146114c4576109a68183611b44565b6109a68183611fe2565b600060058261ffff16815481106114e7576114e7612d72565b9060005260206000209060030201905061150082611847565b600282015560010180546fffffffffffffffff00000000000000001916600160401b426001600160401b03160217905550565b61153b611d8f565b60055461ffff8616106115605760405162461bcd60e51b815260040161095790612d88565b801561156e5761156e610d40565b8360058661ffff168154811061158657611586612d72565b60009182526020909120600390910201546007546115b49163ffffffff600160a01b90910481169116612f25565b6115be9190612f41565b600760006101000a81548163ffffffff021916908363ffffffff1602179055508360058661ffff16815481106115f6576115f6612d72565b906000526020600020906003020160000160146101000a81548163ffffffff021916908363ffffffff1602179055508260058661ffff168154811061163d5761163d612d72565b906000526020600020906003020160000160186101000a8154816001600160401b0302191690836001600160401b031602179055508160058661ffff168154811061168a5761168a612d72565b906000526020600020906003020160010160006101000a8154816001600160401b0302191690836001600160401b0316021790555060058561ffff16815481106116d6576116d6612d72565b6000918252602091829020600390910201546040805163ffffffff881681526001600160401b0380881694820194909452928516908301526001600160a01b03169061ffff8716907f8d79088268352e1a4ae18346d3aa40ff9d49bb8ec82b846a0bc32d12a7e477e39060600160405180910390a35050505050565b61175b33610cc7565b6117775760405162461bcd60e51b815260040161095790612dae565b3360009081526009602052604090205461ffff166117958184611b44565b8115610dd557610dd3818484611e82565b61ffff821660009081526006602090815260408083206001600160a01b03851684529091528120600181015464e8d4a510006117e186611847565b83546117ed9190612e4c565b6117f79190612e79565b6118019190612de6565b949350505050565b611811611d8f565b6001600160a01b03811661183b57604051631e4fbdf760e01b815260006004820152602401610957565b61184481611edd565b50565b60008060058361ffff168154811061186157611861612d72565b600091825260208083206040805160c08101825260039490940290910180546001600160a01b038116808652600160a01b820463ffffffff1694860194909452600160c01b90046001600160401b039081168584015260018201548082166060870152600160401b90041660808501526002015460a0840181905290516370a0823160e01b815230600482015292945092916370a0823190602401602060405180830381865afa158015611919573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061193d9190612f5d565b9050801561198057600061195686856080015142610fe6565b9050816119688264e8d4a51000612e4c565b6119729190612e79565b61197c9084612df9565b9250505b509392505050565b6000611992611d8f565b61199f8686868686612161565b600754604051606089901b6bffffffffffffffffffffffff191660208201529192506000916119f89164010000000090046001600160a01b031690603401604051602081830303815290604052805190602001206123c7565b600154604051630367f0b360e41b815230600482015261ffff851660248201526001600160a01b038a81166044830152918216606482015291925082919082169063367f0b3090608401600060405180830381600087803b158015611a5c57600080fd5b505af1158015611a70573d6000803e3d6000fd5b5050505061ffff8316600081815260086020908152604080832080546001600160a01b0319166001600160a01b038781169190911790915586168084526009835292819020805461ffff191685179055519182527ffaaf525512a973415b1e0c1013407f1249e700df4f7ef24c051bc874434d66b4910160405180910390a2505095945050505050565b7f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00805460011901611b3e57604051633ee5aeb560e01b815260040160405180910390fd5b60029055565b600060058361ffff1681548110611b5d57611b5d612d72565b6000918252602080832061ffff871684526006825260408085206001600160a01b0388168652909252922060039091029091019150611b9b846114ce565b805415611ccd576000816001015464e8d4a5100084600201548460000154611bc39190612e4c565b611bcd9190612e79565b611bd79190612de6565b90508015611ccb576002546001600160a01b0316611c5a576001546040516340c10f1960e01b81526001600160a01b03868116600483015260248201849052909116906340c10f1990604401600060405180830381600087803b158015611c3d57600080fd5b505af1158015611c51573d6000803e3d6000fd5b50505050611ccb565b60025460015460405163ae63932960e01b81526001600160a01b03918216600482015286821660248201526044810184905291169063ae63932990606401600060405180830381600087803b158015611cb257600080fd5b505af1158015611cc6573d6000803e3d6000fd5b505050505b505b610dd38484611e05565b600080611ce58585856123d5565b61ffff861660009081526008602052604090819020549051631b96b2f960e01b81526001600160a01b03878116600483015260248201849052929350911690631b96b2f9906044015b600060405180830381600087803b158015611d4857600080fd5b505af1158015611d5c573d6000803e3d6000fd5b5092979650505050505050565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f0055565b6000611dc27f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b03811615801590611de557506001600160a01b0381163314155b156118445760405163118cdaa760e01b8152336004820152602401610957565b600060058361ffff1681548110611e1e57611e1e612d72565b6000918252602080832061ffff871684526006825260408085206001600160a01b038816865290925292206002600390920290920190810154825491935064e8d4a5100091611e6d9190612e4c565b611e779190612e79565b600190910155505050565b600080611e9085858561261d565b61ffff861660009081526008602052604090819020549051639fc8ae6d60e01b81526001600160a01b03878116600483015260248201849052929350911690639fc8ae6d90604401611d2e565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b60008060008351604103611f785750505060208101516040820151606083015160001a9190611f91565b604051634be6321b60e01b815260040160405180910390fd5b9193909250565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00610924565b611fc96126e5565b610d7d61270a565b611fd96126e5565b61184481612712565b600060058361ffff1681548110611ffb57611ffb612d72565b6000918252602080832061ffff871684526006825260408085206001600160a01b0388168652909252922060039091029091019150612039846114ce565b805415611ccd576000816001015464e8d4a51000846002015484600001546120619190612e4c565b61206b9190612e79565b6120759190612de6565b90508015611ccb57808260000160008282546120919190612df9565b909155505061ffff851660009081526008602052604090819020549051631b96b2f960e01b81526001600160a01b0386811660048301526024820184905290911690631b96b2f990604401600060405180830381600087803b1580156120f657600080fd5b505af115801561210a573d6000803e3d6000fd5b505050508461ffff16846001600160a01b03167f2c00706df3fbb4a8ead830d4c0a7f278823843af15ad7e680c4f7db763dd779c8360405161214e91815260200190565b60405180910390a350610dd38484611e05565b600061216b611d8f565b612174866108b8565b156121b35760405162461bcd60e51b815260206004820152600f60248201526e111d5c1b1a58d85d195908141bdbdb608a1b6044820152606401610957565b81156121c1576121c1610d40565b50600554600780548691906000906121e090849063ffffffff16612f41565b825463ffffffff9182166101009390930a9283029282021916919091179091556001600160a01b038089166000818152600460209081526040808320805461ffff8a1661ffff199091168117909155815160c0810183528581528d88169381019384526001600160401b03808e168285019081528d8216606084019081526080840188815260a08501898152600580546001810182559a52945160039099027f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db081018054995194518616600160c01b026001600160c01b0395909e16600160a01b026001600160c01b0319909a169a909c169990991797909717919091169990991790975596517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db18501805494518816600160401b026fffffffffffffffffffffffffffffffff1990951691909716179290921790945593517f036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db29091015590519092507f8d79088268352e1a4ae18346d3aa40ff9d49bb8ec82b846a0bc32d12a7e477e3906123b69089908990899063ffffffff9390931683526001600160401b03918216602084015216604082015260600190565b60405180910390a395945050505050565b6000610eb78383600061271a565b60008060058561ffff16815481106123ef576123ef612d72565b6000918252602080832061ffff891684526006825260408085206001600160a01b03808b16875293528420935460039093020180549094508116911614801561243757508334145b156124a85760008054906101000a90046001600160a01b03166001600160a01b031663d0e30db0856040518263ffffffff1660e01b81526004016000604051808303818588803b15801561248a57600080fd5b505af115801561249e573d6000803e3d6000fd5b50505050506125a7565b81546040516370a0823160e01b81523060048201526000916001600160a01b0316906370a0823190602401602060405180830381865afa1580156124f0573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906125149190612f5d565b835490915061252e906001600160a01b03168730886127b1565b82546040516370a0823160e01b815230600482015282916001600160a01b0316906370a0823190602401602060405180830381865afa158015612575573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906125999190612f5d565b6125a39190612de6565b9450505b838160000160008282546125bb9190612df9565b909155506125cb90508686611e05565b8561ffff16856001600160a01b03167f2c00706df3fbb4a8ead830d4c0a7f278823843af15ad7e680c4f7db763dd779c8660405161260b91815260200190565b60405180910390a35091949350505050565b60008060058561ffff168154811061263757612637612d72565b6000918252602080832061ffff891684526006825260408085206001600160a01b038a168652909252908320805460039093029091019350918591839190612680908490612de6565b9091555050815461269b906001600160a01b03168686612818565b6126a58686611e05565b8561ffff16856001600160a01b03167f4e2ebfe79f50514ade8e774c7f3c01250d6aa3a91cd1f5c33a78df9c459f6e9d8660405161260b91815260200190565b6126ed612849565b610d7d57604051631afcd79f60e31b815260040160405180910390fd5b611d696126e5565b6118116126e5565b6000814710156127465760405163cf47918160e01b815247600482015260248101839052604401610957565b763d602d80600a3d3981f3363d3d373d3d3d363d730000008460601b60e81c176000526e5af43d82803e903d91602b57fd5bf38460781b17602052826037600984f590506001600160a01b038116610eb75760405163b06ebf3d60e01b815260040160405180910390fd5b6040516001600160a01b038481166024830152838116604483015260648201839052610dd39186918216906323b872dd906084015b604051602081830303815290604052915060e01b6020820180516001600160e01b038381831617835250505050612863565b6040516001600160a01b03838116602483015260448201839052610dd591859182169063a9059cbb906064016127e6565b6000612853611f98565b54600160401b900460ff16919050565b600080602060008451602086016000885af180612886576040513d6000823e3d81fd5b50506000513d9150811561289e5780600114156128ab565b6001600160a01b0384163b155b15610dd357604051635274afe760e01b81526001600160a01b0385166004820152602401610957565b6000602082840312156128e657600080fd5b5035919050565b80356001600160a01b038116811461290457600080fd5b919050565b60006020828403121561291b57600080fd5b610eb7826128ed565b60008060006060848603121561293957600080fd5b612942846128ed565b9250612950602085016128ed565b929592945050506040919091013590565b803561ffff8116811461290457600080fd5b80356001600160401b038116811461290457600080fd5b8035801515811461290457600080fd5b60008060008060008060008060008060006101608c8e0312156129bc57600080fd5b6129c58c6128ed565b9a506129d360208d016128ed565b99506129e160408d016128ed565b98506129ef60608d016128ed565b97506129fd60808d016128ed565b965060a08c01359550612a1260c08d01612961565b9450612a2060e08d01612973565b9350612a2f6101008d01612973565b9250612a3e6101208d01612973565b9150612a4d6101408d0161298a565b90509295989b509295989b9093969950565b600060208284031215612a7157600080fd5b610eb782612973565b60008060408385031215612a8d57600080fd5b612a9683612961565b946020939093013593505050565b600060208284031215612ab657600080fd5b610eb782612961565b60008060408385031215612ad257600080fd5b612a96836128ed565b600080600060608486031215612af057600080fd5b612af984612961565b9250612b0760208501612973565b9150612b1560408501612973565b90509250925092565b634e487b7160e01b600052604160045260246000fd5b60008060008060808587031215612b4a57600080fd5b612b5385612961565b935060208501359250612b6860408601612973565b915060608501356001600160401b03811115612b8357600080fd5b8501601f81018713612b9457600080fd5b80356001600160401b03811115612bad57612bad612b1e565b604051601f8201601f19908116603f011681016001600160401b0381118282101715612bdb57612bdb612b1e565b604052818152828201602001891015612bf357600080fd5b8160208401602083013760006020838301015280935050505092959194509250565b600080600080600080600080610100898b031215612c3257600080fd5b612c3b896128ed565b9750612c4960208a016128ed565b9650612c5760408a016128ed565b9550612c6560608a016128ed565b945060808901359350612c7a60a08a01612973565b9250612c8860c08a01612973565b9150612c9660e08a0161298a565b90509295985092959890939650565b803563ffffffff8116811461290457600080fd5b600080600080600060a08688031215612cd157600080fd5b612cda86612961565b9450612ce860208701612ca5565b9350612cf660408701612973565b9250612d0460608701612973565b9150612d126080870161298a565b90509295509295909350565b60008060408385031215612d3157600080fd5b612d3a83612961565b9150612d48602084016128ed565b90509250929050565b600080600080600060a08688031215612d6957600080fd5b612cda866128ed565b634e487b7160e01b600052603260045260246000fd5b6020808252600c908201526b125b9d985b1a5908141bdbdb60a21b604082015260600190565b6020808252600890820152671393d517d413d3d360c21b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b8181038181111561092457610924612dd0565b8082018082111561092457610924612dd0565b600061ffff821661ffff8103612e2457612e24612dd0565b60010192915050565b6001600160401b03828116828216039081111561092457610924612dd0565b808202811582820484141761092457610924612dd0565b634e487b7160e01b600052601260045260246000fd5b600082612e8857612e88612e63565b500490565b60006001600160401b03831680612ea657612ea6612e63565b806001600160401b0384160491505092915050565b6001600160401b03818116838216019081111561092457610924612dd0565b6001600160401b038181168382160290811690818114612efc57612efc612dd0565b5092915050565b60006001600160401b0382166001600160401b038103612e2457612e24612dd0565b63ffffffff828116828216039081111561092457610924612dd0565b63ffffffff818116838216019081111561092457610924612dd0565b600060208284031215612f6f57600080fd5b505191905056fea264697066735822122045526ffd2a86c7d061b27954e8514001b4f73200a5975398403c9b966c93c8fc64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -21301,9 +29603,9 @@ export declare class MasterPool__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -21376,10 +29678,36 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly anonymous: false;
 			readonly inputs: readonly [
 				{
+					readonly indexed: false;
+					readonly internalType: "uint64";
+					readonly name: "halvingInterval";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "SetHalvingInterval";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: false;
+					readonly internalType: "uint16";
+					readonly name: "halvingRate";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "SetHalvingRate";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: true;
@@ -21389,21 +29717,21 @@ export declare class MasterPool__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "newAllocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
-					readonly name: "startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "startTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
-					readonly name: "endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "endTime";
+					readonly type: "uint64";
 				}
 			];
 			readonly name: "SetPool";
@@ -21414,9 +29742,9 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly inputs: readonly [
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -21434,11 +29762,11 @@ export declare class MasterPool__factory extends ContractFactory {
 				{
 					readonly indexed: false;
 					readonly internalType: "uint256";
-					readonly name: "newReward";
+					readonly name: "rewardsPerSec";
 					readonly type: "uint256";
 				}
 			];
-			readonly name: "SetReward";
+			readonly name: "SetRewards";
 			readonly type: "event";
 		},
 		{
@@ -21452,9 +29780,9 @@ export declare class MasterPool__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: true;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -21488,19 +29816,19 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -21511,9 +29839,9 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly name: "add";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "nonpayable";
@@ -21522,9 +29850,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -21541,9 +29869,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -21551,9 +29879,9 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint64";
 					readonly name: "_deadline";
-					readonly type: "uint256";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bytes";
@@ -21570,12 +29898,51 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
 				}
 			];
-			readonly name: "getBlockRewardPerShare";
+			readonly name: "getMultiplier";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint64";
+					readonly name: "";
+					readonly type: "uint64";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_fromTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_toTime";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "getPoolRewardsByTime";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
@@ -21589,27 +29956,64 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "_fromBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "_toBlock";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
-			readonly name: "getMultiplier";
+			readonly name: "getPoolRewardsPerSec";
 			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
 					readonly name: "";
 					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_pid";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "getRewardsPerShare";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "halvingInterval";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint64";
+					readonly name: "";
+					readonly type: "uint64";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "halvingRate";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21671,24 +30075,24 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -21696,7 +30100,7 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "bool";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeChef";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -21725,24 +30129,34 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_rewardPerBlock";
-					readonly type: "uint256";
-				},
-				{
 					readonly internalType: "address";
 					readonly name: "_rewardVault";
 					readonly type: "address";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "_startBlock";
+					readonly name: "_rewardsPerSec";
 					readonly type: "uint256";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint16";
+					readonly name: "_halvingRate";
+					readonly type: "uint16";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_halvingInterval";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -21782,9 +30196,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -21833,9 +30247,9 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly name: "poolId";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21852,9 +30266,9 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly name: "poolIdByTokens";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21876,28 +30290,28 @@ export declare class MasterPool__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "startTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "endTime";
+					readonly type: "uint64";
+				},
+				{
+					readonly internalType: "uint64";
+					readonly name: "lastRewardTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "uint256";
-					readonly name: "startBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "endBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "lastRewardBlock";
-					readonly type: "uint256";
-				},
-				{
-					readonly internalType: "uint256";
-					readonly name: "accRewardPerShare";
+					readonly name: "accRewardsPerShare";
 					readonly type: "uint256";
 				}
 			];
@@ -21910,9 +30324,9 @@ export declare class MasterPool__factory extends ContractFactory {
 			readonly name: "poolLength";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -21949,9 +30363,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "poolTokens";
@@ -22020,20 +30434,6 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 			];
-			readonly name: "rewardPerBlock";
-			readonly outputs: readonly [
-				{
-					readonly internalType: "uint256";
-					readonly name: "";
-					readonly type: "uint256";
-				}
-			];
-			readonly stateMutability: "view";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-			];
 			readonly name: "rewardToken";
 			readonly outputs: readonly [
 				{
@@ -22061,25 +30461,39 @@ export declare class MasterPool__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
+			];
+			readonly name: "rewardsPerSec";
+			readonly outputs: readonly [
 				{
 					readonly internalType: "uint256";
+					readonly name: "";
+					readonly type: "uint256";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "_allocPoint";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_startBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_startTime";
+					readonly type: "uint64";
 				},
 				{
-					readonly internalType: "uint256";
-					readonly name: "_endBlock";
-					readonly type: "uint256";
+					readonly internalType: "uint64";
+					readonly name: "_endTime";
+					readonly type: "uint64";
 				},
 				{
 					readonly internalType: "bool";
@@ -22095,13 +30509,55 @@ export declare class MasterPool__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "uint64";
+					readonly name: "_halvingInterval";
+					readonly type: "uint64";
+				}
+			];
+			readonly name: "setHalvingInterval";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint16";
+					readonly name: "_halvingRate";
+					readonly type: "uint16";
+				}
+			];
+			readonly name: "setHalvingRate";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "uint256";
+					readonly name: "_rewardsPerSec";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "setRewardsPerSec";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "totalAllocPoint";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint32";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint32";
 				}
 			];
 			readonly stateMutability: "view";
@@ -22124,9 +30580,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly name: "updatePool";
@@ -22138,23 +30594,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
-					readonly name: "newBlockReward";
-					readonly type: "uint256";
-				}
-			];
-			readonly name: "updateRewardPerBlock";
-			readonly outputs: readonly [
-			];
-			readonly stateMutability: "nonpayable";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
-				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -22181,9 +30623,9 @@ export declare class MasterPool__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "uint256";
@@ -22208,7 +30650,7 @@ export declare class MasterPool__factory extends ContractFactory {
 export type RewardVaultConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class RewardVault__factory extends ContractFactory {
+declare class RewardVault__factory extends ContractFactory {
 	constructor(...args: RewardVaultConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -22219,7 +30661,7 @@ export declare class RewardVault__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): RewardVault__factory;
-	static readonly bytecode = "0x6080604052348015600f57600080fd5b50610a5b8061001f6000396000f3fe608060405234801561001057600080fd5b50600436106100885760003560e01c8063ae6393291161005b578063ae63932914610102578063c4d66de814610115578063e7e31e7a14610128578063f2fde38b1461013b57600080fd5b8063124180381461008d578063715018a6146100ab5780638ce5877c146100b55780638da5cb5b146100c8575b600080fd5b61009561014e565b6040516100a29190610919565b60405180910390f35b6100b361015f565b005b6100b36100c336600461097a565b610173565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546040516001600160a01b0390911681526020016100a2565b6100b3610110366004610997565b610215565b6100b361012336600461097a565b6102ce565b6100b361013636600461097a565b610424565b6100b361014936600461097a565b6104bd565b606061015a60006104fb565b905090565b61016761050f565b610171600061056a565b565b61017b61050f565b6101866000826105db565b6101c95760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a822a72222a960891b60448201526064015b60405180910390fd5b6101d4600082610602565b506040516001600160a01b03821681527f508e01dc09a24291350cfc3ad6e6ee056cfa6df6780f82e57e60190be9f35524906020015b60405180910390a150565b6102206000336105db565b61025e5760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a822a72222a960891b60448201526064016101c0565b6102726001600160a01b0384168383610617565b816001600160a01b0316336001600160a01b0316846001600160a01b03167fa209447764afbca4d7c43c9962941f114f3465f7fde32167c76661eb75b3ef77846040516102c191815260200190565b60405180910390a4505050565b60006102d861066e565b805490915060ff600160401b820416159067ffffffffffffffff166000811580156103005750825b905060008267ffffffffffffffff16600114801561031d5750303b155b90508115801561032b575080155b156103495760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561037357845460ff60401b1916600160401b1785555b6001600160a01b038616610385573395505b61038e86610697565b6103996000876106a8565b506040516001600160a01b03871681527ffb461a9d124e123750171741a89341defba2596b06be0c452e3e0f990c18bb9e9060200160405180910390a1831561041c57845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050565b61042c61050f565b6104376000826105db565b156104785760405162461bcd60e51b8152602060048201526011602482015270222aa82624a1a0aa22afa9a822a72222a960791b60448201526064016101c0565b6104836000826106a8565b506040516001600160a01b03821681527ffb461a9d124e123750171741a89341defba2596b06be0c452e3e0f990c18bb9e9060200161020a565b6104c561050f565b6001600160a01b0381166104ef57604051631e4fbdf760e01b8152600060048201526024016101c0565b6104f88161056a565b50565b60606000610508836106bd565b9392505050565b336105417f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b6001600160a01b0316146101715760405163118cdaa760e01b81523360048201526024016101c0565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b6001600160a01b038116600090815260018301602052604081205415155b90505b92915050565b60006105f9836001600160a01b038416610719565b604080516001600160a01b038416602482015260448082018490528251808303909101815260649091019091526020810180516001600160e01b031663a9059cbb60e01b17905261066990849061080c565b505050565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006105fc565b61069f610883565b6104f8816108a8565b60006105f9836001600160a01b0384166108b0565b60608160000180548060200260200160405190810160405280929190818152602001828054801561070d57602002820191906000526020600020905b8154815260200190600101908083116106f9575b50505050509050919050565b6000818152600183016020526040812054801561080257600061073d6001836109d8565b8554909150600090610751906001906109d8565b90508082146107b6576000866000018281548110610771576107716109f9565b9060005260206000200154905080876000018481548110610794576107946109f9565b6000918252602080832090910192909255918252600188019052604090208390555b85548690806107c7576107c7610a0f565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506105fc565b60009150506105fc565b600080602060008451602086016000885af18061082f576040513d6000823e3d81fd5b50506000513d91508115610847578060011415610854565b6001600160a01b0384163b155b1561087d57604051635274afe760e01b81526001600160a01b03851660048201526024016101c0565b50505050565b61088b6108ff565b61017157604051631afcd79f60e31b815260040160405180910390fd5b6104c5610883565b60008181526001830160205260408120546108f7575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556105fc565b5060006105fc565b600061090961066e565b54600160401b900460ff16919050565b602080825282518282018190526000918401906040840190835b8181101561095a5783516001600160a01b0316835260209384019390920191600101610933565b509095945050505050565b6001600160a01b03811681146104f857600080fd5b60006020828403121561098c57600080fd5b813561050881610965565b6000806000606084860312156109ac57600080fd5b83356109b781610965565b925060208401356109c781610965565b929592945050506040919091013590565b818103818111156105fc57634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052603160045260246000fdfea26469706673582212200941bed44abebd8250e1934e3201e4334cd94326c856ffa662509897db7ddd5d64736f6c634300081e0033";
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b50610aff8061001f6000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c8063ae63932911610066578063ae6393291461010d578063ccb6a27014610120578063d9caed1214610133578063e7e31e7a14610146578063f2fde38b1461015957600080fd5b80631241803814610098578063715018a6146100b65780638ce5877c146100c05780638da5cb5b146100d3575b600080fd5b6100a061016c565b6040516100ad91906109bd565b60405180910390f35b6100be61017d565b005b6100be6100ce366004610a1e565b610191565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546040516001600160a01b0390911681526020016100ad565b6100be61011b366004610a3b565b610233565b6100be61012e366004610a1e565b6102ec565b6100be610141366004610a3b565b610442565b6100be610154366004610a1e565b6104ad565b6100be610167366004610a1e565b610546565b60606101786000610584565b905090565b610185610598565b61018f600061060e565b565b610199610598565b6101a460008261067f565b6101e75760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a822a72222a960891b60448201526064015b60405180910390fd5b6101f26000826106a6565b506040516001600160a01b03821681527f508e01dc09a24291350cfc3ad6e6ee056cfa6df6780f82e57e60190be9f35524906020015b60405180910390a150565b61023e60003361067f565b61027c5760405162461bcd60e51b815260206004820152600f60248201526e24a72b20a624a22fa9a822a72222a960891b60448201526064016101de565b6102906001600160a01b03841683836106bb565b816001600160a01b0316336001600160a01b0316846001600160a01b03167fa209447764afbca4d7c43c9962941f114f3465f7fde32167c76661eb75b3ef77846040516102df91815260200190565b60405180910390a4505050565b60006102f6610712565b805490915060ff600160401b820416159067ffffffffffffffff1660008115801561031e5750825b905060008267ffffffffffffffff16600114801561033b5750303b155b905081158015610349575080155b156103675760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561039157845460ff60401b1916600160401b1785555b6001600160a01b0386166103a3573395505b6103ac8661073b565b6103b760008761074c565b506040516001600160a01b03871681527ffb461a9d124e123750171741a89341defba2596b06be0c452e3e0f990c18bb9e9060200160405180910390a1831561043a57845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050565b61044a610598565b61045e6001600160a01b03841683836106bb565b816001600160a01b0316336001600160a01b0316846001600160a01b03167fa4195c37c2947bbe89165f03e320b6903116f0b10d8cfdb522330f7ce6f9fa24846040516102df91815260200190565b6104b5610598565b6104c060008261067f565b156105015760405162461bcd60e51b8152602060048201526011602482015270222aa82624a1a0aa22afa9a822a72222a960791b60448201526064016101de565b61050c60008261074c565b506040516001600160a01b03821681527ffb461a9d124e123750171741a89341defba2596b06be0c452e3e0f990c18bb9e90602001610228565b61054e610598565b6001600160a01b03811661057857604051631e4fbdf760e01b8152600060048201526024016101de565b6105818161060e565b50565b6060600061059183610761565b9392505050565b60006105cb7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c199300546001600160a01b031690565b90506001600160a01b038116158015906105ee57506001600160a01b0381163314155b156105815760405163118cdaa760e01b81523360048201526024016101de565b7f9016d09d72d40fdae2fd8ceac6b6234c7706214fd39c1cd1e609a0528c19930080546001600160a01b031981166001600160a01b03848116918217845560405192169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3505050565b6001600160a01b038116600090815260018301602052604081205415155b90505b92915050565b600061069d836001600160a01b0384166107bd565b604080516001600160a01b038416602482015260448082018490528251808303909101815260649091019091526020810180516001600160e01b031663a9059cbb60e01b17905261070d9084906108b0565b505050565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006106a0565b610743610927565b6105818161094c565b600061069d836001600160a01b038416610954565b6060816000018054806020026020016040519081016040528092919081815260200182805480156107b157602002820191906000526020600020905b81548152602001906001019080831161079d575b50505050509050919050565b600081815260018301602052604081205480156108a65760006107e1600183610a7c565b85549091506000906107f590600190610a7c565b905080821461085a57600086600001828154811061081557610815610a9d565b906000526020600020015490508087600001848154811061083857610838610a9d565b6000918252602080832090910192909255918252600188019052604090208390555b855486908061086b5761086b610ab3565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506106a0565b60009150506106a0565b600080602060008451602086016000885af1806108d3576040513d6000823e3d81fd5b50506000513d915081156108eb5780600114156108f8565b6001600160a01b0384163b155b1561092157604051635274afe760e01b81526001600160a01b03851660048201526024016101de565b50505050565b61092f6109a3565b61018f57604051631afcd79f60e31b815260040160405180910390fd5b61054e610927565b600081815260018301602052604081205461099b575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556106a0565b5060006106a0565b60006109ad610712565b54600160401b900460ff16919050565b602080825282518282018190526000918401906040840190835b818110156109fe5783516001600160a01b03168352602093840193909201916001016109d7565b509095945050505050565b6001600160a01b038116811461058157600080fd5b600060208284031215610a3057600080fd5b813561059181610a09565b600080600060608486031215610a5057600080fd5b8335610a5b81610a09565b92506020840135610a6b81610a09565b929592945050506040919091013590565b818103818111156106a057634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052603160045260246000fdfea26469706673582212205437642f17423f28cf12c6c5b64751f1960abeb73a8c7377940c4d313458154464736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -22356,6 +30798,37 @@ export declare class RewardVault__factory extends ContractFactory {
 			readonly type: "event";
 		},
 		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "token";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "spender";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: true;
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly indexed: false;
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "Withdrawn";
+			readonly type: "event";
+		},
+		{
 			readonly inputs: readonly [
 				{
 					readonly internalType: "address";
@@ -22377,7 +30850,7 @@ export declare class RewardVault__factory extends ContractFactory {
 					readonly type: "address";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeVault";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -22471,6 +30944,30 @@ export declare class RewardVault__factory extends ContractFactory {
 			];
 			readonly stateMutability: "nonpayable";
 			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "contract IERC20";
+					readonly name: "token";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "address";
+					readonly name: "to";
+					readonly type: "address";
+				},
+				{
+					readonly internalType: "uint256";
+					readonly name: "value";
+					readonly type: "uint256";
+				}
+			];
+			readonly name: "withdraw";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
 		}
 	];
 	static createInterface(): RewardVaultInterface;
@@ -22479,7 +30976,7 @@ export declare class RewardVault__factory extends ContractFactory {
 export type InitializableProxyConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class InitializableProxy__factory extends ContractFactory {
+declare class InitializableProxy__factory extends ContractFactory {
 	constructor(...args: InitializableProxyConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -22490,7 +30987,7 @@ export declare class InitializableProxy__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): InitializableProxy__factory;
-	static readonly bytecode = "0x6080604052348015600f57600080fd5b506106f18061001f6000396000f3fe60806040526004361061004e5760003560e01c80634f1ef286146100655780635c60da1b146100785780638f283970146100a9578063dce95104146100c9578063f851a440146100dc5761005d565b3661005d5761005b6100f1565b005b61005b6100f1565b61005b6100733660046105be565b610103565b34801561008457600080fd5b5061008d61016a565b6040516001600160a01b03909116815260200160405180910390f35b3480156100b557600080fd5b5061005b6100c436600461060c565b610179565b61005b6100d736600461062e565b6101d9565b3480156100e857600080fd5b5061008d610263565b6101016100fc61026d565b610277565b565b61010b61029b565b6001600160a01b0316336001600160a01b03161461015c5760405162461bcd60e51b81526020600482015260096024820152682727aa2fa0a226a4a760b91b60448201526064015b60405180910390fd5b61016682826102a5565b5050565b600061017461026d565b905090565b61018161029b565b6001600160a01b0316336001600160a01b0316146101cd5760405162461bcd60e51b81526020600482015260096024820152682727aa2fa0a226a4a760b91b6044820152606401610153565b6101d681610364565b50565b60006101e361026d565b6001600160a01b0316148015610209575060006101fe61029b565b6001600160a01b0316145b61024b5760405162461bcd60e51b81526020600482015260136024820152721053149150511657d253925512505312569151606a1b6044820152606401610153565b61025483610364565b61025e82826102a5565b505050565b600061017461029b565b60006101746103b8565b3660008037600080366000845af43d6000803e808015610296573d6000f35b3d6000fd5b60006101746103eb565b6102ae82610413565b6040516001600160a01b038316907fbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b90600090a280511561035c57600080836001600160a01b031683604051610304919061068c565b600060405180830381855af49150503d806000811461033f576040519150601f19603f3d011682016040523d82523d6000602084013e610344565b606091505b50915091508161035657805181602001fd5b50505050565b61016661048d565b7f7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f61038d6103eb565b604080516001600160a01b03928316815291841660208301520160405180910390a16101d6816104ac565b60007f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5b546001600160a01b0316919050565b60007fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61036103dc565b806001600160a01b03163b60000361044957604051634c9c8ce360e01b81526001600160a01b0382166004820152602401610153565b807f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5b80546001600160a01b0319166001600160a01b039290921691909117905550565b34156101015760405163b398979f60e01b815260040160405180910390fd5b6001600160a01b0381166104d657604051633173bdd160e11b815260006004820152602401610153565b807fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d610361046c565b80356001600160a01b038116811461051457600080fd5b919050565b634e487b7160e01b600052604160045260246000fd5b600082601f83011261054057600080fd5b813567ffffffffffffffff81111561055a5761055a610519565b604051601f8201601f19908116603f0116810167ffffffffffffffff8111828210171561058957610589610519565b6040528181528382016020018510156105a157600080fd5b816020850160208301376000918101602001919091529392505050565b600080604083850312156105d157600080fd5b6105da836104fd565b9150602083013567ffffffffffffffff8111156105f657600080fd5b6106028582860161052f565b9150509250929050565b60006020828403121561061e57600080fd5b610627826104fd565b9392505050565b60008060006060848603121561064357600080fd5b61064c846104fd565b925061065a602085016104fd565b9150604084013567ffffffffffffffff81111561067657600080fd5b6106828682870161052f565b9150509250925092565b6000825160005b818110156106ad5760208186018101518583015201610693565b50600092019182525091905056fea2646970667358221220d8f3e575724754343ed4950d89a16f1d7aedf31b33867b821f1b427cfc554adc64736f6c634300081e0033";
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b50610acf8061001f6000396000f3fe6080604052600436106100745760003560e01c80635c60da1b1161004e5780635c60da1b146100f05780639f712f2f14610105578063aba0017314610125578063ee0530f41461013857610083565b80633e47158c1461008b5780634f1ef286146100bd5780635a28dda4146100d057610083565b366100835761008161015a565b005b61008161015a565b34801561009757600080fd5b506100a061016c565b6040516001600160a01b0390911681526020015b60405180910390f35b6100816100cb366004610785565b61017b565b3480156100dc57600080fd5b506100816100eb3660046107d3565b61030e565b3480156100fc57600080fd5b506100a06103cd565b34801561011157600080fd5b50610081610120366004610810565b6103d7565b610081610133366004610832565b610431565b34801561014457600080fd5b5061014d6104bf565b6040516100b491906108e0565b61016a610165610570565b61057a565b565b60006101766105a3565b905090565b61018361016c565b6001600160a01b0316336001600160a01b031614806101b057506101a561016c565b6001600160a01b0316155b6101d55760405162461bcd60e51b81526004016101cc90610913565b60405180910390fd5b816001600160a01b03163b60000361020b57604051634c9c8ce360e01b81526001600160a01b03831660048201526024016101cc565b7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc80546001600160a01b0319166001600160a01b0384169081179091556040517fbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b90600090a28051156102eb57600080836001600160a01b0316836040516102939190610936565b600060405180830381855af49150503d80600081146102ce576040519150601f19603f3d011682016040523d82523d6000602084013e6102d3565b606091505b5091509150816102e557805181602001fd5b50505050565b341561030a5760405163b398979f60e01b815260040160405180910390fd5b5050565b61031661016c565b6001600160a01b0316336001600160a01b03161480610343575061033861016c565b6001600160a01b0316155b61035f5760405162461bcd60e51b81526004016101cc90610913565b8051156103ca577ffcba12fcf625f4823c7c0c86b97ab29721afc9e784836bc00bf04553a0c8dff461039182826109da565b507f8a1bce929b257bfd582fa164d9b9fa4d4b0b7442b10b3aad23e2c56aa4e0d61a816040516103c191906108e0565b60405180910390a15b50565b6000610176610570565b6103df61016c565b6001600160a01b0316336001600160a01b0316148061040c575061040161016c565b6001600160a01b0316155b6104285760405162461bcd60e51b81526004016101cc90610913565b6103ca816105d6565b600061043b610570565b6001600160a01b03161480156104615750600061045661016c565b6001600160a01b0316145b6104a35760405162461bcd60e51b81526020600482015260136024820152721053149150511657d253925512505312569151606a1b60448201526064016101cc565b6104ad828261017b565b6104b68461030e565b6102e5836103d7565b60607ffcba12fcf625f4823c7c0c86b97ab29721afc9e784836bc00bf04553a0c8dff480546104ed90610952565b80601f016020809104026020016040519081016040528092919081815260200182805461051990610952565b80156105665780601f1061053b57610100808354040283529160200191610566565b820191906000526020600020905b81548152906001019060200180831161054957829003601f168201915b5050505050905090565b600061017661062a565b3660008037600080366000845af43d6000803e808015610599573d6000f35b3d6000fd5b505050565b60007fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035b546001600160a01b0316919050565b7f7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f6105ff6105a3565b604080516001600160a01b03928316815291841660208301520160405180910390a16103ca81610652565b60007f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc6105c7565b6001600160a01b03811661067c57604051633173bdd160e11b8152600060048201526024016101cc565b7fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d610380546001600160a01b0319166001600160a01b0392909216919091179055565b80356001600160a01b03811681146106d457600080fd5b919050565b634e487b7160e01b600052604160045260246000fd5b600082601f83011261070057600080fd5b81356020830160008067ffffffffffffffff841115610721576107216106d9565b50604051601f19601f85018116603f0116810181811067ffffffffffffffff82111715610750576107506106d9565b60405283815290508082840187101561076857600080fd5b838360208301376000602085830101528094505050505092915050565b6000806040838503121561079857600080fd5b6107a1836106bd565b9150602083013567ffffffffffffffff8111156107bd57600080fd5b6107c9858286016106ef565b9150509250929050565b6000602082840312156107e557600080fd5b813567ffffffffffffffff8111156107fc57600080fd5b610808848285016106ef565b949350505050565b60006020828403121561082257600080fd5b61082b826106bd565b9392505050565b6000806000806080858703121561084857600080fd5b843567ffffffffffffffff81111561085f57600080fd5b61086b878288016106ef565b94505061087a602086016106bd565b9250610888604086016106bd565b9150606085013567ffffffffffffffff8111156108a457600080fd5b6108b0878288016106ef565b91505092959194509250565b60005b838110156108d75781810151838201526020016108bf565b50506000910152565b60208152600082518060208401526108ff8160408501602087016108bc565b601f01601f19169190910160400192915050565b6020808252600990820152682727aa2fa0a226a4a760b91b604082015260600190565b600082516109488184602087016108bc565b9190910192915050565b600181811c9082168061096657607f821691505b60208210810361098657634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561059e57806000526020600020601f840160051c810160208510156109b35750805b601f840160051c820191505b818110156109d357600081556001016109bf565b5050505050565b815167ffffffffffffffff8111156109f4576109f46106d9565b610a0881610a028454610952565b8461098c565b6020601f821160018114610a3c5760008315610a245750848201515b600019600385901b1c1916600184901b1784556109d3565b600084815260208120601f198516915b82811015610a6c5787850151825560209485019460019092019101610a4c565b5084821015610a8a5786840151600019600387901b60f8161c191681555b50505050600190811b0190555056fea26469706673582212204d57a77bddefd131f417a2ae9dbad35cbd8ebbd1d00c38b0b945c3b1a8c8205064736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -22543,6 +31040,19 @@ export declare class InitializableProxy__factory extends ContractFactory {
 			readonly anonymous: false;
 			readonly inputs: readonly [
 				{
+					readonly indexed: false;
+					readonly internalType: "string";
+					readonly name: "description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "DescriptionChanged";
+			readonly type: "event";
+		},
+		{
+			readonly anonymous: false;
+			readonly inputs: readonly [
+				{
 					readonly indexed: true;
 					readonly internalType: "address";
 					readonly name: "implementation";
@@ -22558,27 +31068,27 @@ export declare class InitializableProxy__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
-			];
-			readonly name: "admin";
-			readonly outputs: readonly [
-				{
-					readonly internalType: "address";
-					readonly name: "";
-					readonly type: "address";
-				}
-			];
-			readonly stateMutability: "view";
-			readonly type: "function";
-		},
-		{
-			readonly inputs: readonly [
 				{
 					readonly internalType: "address";
 					readonly name: "newAdmin";
 					readonly type: "address";
 				}
 			];
-			readonly name: "changeAdmin";
+			readonly name: "changeProxyAdmin";
+			readonly outputs: readonly [
+			];
+			readonly stateMutability: "nonpayable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				}
+			];
+			readonly name: "changeProxyDescription";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -22601,6 +31111,11 @@ export declare class InitializableProxy__factory extends ContractFactory {
 		{
 			readonly inputs: readonly [
 				{
+					readonly internalType: "string";
+					readonly name: "_description";
+					readonly type: "string";
+				},
+				{
 					readonly internalType: "address";
 					readonly name: "newAdmin";
 					readonly type: "address";
@@ -22620,6 +31135,34 @@ export declare class InitializableProxy__factory extends ContractFactory {
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "payable";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "proxyAdmin";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "address";
+					readonly name: "";
+					readonly type: "address";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
+			];
+			readonly name: "proxyDescription";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "string";
+					readonly name: "";
+					readonly type: "string";
+				}
+			];
+			readonly stateMutability: "view";
 			readonly type: "function";
 		},
 		{
@@ -22649,7 +31192,7 @@ export declare class InitializableProxy__factory extends ContractFactory {
 	static createInterface(): InitializableProxyInterface;
 	static connect(address: string, runner?: ContractRunner | null): InitializableProxy;
 }
-export declare class ERC20Lockable__factory {
+declare class ERC20Lockable__factory {
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -23273,6 +31816,25 @@ export declare class ERC20Lockable__factory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "bytes4";
+					readonly name: "interfaceId";
+					readonly type: "bytes4";
+				}
+			];
+			readonly name: "supportsInterface";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "symbol";
 			readonly outputs: readonly [
@@ -23359,7 +31921,7 @@ export declare class ERC20Lockable__factory {
 export type ERC20MockConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class ERC20Mock__factory extends ContractFactory {
+declare class ERC20Mock__factory extends ContractFactory {
 	constructor(...args: ERC20MockConstructorParams);
 	getDeployTransaction(name_: string, symbol_: string, decimals_: BigNumberish, supply_: BigNumberish, overrides?: NonPayableOverrides & {
 		from?: string;
@@ -23370,7 +31932,7 @@ export declare class ERC20Mock__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): ERC20Mock__factory;
-	static readonly bytecode = "0x61018060405234801561001157600080fd5b506040516118a63803806118a68339810160408190526100309161045f565b338480604051806040016040528060018152602001603160f81b8152508787816003908161005e9190610571565b50600461006b8282610571565b5061007b91508390506005610175565b6101205261008a816006610175565b61014052815160208084019190912060e052815190820120610100524660a05261011760e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c052506001600160a01b03811661015057604051631e4fbdf760e01b8152600060048201526024015b60405180910390fd5b610159816101a8565b5060ff82166101605261016c33826101fa565b505050506106a7565b60006020835110156101915761018a83610234565b90506101a2565b8161019c8482610571565b5060ff90505b92915050565b600880546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b6001600160a01b0382166102245760405163ec442f0560e01b815260006004820152602401610147565b61023060008383610272565b5050565b600080829050601f8151111561025f578260405163305a27a960e01b8152600401610147919061062f565b805161026a82610662565b179392505050565b6001600160a01b03831661029d5780600260008282546102929190610686565b9091555061030f9050565b6001600160a01b038316600090815260208190526040902054818110156102f05760405163391434e360e21b81526001600160a01b03851660048201526024810182905260448101839052606401610147565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b03821661032b5760028054829003905561034a565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8360405161038f91815260200190565b60405180910390a3505050565b634e487b7160e01b600052604160045260246000fd5b60005b838110156103cd5781810151838201526020016103b5565b50506000910152565b600082601f8301126103e757600080fd5b81516001600160401b038111156104005761040061039c565b604051601f8201601f19908116603f011681016001600160401b038111828210171561042e5761042e61039c565b60405281815283820160200185101561044657600080fd5b6104578260208301602087016103b2565b949350505050565b6000806000806080858703121561047557600080fd5b84516001600160401b0381111561048b57600080fd5b610497878288016103d6565b602087015190955090506001600160401b038111156104b557600080fd5b6104c1878288016103d6565b935050604085015160ff811681146104d857600080fd5b6060959095015193969295505050565b600181811c908216806104fc57607f821691505b60208210810361051c57634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561056c57806000526020600020601f840160051c810160208510156105495750805b601f840160051c820191505b818110156105695760008155600101610555565b50505b505050565b81516001600160401b0381111561058a5761058a61039c565b61059e8161059884546104e8565b84610522565b6020601f8211600181146105d257600083156105ba5750848201515b600019600385901b1c1916600184901b178455610569565b600084815260208120601f198516915b8281101561060257878501518255602094850194600190920191016105e2565b50848210156106205786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015261064e8160408501602087016103b2565b601f01601f19169190910160400192915050565b8051602080830151919081101561051c5760001960209190910360031b1b16919050565b808201808211156101a257634e487b7160e01b600052601160045260246000fd5b60805160a05160c05160e0516101005161012051610140516101605161119a61070c600039600061019e015260006109840152600061095701526000610814015260006107ec01526000610747015260006107710152600061079b015261119a6000f3fe608060405234801561001057600080fd5b506004361061012c5760003560e01c806379cc6790116100ad578063a0712d6811610071578063a0712d681461028d578063a9059cbb146102a0578063d505accf146102b3578063dd62ed3e146102c6578063f2fde38b146102ff57600080fd5b806379cc6790146102295780637ecebe001461023c57806384b0196e1461024f5780638da5cb5b1461026a57806395d89b411461028557600080fd5b80633644e515116100f45780633644e515146101c857806340c10f19146101d057806342966c68146101e557806370a08231146101f8578063715018a61461022157600080fd5b806306fdde0314610131578063095ea7b31461014f57806318160ddd1461017257806323b872dd14610184578063313ce56714610197575b600080fd5b610139610312565b6040516101469190610ee4565b60405180910390f35b61016261015d366004610f1a565b6103a4565b6040519015158152602001610146565b6002545b604051908152602001610146565b610162610192366004610f44565b6103be565b60405160ff7f0000000000000000000000000000000000000000000000000000000000000000168152602001610146565b6101766103e2565b6101e36101de366004610f1a565b6103f1565b005b6101e36101f3366004610f81565b610407565b610176610206366004610f9a565b6001600160a01b031660009081526020819052604090205490565b6101e3610414565b6101e3610237366004610f1a565b610428565b61017661024a366004610f9a565b61043d565b61025761045b565b6040516101469796959493929190610fb5565b6008546040516001600160a01b039091168152602001610146565b6101396104a1565b6101e361029b366004610f81565b6104b0565b6101626102ae366004610f1a565b6104c2565b6101e36102c136600461104d565b6104d0565b6101766102d43660046110c0565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b6101e361030d366004610f9a565b61060f565b606060038054610321906110f3565b80601f016020809104026020016040519081016040528092919081815260200182805461034d906110f3565b801561039a5780601f1061036f5761010080835404028352916020019161039a565b820191906000526020600020905b81548152906001019060200180831161037d57829003601f168201915b5050505050905090565b6000336103b281858561064a565b60019150505b92915050565b6000336103cc85828561065c565b6103d78585856106db565b506001949350505050565b60006103ec61073a565b905090565b6103f9610865565b6104038282610892565b5050565b61041133826108c8565b50565b61041c610865565b61042660006108fe565b565b61043382338361065c565b61040382826108c8565b6001600160a01b0381166000908152600760205260408120546103b8565b60006060806000806000606061046f610950565b61047761097d565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b606060048054610321906110f3565b6104b8610865565b6104113382610892565b6000336103b28185856106db565b834211156104f95760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105468c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105a1826109aa565b905060006105b1828787876109d7565b9050896001600160a01b0316816001600160a01b0316146105f8576040516325c0072360e11b81526001600160a01b0380831660048301528b1660248201526044016104f0565b6106038a8a8a61064a565b50505050505050505050565b610617610865565b6001600160a01b03811661064157604051631e4fbdf760e01b8152600060048201526024016104f0565b610411816108fe565b6106578383836001610a05565b505050565b6001600160a01b038381166000908152600160209081526040808320938616835292905220546000198110156106d557818110156106c657604051637dc7a0d960e11b81526001600160a01b038416600482015260248101829052604481018390526064016104f0565b6106d584848484036000610a05565b50505050565b6001600160a01b03831661070557604051634b637e8f60e11b8152600060048201526024016104f0565b6001600160a01b03821661072f5760405163ec442f0560e01b8152600060048201526024016104f0565b610657838383610ada565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561079357507f000000000000000000000000000000000000000000000000000000000000000046145b156107bd57507f000000000000000000000000000000000000000000000000000000000000000090565b6103ec604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b6008546001600160a01b031633146104265760405163118cdaa760e01b81523360048201526024016104f0565b6001600160a01b0382166108bc5760405163ec442f0560e01b8152600060048201526024016104f0565b61040360008383610ada565b6001600160a01b0382166108f257604051634b637e8f60e11b8152600060048201526024016104f0565b61040382600083610ada565b600880546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b60606103ec7f00000000000000000000000000000000000000000000000000000000000000006005610c04565b60606103ec7f00000000000000000000000000000000000000000000000000000000000000006006610c04565b60006103b86109b761073a565b8360405161190160f01b8152600281019290925260228201526042902090565b6000806000806109e988888888610caf565b9250925092506109f98282610d7e565b50909695505050505050565b6001600160a01b038416610a2f5760405163e602df0560e01b8152600060048201526024016104f0565b6001600160a01b038316610a5957604051634a1406b160e11b8152600060048201526024016104f0565b6001600160a01b03808516600090815260016020908152604080832093871683529290522082905580156106d557826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610acc91815260200190565b60405180910390a350505050565b6001600160a01b038316610b05578060026000828254610afa919061112d565b90915550610b779050565b6001600160a01b03831660009081526020819052604090205481811015610b585760405163391434e360e21b81526001600160a01b038516600482015260248101829052604481018390526064016104f0565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610b9357600280548290039055610bb2565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610bf791815260200190565b60405180910390a3505050565b606060ff8314610c1e57610c1783610e37565b90506103b8565b818054610c2a906110f3565b80601f0160208091040260200160405190810160405280929190818152602001828054610c56906110f3565b8015610ca35780601f10610c7857610100808354040283529160200191610ca3565b820191906000526020600020905b815481529060010190602001808311610c8657829003601f168201915b505050505090506103b8565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610cea5750600091506003905082610d74565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610d3e573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d6a57506000925060019150829050610d74565b9250600091508190505b9450945094915050565b6000826003811115610d9257610d9261114e565b03610d9b575050565b6001826003811115610daf57610daf61114e565b03610dcd5760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610de157610de161114e565b03610e025760405163fce698f760e01b8152600481018290526024016104f0565b6003826003811115610e1657610e1661114e565b03610403576040516335e2f38360e21b8152600481018290526024016104f0565b60606000610e4483610e76565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103b857604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610ec457602081850181015186830182015201610ea8565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610ef76020830184610e9e565b9392505050565b80356001600160a01b0381168114610f1557600080fd5b919050565b60008060408385031215610f2d57600080fd5b610f3683610efe565b946020939093013593505050565b600080600060608486031215610f5957600080fd5b610f6284610efe565b9250610f7060208501610efe565b929592945050506040919091013590565b600060208284031215610f9357600080fd5b5035919050565b600060208284031215610fac57600080fd5b610ef782610efe565b60ff60f81b8816815260e060208201526000610fd460e0830189610e9e565b8281036040840152610fe68189610e9e565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b8181101561103c57835183526020938401939092019160010161101e565b50909b9a5050505050505050505050565b600080600080600080600060e0888a03121561106857600080fd5b61107188610efe565b965061107f60208901610efe565b95506040880135945060608801359350608088013560ff811681146110a357600080fd5b9699959850939692959460a0840135945060c09093013592915050565b600080604083850312156110d357600080fd5b6110dc83610efe565b91506110ea60208401610efe565b90509250929050565b600181811c9082168061110757607f821691505b60208210810361112757634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103b857634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea2646970667358221220143565bfd7ebabe28a38c0c71d05fbfa76b60b442df54b9ea16c5eda9980e30664736f6c634300081e0033";
+	static readonly bytecode = "0x61018060405234801561001157600080fd5b506040516118a63803806118a68339810160408190526100309161045f565b338480604051806040016040528060018152602001603160f81b8152508787816003908161005e9190610571565b50600461006b8282610571565b5061007b91508390506005610175565b6101205261008a816006610175565b61014052815160208084019190912060e052815190820120610100524660a05261011760e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c052506001600160a01b03811661015057604051631e4fbdf760e01b8152600060048201526024015b60405180910390fd5b610159816101a8565b5060ff82166101605261016c33826101fa565b505050506106a7565b60006020835110156101915761018a83610234565b90506101a2565b8161019c8482610571565b5060ff90505b92915050565b600880546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b6001600160a01b0382166102245760405163ec442f0560e01b815260006004820152602401610147565b61023060008383610272565b5050565b600080829050601f8151111561025f578260405163305a27a960e01b8152600401610147919061062f565b805161026a82610662565b179392505050565b6001600160a01b03831661029d5780600260008282546102929190610686565b9091555061030f9050565b6001600160a01b038316600090815260208190526040902054818110156102f05760405163391434e360e21b81526001600160a01b03851660048201526024810182905260448101839052606401610147565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b03821661032b5760028054829003905561034a565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8360405161038f91815260200190565b60405180910390a3505050565b634e487b7160e01b600052604160045260246000fd5b60005b838110156103cd5781810151838201526020016103b5565b50506000910152565b600082601f8301126103e757600080fd5b81516001600160401b038111156104005761040061039c565b604051601f8201601f19908116603f011681016001600160401b038111828210171561042e5761042e61039c565b60405281815283820160200185101561044657600080fd5b6104578260208301602087016103b2565b949350505050565b6000806000806080858703121561047557600080fd5b84516001600160401b0381111561048b57600080fd5b610497878288016103d6565b602087015190955090506001600160401b038111156104b557600080fd5b6104c1878288016103d6565b935050604085015160ff811681146104d857600080fd5b6060959095015193969295505050565b600181811c908216806104fc57607f821691505b60208210810361051c57634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561056c57806000526020600020601f840160051c810160208510156105495750805b601f840160051c820191505b818110156105695760008155600101610555565b50505b505050565b81516001600160401b0381111561058a5761058a61039c565b61059e8161059884546104e8565b84610522565b6020601f8211600181146105d257600083156105ba5750848201515b600019600385901b1c1916600184901b178455610569565b600084815260208120601f198516915b8281101561060257878501518255602094850194600190920191016105e2565b50848210156106205786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015261064e8160408501602087016103b2565b601f01601f19169190910160400192915050565b8051602080830151919081101561051c5760001960209190910360031b1b16919050565b808201808211156101a257634e487b7160e01b600052601160045260246000fd5b60805160a05160c05160e0516101005161012051610140516101605161119a61070c600039600061019e015260006109840152600061095701526000610814015260006107ec01526000610747015260006107710152600061079b015261119a6000f3fe608060405234801561001057600080fd5b506004361061012c5760003560e01c806379cc6790116100ad578063a0712d6811610071578063a0712d681461028d578063a9059cbb146102a0578063d505accf146102b3578063dd62ed3e146102c6578063f2fde38b146102ff57600080fd5b806379cc6790146102295780637ecebe001461023c57806384b0196e1461024f5780638da5cb5b1461026a57806395d89b411461028557600080fd5b80633644e515116100f45780633644e515146101c857806340c10f19146101d057806342966c68146101e557806370a08231146101f8578063715018a61461022157600080fd5b806306fdde0314610131578063095ea7b31461014f57806318160ddd1461017257806323b872dd14610184578063313ce56714610197575b600080fd5b610139610312565b6040516101469190610ee4565b60405180910390f35b61016261015d366004610f1a565b6103a4565b6040519015158152602001610146565b6002545b604051908152602001610146565b610162610192366004610f44565b6103be565b60405160ff7f0000000000000000000000000000000000000000000000000000000000000000168152602001610146565b6101766103e2565b6101e36101de366004610f1a565b6103f1565b005b6101e36101f3366004610f81565b610407565b610176610206366004610f9a565b6001600160a01b031660009081526020819052604090205490565b6101e3610414565b6101e3610237366004610f1a565b610428565b61017661024a366004610f9a565b61043d565b61025761045b565b6040516101469796959493929190610fb5565b6008546040516001600160a01b039091168152602001610146565b6101396104a1565b6101e361029b366004610f81565b6104b0565b6101626102ae366004610f1a565b6104c2565b6101e36102c136600461104d565b6104d0565b6101766102d43660046110c0565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b6101e361030d366004610f9a565b61060f565b606060038054610321906110f3565b80601f016020809104026020016040519081016040528092919081815260200182805461034d906110f3565b801561039a5780601f1061036f5761010080835404028352916020019161039a565b820191906000526020600020905b81548152906001019060200180831161037d57829003601f168201915b5050505050905090565b6000336103b281858561064a565b60019150505b92915050565b6000336103cc85828561065c565b6103d78585856106db565b506001949350505050565b60006103ec61073a565b905090565b6103f9610865565b6104038282610892565b5050565b61041133826108c8565b50565b61041c610865565b61042660006108fe565b565b61043382338361065c565b61040382826108c8565b6001600160a01b0381166000908152600760205260408120546103b8565b60006060806000806000606061046f610950565b61047761097d565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b606060048054610321906110f3565b6104b8610865565b6104113382610892565b6000336103b28185856106db565b834211156104f95760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105468c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105a1826109aa565b905060006105b1828787876109d7565b9050896001600160a01b0316816001600160a01b0316146105f8576040516325c0072360e11b81526001600160a01b0380831660048301528b1660248201526044016104f0565b6106038a8a8a61064a565b50505050505050505050565b610617610865565b6001600160a01b03811661064157604051631e4fbdf760e01b8152600060048201526024016104f0565b610411816108fe565b6106578383836001610a05565b505050565b6001600160a01b038381166000908152600160209081526040808320938616835292905220546000198110156106d557818110156106c657604051637dc7a0d960e11b81526001600160a01b038416600482015260248101829052604481018390526064016104f0565b6106d584848484036000610a05565b50505050565b6001600160a01b03831661070557604051634b637e8f60e11b8152600060048201526024016104f0565b6001600160a01b03821661072f5760405163ec442f0560e01b8152600060048201526024016104f0565b610657838383610ada565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561079357507f000000000000000000000000000000000000000000000000000000000000000046145b156107bd57507f000000000000000000000000000000000000000000000000000000000000000090565b6103ec604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b6008546001600160a01b031633146104265760405163118cdaa760e01b81523360048201526024016104f0565b6001600160a01b0382166108bc5760405163ec442f0560e01b8152600060048201526024016104f0565b61040360008383610ada565b6001600160a01b0382166108f257604051634b637e8f60e11b8152600060048201526024016104f0565b61040382600083610ada565b600880546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b60606103ec7f00000000000000000000000000000000000000000000000000000000000000006005610c04565b60606103ec7f00000000000000000000000000000000000000000000000000000000000000006006610c04565b60006103b86109b761073a565b8360405161190160f01b8152600281019290925260228201526042902090565b6000806000806109e988888888610caf565b9250925092506109f98282610d7e565b50909695505050505050565b6001600160a01b038416610a2f5760405163e602df0560e01b8152600060048201526024016104f0565b6001600160a01b038316610a5957604051634a1406b160e11b8152600060048201526024016104f0565b6001600160a01b03808516600090815260016020908152604080832093871683529290522082905580156106d557826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610acc91815260200190565b60405180910390a350505050565b6001600160a01b038316610b05578060026000828254610afa919061112d565b90915550610b779050565b6001600160a01b03831660009081526020819052604090205481811015610b585760405163391434e360e21b81526001600160a01b038516600482015260248101829052604481018390526064016104f0565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610b9357600280548290039055610bb2565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610bf791815260200190565b60405180910390a3505050565b606060ff8314610c1e57610c1783610e37565b90506103b8565b818054610c2a906110f3565b80601f0160208091040260200160405190810160405280929190818152602001828054610c56906110f3565b8015610ca35780601f10610c7857610100808354040283529160200191610ca3565b820191906000526020600020905b815481529060010190602001808311610c8657829003601f168201915b505050505090506103b8565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610cea5750600091506003905082610d74565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610d3e573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d6a57506000925060019150829050610d74565b9250600091508190505b9450945094915050565b6000826003811115610d9257610d9261114e565b03610d9b575050565b6001826003811115610daf57610daf61114e565b03610dcd5760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610de157610de161114e565b03610e025760405163fce698f760e01b8152600481018290526024016104f0565b6003826003811115610e1657610e1661114e565b03610403576040516335e2f38360e21b8152600481018290526024016104f0565b60606000610e4483610e76565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103b857604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610ec457602081850181015186830182015201610ea8565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610ef76020830184610e9e565b9392505050565b80356001600160a01b0381168114610f1557600080fd5b919050565b60008060408385031215610f2d57600080fd5b610f3683610efe565b946020939093013593505050565b600080600060608486031215610f5957600080fd5b610f6284610efe565b9250610f7060208501610efe565b929592945050506040919091013590565b600060208284031215610f9357600080fd5b5035919050565b600060208284031215610fac57600080fd5b610ef782610efe565b60ff60f81b8816815260e060208201526000610fd460e0830189610e9e565b8281036040840152610fe68189610e9e565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b8181101561103c57835183526020938401939092019160010161101e565b50909b9a5050505050505050505050565b600080600080600080600060e0888a03121561106857600080fd5b61107188610efe565b965061107f60208901610efe565b95506040880135945060608801359350608088013560ff811681146110a357600080fd5b9699959850939692959460a0840135945060c09093013592915050565b600080604083850312156110d357600080fd5b6110dc83610efe565b91506110ea60208401610efe565b90509250929050565b600181811c9082168061110757607f821691505b60208210810361112757634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103b857634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea26469706673582212206507e1fc5bdea4e01649335370151e1bc39e110e11e831b82b09339216d6bd2e64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -24077,7 +32639,7 @@ export declare class ERC20Mock__factory extends ContractFactory {
 export type ERC4626PoolConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class ERC4626Pool__factory extends ContractFactory {
+declare class ERC4626Pool__factory extends ContractFactory {
 	constructor(...args: ERC4626PoolConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -24088,7 +32650,7 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): ERC4626Pool__factory;
-	static readonly bytecode = "0x6080604052348015600f57600080fd5b5061253d8061001f6000396000f3fe608060405234801561001057600080fd5b506004361061025e5760003560e01c80638c7ab1d711610146578063c6e6f592116100c3578063dd62ed3e11610087578063dd62ed3e146104fc578063ef8b30f7146102a8578063f10684541461050f578063f5eb42dc14610518578063f7c618c11461052b578063f97d3d071461053e57600080fd5b8063c6e6f592146102a8578063ce96cb77146104b0578063d505accf146104c3578063d905777e146104d6578063dd467064146104e957600080fd5b8063a9059cbb1161010a578063a9059cbb14610477578063b3d7f6b9146102a8578063b460af941461048a578063ba0876521461049d578063c63d75b61461039257600080fd5b80638c7ab1d71461041657806394bf804d1461042957806395d89b411461043c5780639bc289f1146104445780639fc8ae6d1461046457600080fd5b8063358394d8116101df5780634cdad506116101a35780634cdad506146102a85780636bcfdc34146103ba5780636e553f65146103c257806370a08231146103d55780637ecebe00146103e857806384b0196e146103fb57600080fd5b8063358394d8146103455780633644e5151461035857806338d52e0f14610360578063402d267d146103925780634a4fbeec146103a757600080fd5b80630a28a477116102265780630a28a477146102a857806318160ddd146102de5780631b96b2f91461030557806323b872dd14610318578063313ce5671461032b57600080fd5b806301e1d1141461026357806302a19a9e1461027e57806306fdde031461029357806307a2d13a146102a8578063095ea7b3146102bb575b600080fd5b61026b61056c565b6040519081526020015b60405180910390f35b61029161028c366004611e7f565b61059b565b005b61029b610704565b6040516102759190611f84565b61026b6102b6366004611f97565b6107ad565b6102ce6102c9366004611fb0565b6107b7565b6040519015158152602001610275565b7f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace025461026b565b610291610313366004611fb0565b6107cf565b6102ce610326366004611fda565b61082a565b61033361084e565b60405160ff9091168152602001610275565b610291610353366004612017565b610858565b61026b610ab0565b6000805160206124e8833981519152546001600160a01b03165b6040516001600160a01b039091168152602001610275565b61026b6103a0366004612064565b5060001990565b6102ce6103b5366004612064565b610aba565b6102ce610adb565b61026b6103d036600461207f565b610b18565b61026b6103e3366004612064565b610b3e565b61026b6103f6366004612064565b610be3565b610403610bee565b60405161027597969594939291906120ab565b60015461037a906001600160a01b031681565b61026b61043736600461207f565b610c9a565b61029b610cb8565b61026b610452366004612064565b60006020819052908152604090205481565b610291610472366004611fb0565b610cf7565b6102ce610485366004611fb0565b610d4e565b61026b610498366004612143565b610d5c565b61026b6104ab366004612143565b610db4565b61026b6104be366004612064565b610e03565b6102916104d136600461217f565b610e14565b61026b6104e4366004612064565b610f30565b6102916104f7366004611f97565b610f3b565b61026b61050a3660046121f2565b610f48565b61026b60025481565b61026b610526366004612064565b610f92565b60035461037a906001600160a01b031681565b6102ce61054c366004611fb0565b6001600160a01b0391909116600090815260208190526040902054101590565b60006105967f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace025490565b905090565b814211156105c45760405163313c898160e11b8152600481018390526024015b60405180910390fd5b60007f35eff6d814ac6266dcac97b73c7e53eaf4dabccaded194ea1b0d8c021e5060a18686866105f38a610f9d565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810184905260e001604051602081830303815290604052805190602001209050600061064e82610fdf565b9050600061065c828561100c565b9050876001600160a01b0316816001600160a01b0316146106a3576040516325c0072360e11b81526001600160a01b038083166004830152891660248201526044016105bb565b6106ad8887611036565b866001600160a01b0316886001600160a01b03167fa2d3a0f9c14b593023a7113a6db3582e73f8990cedd0d8bb222ab65e20b1a1f6886040516106f291815260200190565b60405180910390a35050505050505050565b606060006000805160206124a88339815191525b90508060030180546107299061221c565b80601f01602080910402602001604051908101604052809291908181526020018280546107559061221c565b80156107a25780601f10610777576101008083540402835291602001916107a2565b820191906000526020600020905b81548152906001019060200180831161078557829003601f168201915b505050505091505090565b6000815b92915050565b6000336107c58185856110a7565b5060019392505050565b6001546001600160a01b0316331461081c5760405162461bcd60e51b815260206004820152601060248201526f13d3931657d35054d5115497d413d3d360821b60448201526064016105bb565b61082682826110b9565b5050565b6000336108388582856110ef565b610843858585611143565b506001949350505050565b60006105966111a2565b60006108626111d4565b805490915060ff600160401b820416159067ffffffffffffffff1660008115801561088a5750825b905060008267ffffffffffffffff1660011480156108a75750303b155b9050811580156108b5575080155b156108d35760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff1916600117855583156108fd57845460ff60401b1916600160401b1785555b600180546001600160a01b03808c166001600160a01b03199283161790925560028a9055600380548984169216919091179055604080516395d89b4160e01b815290516000928a16916395d89b4191600480830192869291908290030181865afa15801561096f573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526109979190810190612256565b905060006109c460405180604001604052806007815260200166029ba30b5b2b2160cd1b815250836111fd565b905060006109ec604051806040016040528060028152602001611cdd60f21b815250846111fd565b90506109f88282611229565b610a018261123b565b610a0a8a611266565b604080516001600160a01b038e81168252602082018e90528c8116828401528b16606082015290517f4cbe1688aeaf2c1317c96624591bc5ddbd99724f79e47858bc85f24001dbee139181900360800190a15050508315610aa557845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050505050565b6000610596611277565b6001600160a01b0381166000908152602081905260408120544211156107b1565b6003546000906001600160a01b0316610b096000805160206124e8833981519152546001600160a01b031690565b6001600160a01b031614905090565b60006000196000610b28856107ad565b9050610b3633858784611281565b949350505050565b600080610b4a83611336565b9050610b54610adb565b156107b1576001546002546040516334637d4f60e21b815260048101919091526001600160a01b0385811660248301529091169063d18df53c90604401602060405180830381865afa158015610bae573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610bd291906122e5565b610bdc9082612314565b9392505050565b60006107b182611369565b600060608082808083816000805160206124c88339815191528054909150158015610c1b57506001810154155b610c5f5760405162461bcd60e51b81526020600482015260156024820152741152540dcc4c8e88155b9a5b9a5d1a585b1a5e9959605a1b60448201526064016105bb565b610c67611392565b610c6f6113d1565b60408051600080825260208201909252600f60f81b9c939b5091995046985030975095509350915050565b60006000196000610caa856107ad565b9050610b3633858388611281565b7f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace0480546060916000805160206124a8833981519152916107299061221c565b6001546001600160a01b03163314610d445760405162461bcd60e51b815260206004820152601060248201526f13d3931657d35054d5115497d413d3d360821b60448201526064016105bb565b61082682826113e9565b6000336107c5818585611143565b600080610d6883610e03565b905080851115610d9157828582604051633fa733bb60e21b81526004016105bb939291906122c4565b6000610d9c866107ad565b9050610dab338686898561141f565b95945050505050565b600080610dc083610f30565b905080851115610de957828582604051632e52afbb60e21b81526004016105bb939291906122c4565b6000610df4866107ad565b9050610dab338686848a61141f565b60006107b1610e1183610b3e565b90565b83421115610e385760405163313c898160e11b8152600481018590526024016105bb565b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9888888610e678c610f9d565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e0016040516020818303038152906040528051906020012090506000610ec282610fdf565b90506000610ed28287878761151e565b9050896001600160a01b0316816001600160a01b031614610f19576040516325c0072360e11b81526001600160a01b0380831660048301528b1660248201526044016105bb565b610f248a8a8a6110a7565b50505050505050505050565b60006107b182610b3e565b610f453382611036565b50565b6001600160a01b0391821660009081527f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace016020908152604080832093909416825291909152205490565b60006107b182611336565b6001600160a01b031660009081527f5ab42ced628888259c08ac98db1eb0cf702fc1501344311d8b100cd1bfe4bb006020526040902080546001810190915590565b60006107b1610fec611277565b8360405161190160f01b8152600281019290925260228201526042902090565b60008060008061101c868661154c565b92509250925061102c8282611599565b5090949350505050565b6001600160a01b038216600090815260208190526040902054811115610826576001600160a01b0382166000818152602081815260409182902084905590518381527f625fed9875dada8643f2418b838ae0bc78d9a148a18eee4ee1979ff0f3f5d427910160405180910390a25050565b6110b48383836001611652565b505050565b6001600160a01b0382166110e35760405163ec442f0560e01b8152600060048201526024016105bb565b6108266000838361173a565b60006110fb8484610f48565b905060001981101561113d578181101561112e57828183604051637dc7a0d960e11b81526004016105bb939291906122c4565b61113d84848484036000611652565b50505050565b6001600160a01b03831661116d57604051634b637e8f60e11b8152600060048201526024016105bb565b6001600160a01b0382166111975760405163ec442f0560e01b8152600060048201526024016105bb565b6110b483838361173a565b6000806000805160206124e88339815191529050600081546111ce9190600160a01b900460ff16612327565b91505090565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a006107b1565b60608282604051602001611212929190612340565b604051602081830303815290604052905092915050565b611231611869565b6108268282611890565b611243611869565b610f4581604051806040016040528060018152602001603160f81b8152506118e1565b61126e611869565b610f4581611942565b60006105966119b4565b60015460405163077ba79560e41b81526001600160a01b03858116600483015260248201859052909116906377ba795090604401600060405180830381600087803b1580156112cf57600080fd5b505af11580156112e3573d6000803e3d6000fd5b505060408051858152602081018590526001600160a01b038088169450881692507fdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d791015b60405180910390a350505050565b6000806000805160206124a88339815191525b6001600160a01b0390931660009081526020939093525050604090205490565b6000807f5ab42ced628888259c08ac98db1eb0cf702fc1501344311d8b100cd1bfe4bb00611349565b7fa16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d10280546060916000805160206124c8833981519152916107299061221c565b606060006000805160206124c8833981519152610718565b6001600160a01b03821661141357604051634b637e8f60e11b8152600060048201526024016105bb565b6108268260008361173a565b600061142a84610f92565b90506000611436610adb565b801561144157508183115b61144b578261144d565b815b60015460405163db2aa12760e01b81526001600160a01b0388811660048301526024820184905292935091169063db2aa12790604401600060405180830381600087803b15801561149d57600080fd5b505af11580156114b1573d6000803e3d6000fd5b50505050846001600160a01b0316866001600160a01b0316886001600160a01b03167ffbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db878760405161150d929190918252602082015260400190565b60405180910390a450505050505050565b60008060008061153088888888611a28565b9250925092506115408282611599565b50909695505050505050565b600080600083516041036115865760208401516040850151606086015160001a61157888828585611a28565b955095509550505050611592565b50508151600091506002905b9250925092565b60008260038111156115ad576115ad61236f565b036115b6575050565b60018260038111156115ca576115ca61236f565b036115e85760405163f645eedf60e01b815260040160405180910390fd5b60028260038111156115fc576115fc61236f565b0361161d5760405163fce698f760e01b8152600481018290526024016105bb565b60038260038111156116315761163161236f565b03610826576040516335e2f38360e21b8152600481018290526024016105bb565b6000805160206124a88339815191526001600160a01b03851661168b5760405163e602df0560e01b8152600060048201526024016105bb565b6001600160a01b0384166116b557604051634a1406b160e11b8152600060048201526024016105bb565b6001600160a01b0380861660009081526001830160209081526040808320938816835292905220839055811561173357836001600160a01b0316856001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9258560405161172a91815260200190565b60405180910390a35b5050505050565b611742610adb565b801561175657506001600160a01b03831615155b156117bb5760015460405163cd09525d60e01b81526001600160a01b0385811660048301529091169063cd09525d90602401600060405180830381600087803b1580156117a257600080fd5b505af11580156117b6573d6000803e3d6000fd5b505050505b6117c6838383611af7565b6001600160a01b038316158015906117e657506001600160a01b03821615155b80156117f157508015155b156110b457600154604051630325c61f60e31b81526001600160a01b0385811660048301528481166024830152604482018490529091169063192e30f890606401600060405180830381600087803b15801561184c57600080fd5b505af1158015611860573d6000803e3d6000fd5b50505050505050565b611871611b33565b61188e57604051631afcd79f60e31b815260040160405180910390fd5b565b611898611869565b6000805160206124a88339815191527f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace036118d284826123cc565b506004810161113d83826123cc565b6118e9611869565b6000805160206124c88339815191527fa16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d10261192384826123cc565b506003810161193283826123cc565b5060008082556001909101555050565b61194a611869565b6000805160206124e883398151915260008061196584611b4d565b9150915081611975576012611977565b805b83546001600160a81b031916600160a01b60ff92909216919091026001600160a01b031916176001600160a01b0394909416939093179091555050565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f6119df611c29565b6119e7611c93565b60408051602081019490945283019190915260608201524660808201523060a082015260c00160405160208183030381529060405280519060200120905090565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115611a635750600091506003905082611aed565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015611ab7573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116611ae357506000925060019150829050611aed565b9250600091508190505b9450945094915050565b611b0083610aba565b15611b28576040516233044d60e31b81526001600160a01b03841660048201526024016105bb565b6110b4838383611cd7565b6000611b3d6111d4565b54600160401b900460ff16919050565b60408051600481526024810182526020810180516001600160e01b031663313ce56760e01b17905290516000918291829182916001600160a01b03871691611b949161248b565b600060405180830381855afa9150503d8060008114611bcf576040519150601f19603f3d011682016040523d82523d6000602084013e611bd4565b606091505b5091509150818015611be857506020815110155b15611c1c57600081806020019051810190611c0391906122e5565b905060ff8111611c1a576001969095509350505050565b505b5060009485945092505050565b60006000805160206124c883398151915281611c43611392565b805190915015611c5b57805160209091012092915050565b81548015611c6a579392505050565b7fc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470935050505090565b60006000805160206124c883398151915281611cad6113d1565b805190915015611cc557805160209091012092915050565b60018201548015611c6a579392505050565b6000805160206124a88339815191526001600160a01b038416611d135781816002016000828254611d089190612314565b90915550611d729050565b6001600160a01b03841660009081526020829052604090205482811015611d535784818460405163391434e360e21b81526004016105bb939291906122c4565b6001600160a01b03851660009081526020839052604090209083900390555b6001600160a01b038316611d90576002810180548390039055611daf565b6001600160a01b03831660009081526020829052604090208054830190555b826001600160a01b0316846001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8460405161132891815260200190565b80356001600160a01b0381168114611e0b57600080fd5b919050565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f1916810167ffffffffffffffff81118282101715611e4f57611e4f611e10565b604052919050565b600067ffffffffffffffff821115611e7157611e71611e10565b50601f01601f191660200190565b600080600080600060a08688031215611e9757600080fd5b611ea086611df4565b9450611eae60208701611df4565b93506040860135925060608601359150608086013567ffffffffffffffff811115611ed857600080fd5b8601601f81018813611ee957600080fd5b8035611efc611ef782611e57565b611e26565b818152896020838501011115611f1157600080fd5b816020840160208301376000602083830101528093505050509295509295909350565b60005b83811015611f4f578181015183820152602001611f37565b50506000910152565b60008151808452611f70816020860160208601611f34565b601f01601f19169290920160200192915050565b602081526000610bdc6020830184611f58565b600060208284031215611fa957600080fd5b5035919050565b60008060408385031215611fc357600080fd5b611fcc83611df4565b946020939093013593505050565b600080600060608486031215611fef57600080fd5b611ff884611df4565b925061200660208501611df4565b929592945050506040919091013590565b6000806000806080858703121561202d57600080fd5b61203685611df4565b93506020850135925061204b60408601611df4565b915061205960608601611df4565b905092959194509250565b60006020828403121561207657600080fd5b610bdc82611df4565b6000806040838503121561209257600080fd5b823591506120a260208401611df4565b90509250929050565b60ff60f81b8816815260e0602082015260006120ca60e0830189611f58565b82810360408401526120dc8189611f58565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b81811015612132578351835260209384019390920191600101612114565b50909b9a5050505050505050505050565b60008060006060848603121561215857600080fd5b8335925061216860208501611df4565b915061217660408501611df4565b90509250925092565b600080600080600080600060e0888a03121561219a57600080fd5b6121a388611df4565b96506121b160208901611df4565b95506040880135945060608801359350608088013560ff811681146121d557600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561220557600080fd5b61220e83611df4565b91506120a260208401611df4565b600181811c9082168061223057607f821691505b60208210810361225057634e487b7160e01b600052602260045260246000fd5b50919050565b60006020828403121561226857600080fd5b815167ffffffffffffffff81111561227f57600080fd5b8201601f8101841361229057600080fd5b805161229e611ef782611e57565b8181528560208385010111156122b357600080fd5b610dab826020830160208601611f34565b6001600160a01b039390931683526020830191909152604082015260600190565b6000602082840312156122f757600080fd5b5051919050565b634e487b7160e01b600052601160045260246000fd5b808201808211156107b1576107b16122fe565b60ff81811683821601908111156107b1576107b16122fe565b60008351612352818460208801611f34565b835190830190612366818360208801611f34565b01949350505050565b634e487b7160e01b600052602160045260246000fd5b601f8211156110b457806000526020600020601f840160051c810160208510156123ac5750805b601f840160051c820191505b8181101561173357600081556001016123b8565b815167ffffffffffffffff8111156123e6576123e6611e10565b6123fa816123f4845461221c565b84612385565b6020601f82116001811461242e57600083156124165750848201515b600019600385901b1c1916600184901b178455611733565b600084815260208120601f198516915b8281101561245e578785015182556020948501946001909201910161243e565b508482101561247c5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b6000825161249d818460208701611f34565b919091019291505056fe52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace00a16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d1000773e532dfede91f04b12a73d3d2acd361424f41f76b4fb79f090161e36b4e00a2646970667358221220332f2eb8320e90bf750d257c99ac6bcf861b67723bfcb62a44bc25dd779f999664736f6c634300081e0033";
+	static readonly bytecode = "0x6080604052348015600f57600080fd5b506126008061001f6000396000f3fe608060405234801561001057600080fd5b50600436106102695760003560e01c806384b0196e11610151578063c6e6f592116100c3578063dd62ed3e11610087578063dd62ed3e1461051a578063ef8b30f7146102d6578063f10684541461052d578063f5eb42dc14610555578063f7c618c114610568578063f97d3d071461057b57600080fd5b8063c6e6f592146102d6578063ce96cb77146104ce578063d505accf146104e1578063d905777e146104f4578063dd4670641461050757600080fd5b80639fc8ae6d116101155780639fc8ae6d14610482578063a9059cbb14610495578063b3d7f6b9146102d6578063b460af94146104a8578063ba087652146104bb578063c63d75b6146103b057600080fd5b806384b0196e146104195780638c7ab1d71461043457806394bf804d1461044757806395d89b411461045a5780639bc289f11461046257600080fd5b8063313ce567116101ea5780634a4fbeec116101ae5780634a4fbeec146103c55780634cdad506146102d65780636bcfdc34146103d85780636e553f65146103e057806370a08231146103f35780637ecebe001461040657600080fd5b8063313ce567146103495780633644e51514610363578063367f0b301461036b57806338d52e0f1461037e578063402d267d146103b057600080fd5b8063095ea7b311610231578063095ea7b3146102e95780630a28a477146102d657806318160ddd146102fc5780631b96b2f91461032357806323b872dd1461033657600080fd5b806301e1d1141461026e57806301ffc9a71461028957806302a19a9e146102ac57806306fdde03146102c157806307a2d13a146102d6575b600080fd5b6102766105a9565b6040519081526020015b60405180910390f35b61029c610297366004611e7d565b6105d8565b6040519015158152602001610280565b6102bf6102ba366004611f32565b61060f565b005b6102c9610778565b6040516102809190612037565b6102766102e436600461204a565b610821565b61029c6102f7366004612063565b610829565b7f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace0254610276565b6102bf610331366004612063565b610841565b61029c61034436600461208d565b61089c565b6103516108c0565b60405160ff9091168152602001610280565b6102766108ca565b6102bf6103793660046120ca565b6108d4565b6000805160206125ab833981519152546001600160a01b03165b6040516001600160a01b039091168152602001610280565b6102766103be366004612127565b5060001990565b61029c6103d3366004612127565b610b3e565b61029c610b5f565b6102766103ee366004612142565b610b9c565b610276610401366004612127565b610bc2565b610276610414366004612127565b610c6c565b610421610c77565b604051610280979695949392919061216e565b600154610398906001600160a01b031681565b610276610455366004612142565b610d23565b6102c9610d41565b610276610470366004612127565b60006020819052908152604090205481565b6102bf610490366004612063565b610d80565b61029c6104a3366004612063565b610dd7565b6102766104b6366004612206565b610de5565b6102766104c9366004612206565b610e3d565b6102766104dc366004612127565b610e8c565b6102bf6104ef366004612242565b610e9d565b610276610502366004612127565b610fb9565b6102bf61051536600461204a565b610fc4565b6102766105283660046122b5565b610fd1565b60015461054290600160a01b900461ffff1681565b60405161ffff9091168152602001610280565b610276610563366004612127565b61101b565b600254610398906001600160a01b031681565b61029c610589366004612063565b6001600160a01b0391909116600090815260208190526040902054101590565b60006105d37f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace025490565b905090565b60006001600160e01b031982166307b8bf0760e51b148061060957506301ffc9a760e01b6001600160e01b03198316145b92915050565b814211156106385760405163313c898160e11b8152600481018390526024015b60405180910390fd5b60007f35eff6d814ac6266dcac97b73c7e53eaf4dabccaded194ea1b0d8c021e5060a18686866106678a611026565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810184905260e00160405160208183030381529060405280519060200120905060006106c282611068565b905060006106d08285611095565b9050876001600160a01b0316816001600160a01b031614610717576040516325c0072360e11b81526001600160a01b0380831660048301528916602482015260440161062f565b61072188876110bf565b866001600160a01b0316886001600160a01b03167fa2d3a0f9c14b593023a7113a6db3582e73f8990cedd0d8bb222ab65e20b1a1f68860405161076691815260200190565b60405180910390a35050505050505050565b6060600060008051602061256b8339815191525b905080600301805461079d906122df565b80601f01602080910402602001604051908101604052809291908181526020018280546107c9906122df565b80156108165780601f106107eb57610100808354040283529160200191610816565b820191906000526020600020905b8154815290600101906020018083116107f957829003601f168201915b505050505091505090565b600081610609565b600033610837818585611130565b5060019392505050565b6001546001600160a01b0316331461088e5760405162461bcd60e51b815260206004820152601060248201526f13d3931657d35054d5115497d413d3d360821b604482015260640161062f565b6108988282611142565b5050565b6000336108aa858285611178565b6108b58585856111cc565b506001949350505050565b60006105d361122b565b60006105d361125d565b60006108de611267565b805490915060ff600160401b820416159067ffffffffffffffff166000811580156109065750825b905060008267ffffffffffffffff1660011480156109235750303b155b905081158015610931575080155b1561094f5760405163f92ee8a960e01b815260040160405180910390fd5b845467ffffffffffffffff19166001178555831561097957845460ff60401b1916600160401b1785555b600180546001600160a01b038b81166001600160b01b031990921691909117600160a01b61ffff8c160217909155600280546001600160a01b031916888316179055604080516395d89b4160e01b815290516000928a16916395d89b4191600480830192869291908290030181865afa1580156109fa573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610a229190810190612319565b90506000610a4f60405180604001604052806007815260200166029ba30b5b2b2160cd1b81525083611290565b90506000610a77604051806040016040528060028152602001611cdd60f21b81525084611290565b9050610a8382826112bc565b610a8c826112ce565b610a958a6112f9565b604080516001600160a01b038e8116825261ffff8e1660208301528c8116828401528b16606082015290517f198ee228dde3a8038dd17502f21ee11bfa7273aea909a6ecaf1768195a6bea889181900360800190a15050508315610b3357845460ff60401b19168555604051600181527fc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d29060200160405180910390a15b505050505050505050565b6001600160a01b038116600090815260208190526040812054421115610609565b6002546000906001600160a01b0316610b8d6000805160206125ab833981519152546001600160a01b031690565b6001600160a01b031614905090565b60006000196000610bac85610821565b9050610bba3385878461130a565b949350505050565b600080610bce836113bf565b9050610bd8610b5f565b15610609576001546040516303a41f6360e61b8152600160a01b820461ffff1660048201526001600160a01b0385811660248301529091169063e907d8c090604401602060405180830381865afa158015610c37573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610c5b91906123a8565b610c6590826123d7565b9392505050565b6000610609826113f2565b6000606080828080838160008051602061258b8339815191528054909150158015610ca457506001810154155b610ce85760405162461bcd60e51b81526020600482015260156024820152741152540dcc4c8e88155b9a5b9a5d1a585b1a5e9959605a1b604482015260640161062f565b610cf061141b565b610cf861145a565b60408051600080825260208201909252600f60f81b9c939b5091995046985030975095509350915050565b60006000196000610d3385610821565b9050610bba3385838861130a565b7f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace04805460609160008051602061256b8339815191529161079d906122df565b6001546001600160a01b03163314610dcd5760405162461bcd60e51b815260206004820152601060248201526f13d3931657d35054d5115497d413d3d360821b604482015260640161062f565b6108988282611472565b6000336108378185856111cc565b600080610df183610e8c565b905080851115610e1a57828582604051633fa733bb60e21b815260040161062f93929190612387565b6000610e2586610821565b9050610e3433868689856114a8565b95945050505050565b600080610e4983610fb9565b905080851115610e7257828582604051632e52afbb60e21b815260040161062f93929190612387565b6000610e7d86610821565b9050610e34338686848a6114a8565b6000610609610e9a83610bc2565b90565b83421115610ec15760405163313c898160e11b81526004810185905260240161062f565b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9888888610ef08c611026565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e0016040516020818303038152906040528051906020012090506000610f4b82611068565b90506000610f5b828787876115a7565b9050896001600160a01b0316816001600160a01b031614610fa2576040516325c0072360e11b81526001600160a01b0380831660048301528b16602482015260440161062f565b610fad8a8a8a611130565b50505050505050505050565b600061060982610bc2565b610fce33826110bf565b50565b6001600160a01b0391821660009081527f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace016020908152604080832093909416825291909152205490565b6000610609826113bf565b6001600160a01b031660009081527f5ab42ced628888259c08ac98db1eb0cf702fc1501344311d8b100cd1bfe4bb006020526040902080546001810190915590565b600061060961107561125d565b8360405161190160f01b8152600281019290925260228201526042902090565b6000806000806110a586866115d5565b9250925092506110b58282611622565b5090949350505050565b6001600160a01b038216600090815260208190526040902054811115610898576001600160a01b0382166000818152602081815260409182902084905590518381527f625fed9875dada8643f2418b838ae0bc78d9a148a18eee4ee1979ff0f3f5d427910160405180910390a25050565b61113d83838360016116db565b505050565b6001600160a01b03821661116c5760405163ec442f0560e01b81526000600482015260240161062f565b610898600083836117c3565b60006111848484610fd1565b90506000198110156111c657818110156111b757828183604051637dc7a0d960e11b815260040161062f93929190612387565b6111c6848484840360006116db565b50505050565b6001600160a01b0383166111f657604051634b637e8f60e11b81526000600482015260240161062f565b6001600160a01b0382166112205760405163ec442f0560e01b81526000600482015260240161062f565b61113d8383836117c3565b6000806000805160206125ab8339815191529050600081546112579190600160a01b900460ff166123ea565b91505090565b60006105d36118f2565b6000807ff0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00610609565b606082826040516020016112a5929190612403565b604051602081830303815290604052905092915050565b6112c4611966565b610898828261198d565b6112d6611966565b610fce81604051806040016040528060018152602001603160f81b8152506119de565b611301611966565b610fce81611a3f565b60015460405163077ba79560e41b81526001600160a01b03858116600483015260248201859052909116906377ba795090604401600060405180830381600087803b15801561135857600080fd5b505af115801561136c573d6000803e3d6000fd5b505060408051858152602081018590526001600160a01b038088169450881692507fdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d791015b60405180910390a350505050565b60008060008051602061256b8339815191525b6001600160a01b0390931660009081526020939093525050604090205490565b6000807f5ab42ced628888259c08ac98db1eb0cf702fc1501344311d8b100cd1bfe4bb006113d2565b7fa16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d102805460609160008051602061258b8339815191529161079d906122df565b6060600060008051602061258b83398151915261078c565b6001600160a01b03821661149c57604051634b637e8f60e11b81526000600482015260240161062f565b610898826000836117c3565b60006114b38461101b565b905060006114bf610b5f565b80156114ca57508183115b6114d457826114d6565b815b60015460405163db2aa12760e01b81526001600160a01b0388811660048301526024820184905292935091169063db2aa12790604401600060405180830381600087803b15801561152657600080fd5b505af115801561153a573d6000803e3d6000fd5b50505050846001600160a01b0316866001600160a01b0316886001600160a01b03167ffbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db8787604051611596929190918252602082015260400190565b60405180910390a450505050505050565b6000806000806115b988888888611ab1565b9250925092506115c98282611622565b50909695505050505050565b6000806000835160410361160f5760208401516040850151606086015160001a61160188828585611ab1565b95509550955050505061161b565b50508151600091506002905b9250925092565b600082600381111561163657611636612432565b0361163f575050565b600182600381111561165357611653612432565b036116715760405163f645eedf60e01b815260040160405180910390fd5b600282600381111561168557611685612432565b036116a65760405163fce698f760e01b81526004810182905260240161062f565b60038260038111156116ba576116ba612432565b03610898576040516335e2f38360e21b81526004810182905260240161062f565b60008051602061256b8339815191526001600160a01b0385166117145760405163e602df0560e01b81526000600482015260240161062f565b6001600160a01b03841661173e57604051634a1406b160e11b81526000600482015260240161062f565b6001600160a01b038086166000908152600183016020908152604080832093881683529290522083905581156117bc57836001600160a01b0316856001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925856040516117b391815260200190565b60405180910390a35b5050505050565b6117cb610b5f565b80156117df57506001600160a01b03831615155b156118445760015460405163cd09525d60e01b81526001600160a01b0385811660048301529091169063cd09525d90602401600060405180830381600087803b15801561182b57600080fd5b505af115801561183f573d6000803e3d6000fd5b505050505b61184f838383611b80565b6001600160a01b0383161580159061186f57506001600160a01b03821615155b801561187a57508015155b1561113d57600154604051630325c61f60e31b81526001600160a01b0385811660048301528481166024830152604482018490529091169063192e30f890606401600060405180830381600087803b1580156118d557600080fd5b505af11580156118e9573d6000803e3d6000fd5b50505050505050565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f61191d611bbc565b611925611c26565b60408051602081019490945283019190915260608201524660808201523060a082015260c00160405160208183030381529060405280519060200120905090565b61196e611c6a565b61198b57604051631afcd79f60e31b815260040160405180910390fd5b565b611995611966565b60008051602061256b8339815191527f52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace036119cf848261248f565b50600481016111c6838261248f565b6119e6611966565b60008051602061258b8339815191527fa16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d102611a20848261248f565b5060038101611a2f838261248f565b5060008082556001909101555050565b611a47611966565b6000805160206125ab833981519152600080611a6284611c84565b9150915081611a72576012611a74565b805b83546001600160a81b031916600160a01b60ff92909216919091026001600160a01b031916176001600160a01b0394909416939093179091555050565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115611aec5750600091506003905082611b76565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015611b40573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116611b6c57506000925060019150829050611b76565b9250600091508190505b9450945094915050565b611b8983610b3e565b15611bb1576040516233044d60e31b81526001600160a01b038416600482015260240161062f565b61113d838383611d60565b600060008051602061258b83398151915281611bd661141b565b805190915015611bee57805160209091012092915050565b81548015611bfd579392505050565b7fc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470935050505090565b600060008051602061258b83398151915281611c4061145a565b805190915015611c5857805160209091012092915050565b60018201548015611bfd579392505050565b6000611c74611267565b54600160401b900460ff16919050565b60408051600481526024810182526020810180516001600160e01b031663313ce56760e01b17905290516000918291829182916001600160a01b03871691611ccb9161254e565b600060405180830381855afa9150503d8060008114611d06576040519150601f19603f3d011682016040523d82523d6000602084013e611d0b565b606091505b5091509150818015611d1f57506020815110155b15611d5357600081806020019051810190611d3a91906123a8565b905060ff8111611d51576001969095509350505050565b505b5060009485945092505050565b60008051602061256b8339815191526001600160a01b038416611d9c5781816002016000828254611d9191906123d7565b90915550611dfb9050565b6001600160a01b03841660009081526020829052604090205482811015611ddc5784818460405163391434e360e21b815260040161062f93929190612387565b6001600160a01b03851660009081526020839052604090209083900390555b6001600160a01b038316611e19576002810180548390039055611e38565b6001600160a01b03831660009081526020829052604090208054830190555b826001600160a01b0316846001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef846040516113b191815260200190565b600060208284031215611e8f57600080fd5b81356001600160e01b031981168114610c6557600080fd5b80356001600160a01b0381168114611ebe57600080fd5b919050565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f1916810167ffffffffffffffff81118282101715611f0257611f02611ec3565b604052919050565b600067ffffffffffffffff821115611f2457611f24611ec3565b50601f01601f191660200190565b600080600080600060a08688031215611f4a57600080fd5b611f5386611ea7565b9450611f6160208701611ea7565b93506040860135925060608601359150608086013567ffffffffffffffff811115611f8b57600080fd5b8601601f81018813611f9c57600080fd5b8035611faf611faa82611f0a565b611ed9565b818152896020838501011115611fc457600080fd5b816020840160208301376000602083830101528093505050509295509295909350565b60005b83811015612002578181015183820152602001611fea565b50506000910152565b60008151808452612023816020860160208601611fe7565b601f01601f19169290920160200192915050565b602081526000610c65602083018461200b565b60006020828403121561205c57600080fd5b5035919050565b6000806040838503121561207657600080fd5b61207f83611ea7565b946020939093013593505050565b6000806000606084860312156120a257600080fd5b6120ab84611ea7565b92506120b960208501611ea7565b929592945050506040919091013590565b600080600080608085870312156120e057600080fd5b6120e985611ea7565b9350602085013561ffff8116811461210057600080fd5b925061210e60408601611ea7565b915061211c60608601611ea7565b905092959194509250565b60006020828403121561213957600080fd5b610c6582611ea7565b6000806040838503121561215557600080fd5b8235915061216560208401611ea7565b90509250929050565b60ff60f81b8816815260e06020820152600061218d60e083018961200b565b828103604084015261219f818961200b565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b818110156121f55783518352602093840193909201916001016121d7565b50909b9a5050505050505050505050565b60008060006060848603121561221b57600080fd5b8335925061222b60208501611ea7565b915061223960408501611ea7565b90509250925092565b600080600080600080600060e0888a03121561225d57600080fd5b61226688611ea7565b965061227460208901611ea7565b95506040880135945060608801359350608088013560ff8116811461229857600080fd5b9699959850939692959460a0840135945060c09093013592915050565b600080604083850312156122c857600080fd5b6122d183611ea7565b915061216560208401611ea7565b600181811c908216806122f357607f821691505b60208210810361231357634e487b7160e01b600052602260045260246000fd5b50919050565b60006020828403121561232b57600080fd5b815167ffffffffffffffff81111561234257600080fd5b8201601f8101841361235357600080fd5b8051612361611faa82611f0a565b81815285602083850101111561237657600080fd5b610e34826020830160208601611fe7565b6001600160a01b039390931683526020830191909152604082015260600190565b6000602082840312156123ba57600080fd5b5051919050565b634e487b7160e01b600052601160045260246000fd5b80820180821115610609576106096123c1565b60ff8181168382160190811115610609576106096123c1565b60008351612415818460208801611fe7565b835190830190612429818360208801611fe7565b01949350505050565b634e487b7160e01b600052602160045260246000fd5b601f82111561113d57806000526020600020601f840160051c8101602085101561246f5750805b601f840160051c820191505b818110156117bc576000815560010161247b565b815167ffffffffffffffff8111156124a9576124a9611ec3565b6124bd816124b784546122df565b84612448565b6020601f8211600181146124f157600083156124d95750848201515b600019600385901b1c1916600184901b1784556117bc565b600084815260208120601f198516915b828110156125215787850151825560209485019460019092019101612501565b508482101561253f5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b60008251612560818460208701611fe7565b919091019291505056fe52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace00a16a46d94261c7517cc8ff89f61c0ce93598e3c849801011dee649a6a557d1000773e532dfede91f04b12a73d3d2acd361424f41f76b4fb79f090161e36b4e00a264697066735822122009aa976afd22f7c6fac1cd1ea004a48703a333b832567212089a826aa3e6d6d664736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -24441,9 +33003,9 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 				},
 				{
 					readonly indexed: false;
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly indexed: false;
@@ -24790,9 +33352,9 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 					readonly type: "address";
 				},
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "_pid";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				},
 				{
 					readonly internalType: "address";
@@ -24805,7 +33367,7 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 					readonly type: "address";
 				}
 			];
-			readonly name: "initialize";
+			readonly name: "initializeToken";
 			readonly outputs: readonly [
 			];
 			readonly stateMutability: "nonpayable";
@@ -25170,9 +33732,9 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 			readonly name: "pid";
 			readonly outputs: readonly [
 				{
-					readonly internalType: "uint256";
+					readonly internalType: "uint16";
 					readonly name: "";
-					readonly type: "uint256";
+					readonly type: "uint16";
 				}
 			];
 			readonly stateMutability: "view";
@@ -25318,6 +33880,25 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 		},
 		{
 			readonly inputs: readonly [
+				{
+					readonly internalType: "bytes4";
+					readonly name: "interfaceId";
+					readonly type: "bytes4";
+				}
+			];
+			readonly name: "supportsInterface";
+			readonly outputs: readonly [
+				{
+					readonly internalType: "bool";
+					readonly name: "";
+					readonly type: "bool";
+				}
+			];
+			readonly stateMutability: "view";
+			readonly type: "function";
+		},
+		{
+			readonly inputs: readonly [
 			];
 			readonly name: "symbol";
 			readonly outputs: readonly [
@@ -25447,7 +34028,7 @@ export declare class ERC4626Pool__factory extends ContractFactory {
 export type WETHConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class WETH__factory extends ContractFactory {
+declare class WETH__factory extends ContractFactory {
 	constructor(...args: WETHConstructorParams);
 	getDeployTransaction(overrides?: NonPayableOverrides & {
 		from?: string;
@@ -25458,7 +34039,7 @@ export declare class WETH__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): WETH__factory;
-	static readonly bytecode = "0x61016060405234801561001157600080fd5b506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b81525080604051806040016040528060018152602001603160f81b8152506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b815250604051806040016040528060048152602001630ae8aa8960e31b81525081600390816100a59190610286565b5060046100b28282610286565b506100c29150839050600561016d565b610120526100d181600661016d565b61014052815160208084019190912060e052815190820120610100524660a05261015e60e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c052506103b6565b600060208351101561018957610182836101a0565b905061019a565b816101948482610286565b5060ff90505b92915050565b600080829050601f815111156101d4578260405163305a27a960e01b81526004016101cb9190610344565b60405180910390fd5b80516101df82610392565b179392505050565b634e487b7160e01b600052604160045260246000fd5b600181811c9082168061021157607f821691505b60208210810361023157634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561028157806000526020600020601f840160051c8101602085101561025e5750805b601f840160051c820191505b8181101561027e576000815560010161026a565b50505b505050565b81516001600160401b0381111561029f5761029f6101e7565b6102b3816102ad84546101fd565b84610237565b6020601f8211600181146102e757600083156102cf5750848201515b600019600385901b1c1916600184901b17845561027e565b600084815260208120601f198516915b8281101561031757878501518255602094850194600190920191016102f7565b50848210156103355786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015260005b818110156103725760208186018101516040868401015201610355565b506000604082850101526040601f19601f83011684010191505092915050565b805160208083015191908110156102315760001960209190910360031b1b16919050565b60805160a05160c05160e051610100516101205161014051611131610410600039600061091b015260006108ee015260006108960152600061086e015260006107c9015260006107f30152600061081d01526111316000f3fe6080604052600436106100ec5760003560e01c806370a082311161008a578063a9059cbb11610059578063a9059cbb1461027e578063d0e30db01461029e578063d505accf146102a6578063dd62ed3e146102c657600080fd5b806370a08231146101eb5780637ecebe001461022157806384b0196e1461024157806395d89b411461026957600080fd5b806323b872dd116100c657806323b872dd1461017a5780632e1a7d4d1461019a578063313ce567146101ba5780633644e515146101d657600080fd5b806306fdde0314610100578063095ea7b31461012b57806318160ddd1461015b57600080fd5b366100fb576100f961030c565b005b600080fd5b34801561010c57600080fd5b5061011561034d565b6040516101229190610e7b565b60405180910390f35b34801561013757600080fd5b5061014b610146366004610eb1565b6103df565b6040519015158152602001610122565b34801561016757600080fd5b506002545b604051908152602001610122565b34801561018657600080fd5b5061014b610195366004610edb565b6103f9565b3480156101a657600080fd5b506100f96101b5366004610f18565b61041d565b3480156101c657600080fd5b5060405160128152602001610122565b3480156101e257600080fd5b5061016c61048d565b3480156101f757600080fd5b5061016c610206366004610f31565b6001600160a01b031660009081526020819052604090205490565b34801561022d57600080fd5b5061016c61023c366004610f31565b61049c565b34801561024d57600080fd5b506102566104ba565b6040516101229796959493929190610f4c565b34801561027557600080fd5b50610115610500565b34801561028a57600080fd5b5061014b610299366004610eb1565b61050f565b6100f961030c565b3480156102b257600080fd5b506100f96102c1366004610fe4565b61051d565b3480156102d257600080fd5b5061016c6102e1366004611057565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b610316333461065c565b60405134815233907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a2565b60606003805461035c9061108a565b80601f01602080910402602001604051908101604052809291908181526020018280546103889061108a565b80156103d55780601f106103aa576101008083540402835291602001916103d5565b820191906000526020600020905b8154815290600101906020018083116103b857829003601f168201915b5050505050905090565b6000336103ed818585610696565b60019150505b92915050565b6000336104078582856106a8565b610412858585610727565b506001949350505050565b6104273382610786565b604051339082156108fc029083906000818181858888f19350505050158015610454573d6000803e3d6000fd5b5060405181815233907f7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b659060200160405180910390a250565b60006104976107bc565b905090565b6001600160a01b0381166000908152600760205260408120546103f3565b6000606080600080600060606104ce6108e7565b6104d6610914565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b60606004805461035c9061108a565b6000336103ed818585610727565b834211156105465760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105938c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105ee82610941565b905060006105fe8287878761096e565b9050896001600160a01b0316816001600160a01b031614610645576040516325c0072360e11b81526001600160a01b0380831660048301528b16602482015260440161053d565b6106508a8a8a610696565b50505050505050505050565b6001600160a01b0382166106865760405163ec442f0560e01b81526000600482015260240161053d565b6106926000838361099c565b5050565b6106a38383836001610ac6565b505050565b6001600160a01b03838116600090815260016020908152604080832093861683529290522054600019811015610721578181101561071257604051637dc7a0d960e11b81526001600160a01b0384166004820152602481018290526044810183905260640161053d565b61072184848484036000610ac6565b50505050565b6001600160a01b03831661075157604051634b637e8f60e11b81526000600482015260240161053d565b6001600160a01b03821661077b5760405163ec442f0560e01b81526000600482015260240161053d565b6106a383838361099c565b6001600160a01b0382166107b057604051634b637e8f60e11b81526000600482015260240161053d565b6106928260008361099c565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561081557507f000000000000000000000000000000000000000000000000000000000000000046145b1561083f57507f000000000000000000000000000000000000000000000000000000000000000090565b610497604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60606104977f00000000000000000000000000000000000000000000000000000000000000006005610b9b565b60606104977f00000000000000000000000000000000000000000000000000000000000000006006610b9b565b60006103f361094e6107bc565b8360405161190160f01b8152600281019290925260228201526042902090565b60008060008061098088888888610c46565b9250925092506109908282610d15565b50909695505050505050565b6001600160a01b0383166109c75780600260008282546109bc91906110c4565b90915550610a399050565b6001600160a01b03831660009081526020819052604090205481811015610a1a5760405163391434e360e21b81526001600160a01b0385166004820152602481018290526044810183905260640161053d565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610a5557600280548290039055610a74565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610ab991815260200190565b60405180910390a3505050565b6001600160a01b038416610af05760405163e602df0560e01b81526000600482015260240161053d565b6001600160a01b038316610b1a57604051634a1406b160e11b81526000600482015260240161053d565b6001600160a01b038085166000908152600160209081526040808320938716835292905220829055801561072157826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610b8d91815260200190565b60405180910390a350505050565b606060ff8314610bb557610bae83610dce565b90506103f3565b818054610bc19061108a565b80601f0160208091040260200160405190810160405280929190818152602001828054610bed9061108a565b8015610c3a5780601f10610c0f57610100808354040283529160200191610c3a565b820191906000526020600020905b815481529060010190602001808311610c1d57829003601f168201915b505050505090506103f3565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610c815750600091506003905082610d0b565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610cd5573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d0157506000925060019150829050610d0b565b9250600091508190505b9450945094915050565b6000826003811115610d2957610d296110e5565b03610d32575050565b6001826003811115610d4657610d466110e5565b03610d645760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610d7857610d786110e5565b03610d995760405163fce698f760e01b81526004810182905260240161053d565b6003826003811115610dad57610dad6110e5565b03610692576040516335e2f38360e21b81526004810182905260240161053d565b60606000610ddb83610e0d565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103f357604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610e5b57602081850181015186830182015201610e3f565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610e8e6020830184610e35565b9392505050565b80356001600160a01b0381168114610eac57600080fd5b919050565b60008060408385031215610ec457600080fd5b610ecd83610e95565b946020939093013593505050565b600080600060608486031215610ef057600080fd5b610ef984610e95565b9250610f0760208501610e95565b929592945050506040919091013590565b600060208284031215610f2a57600080fd5b5035919050565b600060208284031215610f4357600080fd5b610e8e82610e95565b60ff60f81b8816815260e060208201526000610f6b60e0830189610e35565b8281036040840152610f7d8189610e35565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b81811015610fd3578351835260209384019390920191600101610fb5565b50909b9a5050505050505050505050565b600080600080600080600060e0888a031215610fff57600080fd5b61100888610e95565b965061101660208901610e95565b95506040880135945060608801359350608088013560ff8116811461103a57600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561106a57600080fd5b61107383610e95565b915061108160208401610e95565b90509250929050565b600181811c9082168061109e57607f821691505b6020821081036110be57634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103f357634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea2646970667358221220cf936561a4791fd70b5dbaf6f63ad87ff88cfe8ebcc91389374956d3e199572464736f6c634300081e0033";
+	static readonly bytecode = "0x61016060405234801561001157600080fd5b506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b81525080604051806040016040528060018152602001603160f81b8152506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b815250604051806040016040528060048152602001630ae8aa8960e31b81525081600390816100a59190610286565b5060046100b28282610286565b506100c29150839050600561016d565b610120526100d181600661016d565b61014052815160208084019190912060e052815190820120610100524660a05261015e60e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c052506103b6565b600060208351101561018957610182836101a0565b905061019a565b816101948482610286565b5060ff90505b92915050565b600080829050601f815111156101d4578260405163305a27a960e01b81526004016101cb9190610344565b60405180910390fd5b80516101df82610392565b179392505050565b634e487b7160e01b600052604160045260246000fd5b600181811c9082168061021157607f821691505b60208210810361023157634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561028157806000526020600020601f840160051c8101602085101561025e5750805b601f840160051c820191505b8181101561027e576000815560010161026a565b50505b505050565b81516001600160401b0381111561029f5761029f6101e7565b6102b3816102ad84546101fd565b84610237565b6020601f8211600181146102e757600083156102cf5750848201515b600019600385901b1c1916600184901b17845561027e565b600084815260208120601f198516915b8281101561031757878501518255602094850194600190920191016102f7565b50848210156103355786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015260005b818110156103725760208186018101516040868401015201610355565b506000604082850101526040601f19601f83011684010191505092915050565b805160208083015191908110156102315760001960209190910360031b1b16919050565b60805160a05160c05160e051610100516101205161014051611131610410600039600061091b015260006108ee015260006108960152600061086e015260006107c9015260006107f30152600061081d01526111316000f3fe6080604052600436106100ec5760003560e01c806370a082311161008a578063a9059cbb11610059578063a9059cbb1461027e578063d0e30db01461029e578063d505accf146102a6578063dd62ed3e146102c657600080fd5b806370a08231146101eb5780637ecebe001461022157806384b0196e1461024157806395d89b411461026957600080fd5b806323b872dd116100c657806323b872dd1461017a5780632e1a7d4d1461019a578063313ce567146101ba5780633644e515146101d657600080fd5b806306fdde0314610100578063095ea7b31461012b57806318160ddd1461015b57600080fd5b366100fb576100f961030c565b005b600080fd5b34801561010c57600080fd5b5061011561034d565b6040516101229190610e7b565b60405180910390f35b34801561013757600080fd5b5061014b610146366004610eb1565b6103df565b6040519015158152602001610122565b34801561016757600080fd5b506002545b604051908152602001610122565b34801561018657600080fd5b5061014b610195366004610edb565b6103f9565b3480156101a657600080fd5b506100f96101b5366004610f18565b61041d565b3480156101c657600080fd5b5060405160128152602001610122565b3480156101e257600080fd5b5061016c61048d565b3480156101f757600080fd5b5061016c610206366004610f31565b6001600160a01b031660009081526020819052604090205490565b34801561022d57600080fd5b5061016c61023c366004610f31565b61049c565b34801561024d57600080fd5b506102566104ba565b6040516101229796959493929190610f4c565b34801561027557600080fd5b50610115610500565b34801561028a57600080fd5b5061014b610299366004610eb1565b61050f565b6100f961030c565b3480156102b257600080fd5b506100f96102c1366004610fe4565b61051d565b3480156102d257600080fd5b5061016c6102e1366004611057565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b610316333461065c565b60405134815233907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a2565b60606003805461035c9061108a565b80601f01602080910402602001604051908101604052809291908181526020018280546103889061108a565b80156103d55780601f106103aa576101008083540402835291602001916103d5565b820191906000526020600020905b8154815290600101906020018083116103b857829003601f168201915b5050505050905090565b6000336103ed818585610696565b60019150505b92915050565b6000336104078582856106a8565b610412858585610727565b506001949350505050565b6104273382610786565b604051339082156108fc029083906000818181858888f19350505050158015610454573d6000803e3d6000fd5b5060405181815233907f7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b659060200160405180910390a250565b60006104976107bc565b905090565b6001600160a01b0381166000908152600760205260408120546103f3565b6000606080600080600060606104ce6108e7565b6104d6610914565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b60606004805461035c9061108a565b6000336103ed818585610727565b834211156105465760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105938c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105ee82610941565b905060006105fe8287878761096e565b9050896001600160a01b0316816001600160a01b031614610645576040516325c0072360e11b81526001600160a01b0380831660048301528b16602482015260440161053d565b6106508a8a8a610696565b50505050505050505050565b6001600160a01b0382166106865760405163ec442f0560e01b81526000600482015260240161053d565b6106926000838361099c565b5050565b6106a38383836001610ac6565b505050565b6001600160a01b03838116600090815260016020908152604080832093861683529290522054600019811015610721578181101561071257604051637dc7a0d960e11b81526001600160a01b0384166004820152602481018290526044810183905260640161053d565b61072184848484036000610ac6565b50505050565b6001600160a01b03831661075157604051634b637e8f60e11b81526000600482015260240161053d565b6001600160a01b03821661077b5760405163ec442f0560e01b81526000600482015260240161053d565b6106a383838361099c565b6001600160a01b0382166107b057604051634b637e8f60e11b81526000600482015260240161053d565b6106928260008361099c565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561081557507f000000000000000000000000000000000000000000000000000000000000000046145b1561083f57507f000000000000000000000000000000000000000000000000000000000000000090565b610497604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60606104977f00000000000000000000000000000000000000000000000000000000000000006005610b9b565b60606104977f00000000000000000000000000000000000000000000000000000000000000006006610b9b565b60006103f361094e6107bc565b8360405161190160f01b8152600281019290925260228201526042902090565b60008060008061098088888888610c46565b9250925092506109908282610d15565b50909695505050505050565b6001600160a01b0383166109c75780600260008282546109bc91906110c4565b90915550610a399050565b6001600160a01b03831660009081526020819052604090205481811015610a1a5760405163391434e360e21b81526001600160a01b0385166004820152602481018290526044810183905260640161053d565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610a5557600280548290039055610a74565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610ab991815260200190565b60405180910390a3505050565b6001600160a01b038416610af05760405163e602df0560e01b81526000600482015260240161053d565b6001600160a01b038316610b1a57604051634a1406b160e11b81526000600482015260240161053d565b6001600160a01b038085166000908152600160209081526040808320938716835292905220829055801561072157826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610b8d91815260200190565b60405180910390a350505050565b606060ff8314610bb557610bae83610dce565b90506103f3565b818054610bc19061108a565b80601f0160208091040260200160405190810160405280929190818152602001828054610bed9061108a565b8015610c3a5780601f10610c0f57610100808354040283529160200191610c3a565b820191906000526020600020905b815481529060010190602001808311610c1d57829003601f168201915b505050505090506103f3565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610c815750600091506003905082610d0b565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610cd5573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d0157506000925060019150829050610d0b565b9250600091508190505b9450945094915050565b6000826003811115610d2957610d296110e5565b03610d32575050565b6001826003811115610d4657610d466110e5565b03610d645760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610d7857610d786110e5565b03610d995760405163fce698f760e01b81526004810182905260240161053d565b6003826003811115610dad57610dad6110e5565b03610692576040516335e2f38360e21b81526004810182905260240161053d565b60606000610ddb83610e0d565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103f357604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610e5b57602081850181015186830182015201610e3f565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610e8e6020830184610e35565b9392505050565b80356001600160a01b0381168114610eac57600080fd5b919050565b60008060408385031215610ec457600080fd5b610ecd83610e95565b946020939093013593505050565b600080600060608486031215610ef057600080fd5b610ef984610e95565b9250610f0760208501610e95565b929592945050506040919091013590565b600060208284031215610f2a57600080fd5b5035919050565b600060208284031215610f4357600080fd5b610e8e82610e95565b60ff60f81b8816815260e060208201526000610f6b60e0830189610e35565b8281036040840152610f7d8189610e35565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b81811015610fd3578351835260209384019390920191600101610fb5565b50909b9a5050505050505050505050565b600080600080600080600060e0888a031215610fff57600080fd5b61100888610e95565b965061101660208901610e95565b95506040880135945060608801359350608088013560ff8116811461103a57600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561106a57600080fd5b61107383610e95565b915061108160208401610e95565b90509250929050565b600181811c9082168061109e57607f821691505b6020821081036110be57634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103f357634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea26469706673582212202fa6487606e7d71601b924821884662dad63252677deeea1cbee1842cb12bfe564736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -26060,7 +34641,7 @@ export declare class WETH__factory extends ContractFactory {
 export type WETHMockConstructorParams = [
 	signer?: Signer
 ] | ConstructorParameters<typeof ContractFactory>;
-export declare class WETHMock__factory extends ContractFactory {
+declare class WETHMock__factory extends ContractFactory {
 	constructor(...args: WETHMockConstructorParams);
 	getDeployTransaction(supply_: BigNumberish, overrides?: NonPayableOverrides & {
 		from?: string;
@@ -26071,7 +34652,7 @@ export declare class WETHMock__factory extends ContractFactory {
 		deploymentTransaction(): ContractTransactionResponse;
 	}>;
 	connect(runner: ContractRunner | null): WETHMock__factory;
-	static readonly bytecode = "0x61016060405234801561001157600080fd5b5060405161170438038061170483398101604081905261003091610370565b6040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b81525080604051806040016040528060018152602001603160f81b8152506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b815250604051806040016040528060048152602001630ae8aa8960e31b81525081600390816100c39190610428565b5060046100d08282610428565b506100e091508390506005610196565b610120526100ef816006610196565b61014052815160208084019190912060e052815190820120610100524660a05261017c60e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c0525061019033826101c9565b50610579565b60006020835110156101b2576101ab83610208565b90506101c3565b816101bd8482610428565b5060ff90505b92915050565b6001600160a01b0382166101f85760405163ec442f0560e01b8152600060048201526024015b60405180910390fd5b61020460008383610246565b5050565b600080829050601f81511115610233578260405163305a27a960e01b81526004016101ef91906104e6565b805161023e82610534565b179392505050565b6001600160a01b0383166102715780600260008282546102669190610558565b909155506102e39050565b6001600160a01b038316600090815260208190526040902054818110156102c45760405163391434e360e21b81526001600160a01b038516600482015260248101829052604481018390526064016101ef565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b0382166102ff5760028054829003905561031e565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8360405161036391815260200190565b60405180910390a3505050565b60006020828403121561038257600080fd5b5051919050565b634e487b7160e01b600052604160045260246000fd5b600181811c908216806103b357607f821691505b6020821081036103d357634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561042357806000526020600020601f840160051c810160208510156104005750805b601f840160051c820191505b81811015610420576000815560010161040c565b50505b505050565b81516001600160401b0381111561044157610441610389565b6104558161044f845461039f565b846103d9565b6020601f82116001811461048957600083156104715750848201515b600019600385901b1c1916600184901b178455610420565b600084815260208120601f198516915b828110156104b95787850151825560209485019460019092019101610499565b50848210156104d75786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015260005b8181101561051457602081860181015160408684010152016104f7565b506000604082850101526040601f19601f83011684010191505092915050565b805160208083015191908110156103d35760001960209190910360031b1b16919050565b808201808211156101c357634e487b7160e01b600052601160045260246000fd5b60805160a05160c05160e0516101005161012051610140516111316105d3600039600061091b015260006108ee015260006108960152600061086e015260006107c9015260006107f30152600061081d01526111316000f3fe6080604052600436106100ec5760003560e01c806370a082311161008a578063a9059cbb11610059578063a9059cbb1461027e578063d0e30db01461029e578063d505accf146102a6578063dd62ed3e146102c657600080fd5b806370a08231146101eb5780637ecebe001461022157806384b0196e1461024157806395d89b411461026957600080fd5b806323b872dd116100c657806323b872dd1461017a5780632e1a7d4d1461019a578063313ce567146101ba5780633644e515146101d657600080fd5b806306fdde0314610100578063095ea7b31461012b57806318160ddd1461015b57600080fd5b366100fb576100f961030c565b005b600080fd5b34801561010c57600080fd5b5061011561034d565b6040516101229190610e7b565b60405180910390f35b34801561013757600080fd5b5061014b610146366004610eb1565b6103df565b6040519015158152602001610122565b34801561016757600080fd5b506002545b604051908152602001610122565b34801561018657600080fd5b5061014b610195366004610edb565b6103f9565b3480156101a657600080fd5b506100f96101b5366004610f18565b61041d565b3480156101c657600080fd5b5060405160128152602001610122565b3480156101e257600080fd5b5061016c61048d565b3480156101f757600080fd5b5061016c610206366004610f31565b6001600160a01b031660009081526020819052604090205490565b34801561022d57600080fd5b5061016c61023c366004610f31565b61049c565b34801561024d57600080fd5b506102566104ba565b6040516101229796959493929190610f4c565b34801561027557600080fd5b50610115610500565b34801561028a57600080fd5b5061014b610299366004610eb1565b61050f565b6100f961030c565b3480156102b257600080fd5b506100f96102c1366004610fe4565b61051d565b3480156102d257600080fd5b5061016c6102e1366004611057565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b610316333461065c565b60405134815233907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a2565b60606003805461035c9061108a565b80601f01602080910402602001604051908101604052809291908181526020018280546103889061108a565b80156103d55780601f106103aa576101008083540402835291602001916103d5565b820191906000526020600020905b8154815290600101906020018083116103b857829003601f168201915b5050505050905090565b6000336103ed818585610696565b60019150505b92915050565b6000336104078582856106a8565b610412858585610727565b506001949350505050565b6104273382610786565b604051339082156108fc029083906000818181858888f19350505050158015610454573d6000803e3d6000fd5b5060405181815233907f7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b659060200160405180910390a250565b60006104976107bc565b905090565b6001600160a01b0381166000908152600760205260408120546103f3565b6000606080600080600060606104ce6108e7565b6104d6610914565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b60606004805461035c9061108a565b6000336103ed818585610727565b834211156105465760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105938c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105ee82610941565b905060006105fe8287878761096e565b9050896001600160a01b0316816001600160a01b031614610645576040516325c0072360e11b81526001600160a01b0380831660048301528b16602482015260440161053d565b6106508a8a8a610696565b50505050505050505050565b6001600160a01b0382166106865760405163ec442f0560e01b81526000600482015260240161053d565b6106926000838361099c565b5050565b6106a38383836001610ac6565b505050565b6001600160a01b03838116600090815260016020908152604080832093861683529290522054600019811015610721578181101561071257604051637dc7a0d960e11b81526001600160a01b0384166004820152602481018290526044810183905260640161053d565b61072184848484036000610ac6565b50505050565b6001600160a01b03831661075157604051634b637e8f60e11b81526000600482015260240161053d565b6001600160a01b03821661077b5760405163ec442f0560e01b81526000600482015260240161053d565b6106a383838361099c565b6001600160a01b0382166107b057604051634b637e8f60e11b81526000600482015260240161053d565b6106928260008361099c565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561081557507f000000000000000000000000000000000000000000000000000000000000000046145b1561083f57507f000000000000000000000000000000000000000000000000000000000000000090565b610497604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60606104977f00000000000000000000000000000000000000000000000000000000000000006005610b9b565b60606104977f00000000000000000000000000000000000000000000000000000000000000006006610b9b565b60006103f361094e6107bc565b8360405161190160f01b8152600281019290925260228201526042902090565b60008060008061098088888888610c46565b9250925092506109908282610d15565b50909695505050505050565b6001600160a01b0383166109c75780600260008282546109bc91906110c4565b90915550610a399050565b6001600160a01b03831660009081526020819052604090205481811015610a1a5760405163391434e360e21b81526001600160a01b0385166004820152602481018290526044810183905260640161053d565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610a5557600280548290039055610a74565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610ab991815260200190565b60405180910390a3505050565b6001600160a01b038416610af05760405163e602df0560e01b81526000600482015260240161053d565b6001600160a01b038316610b1a57604051634a1406b160e11b81526000600482015260240161053d565b6001600160a01b038085166000908152600160209081526040808320938716835292905220829055801561072157826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610b8d91815260200190565b60405180910390a350505050565b606060ff8314610bb557610bae83610dce565b90506103f3565b818054610bc19061108a565b80601f0160208091040260200160405190810160405280929190818152602001828054610bed9061108a565b8015610c3a5780601f10610c0f57610100808354040283529160200191610c3a565b820191906000526020600020905b815481529060010190602001808311610c1d57829003601f168201915b505050505090506103f3565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610c815750600091506003905082610d0b565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610cd5573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d0157506000925060019150829050610d0b565b9250600091508190505b9450945094915050565b6000826003811115610d2957610d296110e5565b03610d32575050565b6001826003811115610d4657610d466110e5565b03610d645760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610d7857610d786110e5565b03610d995760405163fce698f760e01b81526004810182905260240161053d565b6003826003811115610dad57610dad6110e5565b03610692576040516335e2f38360e21b81526004810182905260240161053d565b60606000610ddb83610e0d565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103f357604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610e5b57602081850181015186830182015201610e3f565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610e8e6020830184610e35565b9392505050565b80356001600160a01b0381168114610eac57600080fd5b919050565b60008060408385031215610ec457600080fd5b610ecd83610e95565b946020939093013593505050565b600080600060608486031215610ef057600080fd5b610ef984610e95565b9250610f0760208501610e95565b929592945050506040919091013590565b600060208284031215610f2a57600080fd5b5035919050565b600060208284031215610f4357600080fd5b610e8e82610e95565b60ff60f81b8816815260e060208201526000610f6b60e0830189610e35565b8281036040840152610f7d8189610e35565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b81811015610fd3578351835260209384019390920191600101610fb5565b50909b9a5050505050505050505050565b600080600080600080600060e0888a031215610fff57600080fd5b61100888610e95565b965061101660208901610e95565b95506040880135945060608801359350608088013560ff8116811461103a57600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561106a57600080fd5b61107383610e95565b915061108160208401610e95565b90509250929050565b600181811c9082168061109e57607f821691505b6020821081036110be57634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103f357634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea2646970667358221220acd411bf3a3dcc711d2b573137ff4425f7d50182ae51c5c35238e07c336c90c264736f6c634300081e0033";
+	static readonly bytecode = "0x61016060405234801561001157600080fd5b5060405161170438038061170483398101604081905261003091610370565b6040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b81525080604051806040016040528060018152602001603160f81b8152506040518060400160405280600d81526020016c2bb930b83832b21022ba3432b960991b815250604051806040016040528060048152602001630ae8aa8960e31b81525081600390816100c39190610428565b5060046100d08282610428565b506100e091508390506005610196565b610120526100ef816006610196565b61014052815160208084019190912060e052815190820120610100524660a05261017c60e05161010051604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201529081019290925260608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60805250503060c0525061019033826101c9565b50610579565b60006020835110156101b2576101ab83610208565b90506101c3565b816101bd8482610428565b5060ff90505b92915050565b6001600160a01b0382166101f85760405163ec442f0560e01b8152600060048201526024015b60405180910390fd5b61020460008383610246565b5050565b600080829050601f81511115610233578260405163305a27a960e01b81526004016101ef91906104e6565b805161023e82610534565b179392505050565b6001600160a01b0383166102715780600260008282546102669190610558565b909155506102e39050565b6001600160a01b038316600090815260208190526040902054818110156102c45760405163391434e360e21b81526001600160a01b038516600482015260248101829052604481018390526064016101ef565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b0382166102ff5760028054829003905561031e565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8360405161036391815260200190565b60405180910390a3505050565b60006020828403121561038257600080fd5b5051919050565b634e487b7160e01b600052604160045260246000fd5b600181811c908216806103b357607f821691505b6020821081036103d357634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561042357806000526020600020601f840160051c810160208510156104005750805b601f840160051c820191505b81811015610420576000815560010161040c565b50505b505050565b81516001600160401b0381111561044157610441610389565b6104558161044f845461039f565b846103d9565b6020601f82116001811461048957600083156104715750848201515b600019600385901b1c1916600184901b178455610420565b600084815260208120601f198516915b828110156104b95787850151825560209485019460019092019101610499565b50848210156104d75786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b602081526000825180602084015260005b8181101561051457602081860181015160408684010152016104f7565b506000604082850101526040601f19601f83011684010191505092915050565b805160208083015191908110156103d35760001960209190910360031b1b16919050565b808201808211156101c357634e487b7160e01b600052601160045260246000fd5b60805160a05160c05160e0516101005161012051610140516111316105d3600039600061091b015260006108ee015260006108960152600061086e015260006107c9015260006107f30152600061081d01526111316000f3fe6080604052600436106100ec5760003560e01c806370a082311161008a578063a9059cbb11610059578063a9059cbb1461027e578063d0e30db01461029e578063d505accf146102a6578063dd62ed3e146102c657600080fd5b806370a08231146101eb5780637ecebe001461022157806384b0196e1461024157806395d89b411461026957600080fd5b806323b872dd116100c657806323b872dd1461017a5780632e1a7d4d1461019a578063313ce567146101ba5780633644e515146101d657600080fd5b806306fdde0314610100578063095ea7b31461012b57806318160ddd1461015b57600080fd5b366100fb576100f961030c565b005b600080fd5b34801561010c57600080fd5b5061011561034d565b6040516101229190610e7b565b60405180910390f35b34801561013757600080fd5b5061014b610146366004610eb1565b6103df565b6040519015158152602001610122565b34801561016757600080fd5b506002545b604051908152602001610122565b34801561018657600080fd5b5061014b610195366004610edb565b6103f9565b3480156101a657600080fd5b506100f96101b5366004610f18565b61041d565b3480156101c657600080fd5b5060405160128152602001610122565b3480156101e257600080fd5b5061016c61048d565b3480156101f757600080fd5b5061016c610206366004610f31565b6001600160a01b031660009081526020819052604090205490565b34801561022d57600080fd5b5061016c61023c366004610f31565b61049c565b34801561024d57600080fd5b506102566104ba565b6040516101229796959493929190610f4c565b34801561027557600080fd5b50610115610500565b34801561028a57600080fd5b5061014b610299366004610eb1565b61050f565b6100f961030c565b3480156102b257600080fd5b506100f96102c1366004610fe4565b61051d565b3480156102d257600080fd5b5061016c6102e1366004611057565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b610316333461065c565b60405134815233907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a2565b60606003805461035c9061108a565b80601f01602080910402602001604051908101604052809291908181526020018280546103889061108a565b80156103d55780601f106103aa576101008083540402835291602001916103d5565b820191906000526020600020905b8154815290600101906020018083116103b857829003601f168201915b5050505050905090565b6000336103ed818585610696565b60019150505b92915050565b6000336104078582856106a8565b610412858585610727565b506001949350505050565b6104273382610786565b604051339082156108fc029083906000818181858888f19350505050158015610454573d6000803e3d6000fd5b5060405181815233907f7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b659060200160405180910390a250565b60006104976107bc565b905090565b6001600160a01b0381166000908152600760205260408120546103f3565b6000606080600080600060606104ce6108e7565b6104d6610914565b60408051600080825260208201909252600f60f81b9b939a50919850469750309650945092509050565b60606004805461035c9061108a565b6000336103ed818585610727565b834211156105465760405163313c898160e11b8152600481018590526024015b60405180910390fd5b60007f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c98888886105938c6001600160a01b0316600090815260076020526040902080546001810190915590565b6040805160208101969096526001600160a01b0394851690860152929091166060840152608083015260a082015260c0810186905260e00160405160208183030381529060405280519060200120905060006105ee82610941565b905060006105fe8287878761096e565b9050896001600160a01b0316816001600160a01b031614610645576040516325c0072360e11b81526001600160a01b0380831660048301528b16602482015260440161053d565b6106508a8a8a610696565b50505050505050505050565b6001600160a01b0382166106865760405163ec442f0560e01b81526000600482015260240161053d565b6106926000838361099c565b5050565b6106a38383836001610ac6565b505050565b6001600160a01b03838116600090815260016020908152604080832093861683529290522054600019811015610721578181101561071257604051637dc7a0d960e11b81526001600160a01b0384166004820152602481018290526044810183905260640161053d565b61072184848484036000610ac6565b50505050565b6001600160a01b03831661075157604051634b637e8f60e11b81526000600482015260240161053d565b6001600160a01b03821661077b5760405163ec442f0560e01b81526000600482015260240161053d565b6106a383838361099c565b6001600160a01b0382166107b057604051634b637e8f60e11b81526000600482015260240161053d565b6106928260008361099c565b6000306001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614801561081557507f000000000000000000000000000000000000000000000000000000000000000046145b1561083f57507f000000000000000000000000000000000000000000000000000000000000000090565b610497604080517f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f60208201527f0000000000000000000000000000000000000000000000000000000000000000918101919091527f000000000000000000000000000000000000000000000000000000000000000060608201524660808201523060a082015260009060c00160405160208183030381529060405280519060200120905090565b60606104977f00000000000000000000000000000000000000000000000000000000000000006005610b9b565b60606104977f00000000000000000000000000000000000000000000000000000000000000006006610b9b565b60006103f361094e6107bc565b8360405161190160f01b8152600281019290925260228201526042902090565b60008060008061098088888888610c46565b9250925092506109908282610d15565b50909695505050505050565b6001600160a01b0383166109c75780600260008282546109bc91906110c4565b90915550610a399050565b6001600160a01b03831660009081526020819052604090205481811015610a1a5760405163391434e360e21b81526001600160a01b0385166004820152602481018290526044810183905260640161053d565b6001600160a01b03841660009081526020819052604090209082900390555b6001600160a01b038216610a5557600280548290039055610a74565b6001600160a01b03821660009081526020819052604090208054820190555b816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef83604051610ab991815260200190565b60405180910390a3505050565b6001600160a01b038416610af05760405163e602df0560e01b81526000600482015260240161053d565b6001600160a01b038316610b1a57604051634a1406b160e11b81526000600482015260240161053d565b6001600160a01b038085166000908152600160209081526040808320938716835292905220829055801561072157826001600160a01b0316846001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92584604051610b8d91815260200190565b60405180910390a350505050565b606060ff8314610bb557610bae83610dce565b90506103f3565b818054610bc19061108a565b80601f0160208091040260200160405190810160405280929190818152602001828054610bed9061108a565b8015610c3a5780601f10610c0f57610100808354040283529160200191610c3a565b820191906000526020600020905b815481529060010190602001808311610c1d57829003601f168201915b505050505090506103f3565b600080807f7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0841115610c815750600091506003905082610d0b565b604080516000808252602082018084528a905260ff891692820192909252606081018790526080810186905260019060a0016020604051602081039080840390855afa158015610cd5573d6000803e3d6000fd5b5050604051601f1901519150506001600160a01b038116610d0157506000925060019150829050610d0b565b9250600091508190505b9450945094915050565b6000826003811115610d2957610d296110e5565b03610d32575050565b6001826003811115610d4657610d466110e5565b03610d645760405163f645eedf60e01b815260040160405180910390fd5b6002826003811115610d7857610d786110e5565b03610d995760405163fce698f760e01b81526004810182905260240161053d565b6003826003811115610dad57610dad6110e5565b03610692576040516335e2f38360e21b81526004810182905260240161053d565b60606000610ddb83610e0d565b604080516020808252818301909252919250600091906020820181803683375050509182525060208101929092525090565b600060ff8216601f8111156103f357604051632cd44ac360e21b815260040160405180910390fd5b6000815180845260005b81811015610e5b57602081850181015186830182015201610e3f565b506000602082860101526020601f19601f83011685010191505092915050565b602081526000610e8e6020830184610e35565b9392505050565b80356001600160a01b0381168114610eac57600080fd5b919050565b60008060408385031215610ec457600080fd5b610ecd83610e95565b946020939093013593505050565b600080600060608486031215610ef057600080fd5b610ef984610e95565b9250610f0760208501610e95565b929592945050506040919091013590565b600060208284031215610f2a57600080fd5b5035919050565b600060208284031215610f4357600080fd5b610e8e82610e95565b60ff60f81b8816815260e060208201526000610f6b60e0830189610e35565b8281036040840152610f7d8189610e35565b606084018890526001600160a01b038716608085015260a0840186905283810360c08501528451808252602080870193509091019060005b81811015610fd3578351835260209384019390920191600101610fb5565b50909b9a5050505050505050505050565b600080600080600080600060e0888a031215610fff57600080fd5b61100888610e95565b965061101660208901610e95565b95506040880135945060608801359350608088013560ff8116811461103a57600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561106a57600080fd5b61107383610e95565b915061108160208401610e95565b90509250929050565b600181811c9082168061109e57607f821691505b6020821081036110be57634e487b7160e01b600052602260045260246000fd5b50919050565b808201808211156103f357634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fdfea2646970667358221220b6b312fbf32d38897dffa50d521745e7817088f2c501465087ba95d5f2ad27aa64736f6c634300081e0033";
 	static readonly abi: readonly [
 		{
 			readonly inputs: readonly [
@@ -26681,6 +35262,127 @@ export declare class WETHMock__factory extends ContractFactory {
 	static createInterface(): WETHMockInterface;
 	static connect(address: string, runner?: ContractRunner | null): WETHMock;
 }
+export interface BaseToken {
+	pid?: number;
+	address?: string;
+	name?: string;
+	symbol?: string;
+	decimals?: number;
+	totalSupply?: number;
+	oracle?: string;
+	lpTokens?: string[];
+	mockUsdPrice?: number;
+	allocPoint?: number;
+	rewardFromTimestamp?: number;
+	rewardToTimestamp?: number;
+	deposit?: number;
+	withdraw?: number;
+}
+export interface BaseConfig {
+	chainId?: number;
+	initRewardsPerSec?: number;
+	rewardFromTimestamp?: number;
+	rewardToTimestamp?: number;
+	halvingRate?: number;
+	halvingInterval?: number;
+	masterChef?: string;
+	rewardVault?: string;
+	rewardToken?: BaseToken;
+	WETH?: BaseToken;
+	pools?: BaseToken[];
+}
+export interface AddToken extends BaseToken {
+}
+export interface AddConfig extends Omit<BaseConfig, "initRewardsPerSec" | "rewardFromTimestamp" | "rewardToTimestamp"> {
+	initRewardsPerSec: number;
+	rewardFromTimestamp: number;
+	rewardToTimestamp: number;
+}
+export interface FrontToken extends Omit<BaseToken, "pid" | "address"> {
+	pid: number;
+	address: string;
+	oracle: string;
+}
+export interface FrontConfig extends Omit<BaseConfig, "masterChef" | "rewardToken" | "WETH" | "pools"> {
+	masterChef: string;
+	rewardToken: FrontToken & {
+		pid?: number;
+	};
+	WETH: FrontToken & {
+		pid?: number;
+	};
+	pools: FrontToken[];
+}
+export interface ContractToken extends Omit<FrontToken, "address" | "oracle"> {
+	address?: string;
+	token: ERC20Mock;
+	oracle: IDataFeed;
+}
+export interface ContractConfig extends Omit<FrontConfig, "masterChef" | "rewardToken" | "WETH" | "pools"> {
+	masterChef: MasterChef | MasterPool;
+	rewardToken: ContractToken & {
+		pid?: number;
+	};
+	WETH: ContractToken & {
+		pid?: number;
+	};
+	pools: ContractToken[];
+}
+export declare const SECOND_PER_YEAR = 31622400;
+/**
+ * Get farm APR value in %
+ * @param rewardsPerSec rewards given per second for pool in decimals ( not 1 wei )
+ * @param rewardTokenUSD USD value per 1 TOKEN ( not 1 wei )
+ * @param stakingTokenUSD USD value per 1 Staking TOKEN ( not 1 wei )
+ * @param totalStakedBalance TOKEN balance staked on pool
+ */
+export declare function getFarmApr(rewardsPerSec: number, rewardTokenUSD: number, stakingTokenUSD: number, totalStakedBalance: number): number;
+export declare enum Networks {
+	MAINNET = 1,
+	ARBITRUM_SEPOLIA = 421614
+}
+export type Runner = SignerWithAddress | Provider;
+export declare function findFarmByToken(config: FrontConfig, tokenAddress: string): FrontToken | undefined;
+export declare function getContractConfig(config: FrontConfig, runner?: Runner): ContractConfig;
+export declare function getTotalRewards(config: BaseConfig, timestamp?: number): {
+	initRewardsPerSec: number;
+	rewardFromTimestamp: number;
+	rewardToTimestamp: number;
+	halvingRate: number;
+	halvingInterval: number;
+	totalRewards: number;
+};
+export declare function getFarmStats(config: ContractConfig): Promise<{
+	rewardTokenDecimals: number;
+	rewardTokenUsd: number;
+}>;
+export declare function getFarms(config: ContractConfig, user?: SignerWithAddress | string): Promise<{
+	rewardsPerSec: number;
+	apr: number;
+	allocPoint: number;
+	stakingTokenUsd: number;
+	totalStakedBalance: number;
+	totalStakedUSD: number;
+	userTokenBalance: number;
+	userTokenUSD: number;
+	userStakedBalance: number;
+	userStakedUSD: number;
+	rewardsPerSecBN: bigint | undefined;
+	address?: string;
+	token: ERC20Mock;
+	oracle: IDataFeed;
+	symbol?: string | undefined;
+	name?: string | undefined;
+	totalSupply?: number | undefined;
+	decimals?: number | undefined;
+	deposit?: number | undefined;
+	withdraw?: number | undefined;
+	pid: number;
+	rewardFromTimestamp?: number | undefined;
+	rewardToTimestamp?: number | undefined;
+	lpTokens?: string[] | undefined;
+	mockUsdPrice?: number | undefined;
+}[]>;
 
 declare namespace ownableSol {
 	export { Ownable };
@@ -26763,6 +35465,9 @@ declare namespace math {
 declare namespace ierc165Sol {
 	export { IERC165 };
 }
+declare namespace erc165Sol {
+	export { ERC165 };
+}
 declare namespace safeCastSol {
 	export { SafeCast };
 }
@@ -26788,7 +35493,7 @@ declare namespace cryptography {
 	export { ecdsaSol, eip712Sol };
 }
 declare namespace introspection {
-	export { ierc165Sol };
+	export { erc165Sol, ierc165Sol };
 }
 declare namespace access {
 	export { ownableSol };
@@ -26865,8 +35570,14 @@ declare namespace factories {
 declare namespace iwethSol {
 	export { IWETH };
 }
+declare namespace iDataFeedSol {
+	export { IDataFeed };
+}
 declare namespace ierc20Sol$1 {
 	export { IERC20Exp, IERC20Mintable };
+}
+declare namespace ierc20LockableSol {
+	export { IERC20Lockable };
 }
 declare namespace ierc4626Sol$1 {
 	export { IERC4626$1 as IERC4626 };
@@ -26886,11 +35597,35 @@ declare namespace iMasterPoolSol {
 declare namespace iRewardVaultSol {
 	export { IRewardVault };
 }
+declare namespace iUniswapV2FactorySol {
+	export { IUniswapV2Factory };
+}
+declare namespace iUniswapV2PairSol {
+	export { IUniswapV2Pair };
+}
+declare namespace iv2SwapFeedSol {
+	export { IV2SwapFeed };
+}
 declare namespace tokens {
 	export { erc20LockableSol, erc20MockSol, erc4626PoolSol, wethMockSol, wethSol };
 }
+declare namespace withSettlerSol {
+	export { WithSettler };
+}
+declare namespace ownableSol$1 {
+	export { Ownable$1 as Ownable };
+}
 declare namespace sigLibSol {
 	export { SigLib };
+}
+declare namespace v2SwapFeedFactorySol {
+	export { V2SwapFeedFactory };
+}
+declare namespace dataFeedSol {
+	export { DataFeed };
+}
+declare namespace v2SwapFeedSol {
+	export { V2SwapFeed };
 }
 declare namespace rewardVaultSol {
 	export { RewardVault };
@@ -26923,10 +35658,13 @@ declare namespace lockSol {
 	export { Lock$1 as Lock };
 }
 declare namespace interfaces$1 {
-	export { iInitializableProxySol, iMasterChefSol, iMasterPoolSol, iRewardVaultSol, ierc20Sol$1 as ierc20Sol, ierc4626PoolSol, ierc4626Sol$1 as ierc4626Sol, iwethSol };
+	export { iDataFeedSol, iInitializableProxySol, iMasterChefSol, iMasterPoolSol, iRewardVaultSol, iUniswapV2FactorySol, iUniswapV2PairSol, ierc20LockableSol, ierc20Sol$1 as ierc20Sol, ierc4626PoolSol, ierc4626Sol$1 as ierc4626Sol, iv2SwapFeedSol, iwethSol };
 }
 declare namespace libraries {
-	export { sigLibSol };
+	export { ownableSol$1 as ownableSol, sigLibSol, withSettlerSol };
+}
+declare namespace oracle {
+	export { dataFeedSol, v2SwapFeedFactorySol, v2SwapFeedSol };
 }
 declare namespace pools {
 	export { masterChefSol, masterPoolSol, rewardVaultSol };
@@ -26934,7 +35672,7 @@ declare namespace pools {
 declare namespace proxy$2 {
 	export { initializableProxySol };
 }
-declare namespace ownableSol$1 {
+declare namespace ownableSol$2 {
 	export { Ownable__factory };
 }
 declare namespace utils$4 {
@@ -27015,6 +35753,9 @@ declare namespace math$1 {
 declare namespace ierc165Sol$1 {
 	export { IERC165__factory };
 }
+declare namespace erc165Sol$1 {
+	export { ERC165__factory };
+}
 declare namespace safeCastSol$1 {
 	export { SafeCast__factory };
 }
@@ -27040,10 +35781,10 @@ declare namespace cryptography$2 {
 	export { ecdsaSol$1 as ecdsaSol, eip712Sol$1 as eip712Sol };
 }
 declare namespace introspection$1 {
-	export { ierc165Sol$1 as ierc165Sol };
+	export { erc165Sol$1 as erc165Sol, ierc165Sol$1 as ierc165Sol };
 }
 declare namespace access$2 {
-	export { ownableSol$1 as ownableSol };
+	export { ownableSol$2 as ownableSol };
 }
 declare namespace interfaces$2 {
 	export { draftIerc6093Sol$1 as draftIerc6093Sol, ierc1363Sol$1 as ierc1363Sol, ierc1967Sol$1 as ierc1967Sol, ierc4626Sol$2 as ierc4626Sol, ierc5267Sol$1 as ierc5267Sol };
@@ -27112,13 +35853,19 @@ declare namespace contracts$1 {
 	export { access$2 as access, interfaces$2 as interfaces, proxy$3 as proxy, token$2 as token, utils$4 as utils };
 }
 declare namespace contracts$2 {
-	export { interfaces$3 as interfaces, libraries$1 as libraries, lockSol$1 as lockSol, pools$1 as pools, proxy$5 as proxy, tokens$1 as tokens };
+	export { interfaces$3 as interfaces, libraries$1 as libraries, lockSol$1 as lockSol, oracle$1 as oracle, pools$1 as pools, proxy$5 as proxy, tokens$1 as tokens };
 }
 declare namespace iwethSol$1 {
 	export { IWETH__factory };
 }
+declare namespace iDataFeedSol$1 {
+	export { IDataFeed__factory };
+}
 declare namespace ierc20Sol$3 {
 	export { IERC20Exp__factory, IERC20Mintable__factory };
+}
+declare namespace ierc20LockableSol$1 {
+	export { IERC20Lockable__factory };
 }
 declare namespace ierc4626Sol$3 {
 	export { IERC4626__factory$1 as IERC4626__factory };
@@ -27138,11 +35885,35 @@ declare namespace iMasterPoolSol$1 {
 declare namespace iRewardVaultSol$1 {
 	export { IRewardVault__factory };
 }
+declare namespace iUniswapV2FactorySol$1 {
+	export { IUniswapV2Factory__factory };
+}
+declare namespace iUniswapV2PairSol$1 {
+	export { IUniswapV2Pair__factory };
+}
+declare namespace iv2SwapFeedSol$1 {
+	export { IV2SwapFeed__factory };
+}
 declare namespace tokens$1 {
 	export { erc20LockableSol$1 as erc20LockableSol, erc20MockSol$1 as erc20MockSol, erc4626PoolSol$1 as erc4626PoolSol, wethMockSol$1 as wethMockSol, wethSol$1 as wethSol };
 }
+declare namespace withSettlerSol$1 {
+	export { WithSettler__factory };
+}
+declare namespace ownableSol$3 {
+	export { Ownable__factory$1 as Ownable__factory };
+}
 declare namespace sigLibSol$1 {
 	export { SigLib__factory };
+}
+declare namespace v2SwapFeedFactorySol$1 {
+	export { V2SwapFeedFactory__factory };
+}
+declare namespace dataFeedSol$1 {
+	export { DataFeed__factory };
+}
+declare namespace v2SwapFeedSol$1 {
+	export { V2SwapFeed__factory };
 }
 declare namespace rewardVaultSol$1 {
 	export { RewardVault__factory };
@@ -27175,10 +35946,13 @@ declare namespace lockSol$1 {
 	export { Lock__factory };
 }
 declare namespace interfaces$3 {
-	export { iInitializableProxySol$1 as iInitializableProxySol, iMasterChefSol$1 as iMasterChefSol, iMasterPoolSol$1 as iMasterPoolSol, iRewardVaultSol$1 as iRewardVaultSol, ierc20Sol$3 as ierc20Sol, ierc4626PoolSol$1 as ierc4626PoolSol, ierc4626Sol$3 as ierc4626Sol, iwethSol$1 as iwethSol };
+	export { iDataFeedSol$1 as iDataFeedSol, iInitializableProxySol$1 as iInitializableProxySol, iMasterChefSol$1 as iMasterChefSol, iMasterPoolSol$1 as iMasterPoolSol, iRewardVaultSol$1 as iRewardVaultSol, iUniswapV2FactorySol$1 as iUniswapV2FactorySol, iUniswapV2PairSol$1 as iUniswapV2PairSol, ierc20LockableSol$1 as ierc20LockableSol, ierc20Sol$3 as ierc20Sol, ierc4626PoolSol$1 as ierc4626PoolSol, ierc4626Sol$3 as ierc4626Sol, iv2SwapFeedSol$1 as iv2SwapFeedSol, iwethSol$1 as iwethSol };
 }
 declare namespace libraries$1 {
-	export { sigLibSol$1 as sigLibSol };
+	export { ownableSol$3 as ownableSol, sigLibSol$1 as sigLibSol, withSettlerSol$1 as withSettlerSol };
+}
+declare namespace oracle$1 {
+	export { dataFeedSol$1 as dataFeedSol, v2SwapFeedFactorySol$1 as v2SwapFeedFactorySol, v2SwapFeedSol$1 as v2SwapFeedSol };
 }
 declare namespace pools$1 {
 	export { masterChefSol$1 as masterChefSol, masterPoolSol$1 as masterPoolSol, rewardVaultSol$1 as rewardVaultSol };
@@ -27193,17 +35967,14 @@ declare namespace openzeppelin$1 {
 	export { contracts, contractsUpgradeable };
 }
 declare namespace contracts$3 {
-	export { interfaces$1 as interfaces, libraries, lockSol, pools, proxy$2 as proxy, tokens };
+	export { interfaces$1 as interfaces, libraries, lockSol, oracle, pools, proxy$2 as proxy, tokens };
+}
+declare namespace contracts$4 {
+	export { Address, Address__factory, Clones, Clones__factory, ContextUpgradeable, ContextUpgradeable__factory, Create2, Create2__factory, DataFeed, DataFeed__factory, ECDSA, ECDSA__factory, EIP712, EIP712Upgradeable, EIP712Upgradeable__factory, EIP712__factory, ERC165, ERC165__factory, ERC1967Utils, ERC1967Utils__factory, ERC20, ERC20Burnable, ERC20Burnable__factory, ERC20Lockable, ERC20Lockable__factory, ERC20Mock, ERC20Mock__factory, ERC20Permit, ERC20PermitUpgradeable, ERC20PermitUpgradeable__factory, ERC20Permit__factory, ERC20Upgradeable, ERC20Upgradeable__factory, ERC20__factory, ERC4626Pool, ERC4626Pool__factory, ERC4626Upgradeable, ERC4626Upgradeable__factory, Errors, Errors__factory, IBeacon, IBeacon__factory, IDataFeed, IDataFeed__factory, IERC1155Errors, IERC1155Errors__factory, IERC1363, IERC1363__factory, IERC165, IERC165__factory, IERC1967, IERC1967__factory, IERC20, IERC20Errors, IERC20Errors__factory, IERC20Exp, IERC20Exp__factory, IERC20Lockable, IERC20Lockable__factory, IERC20Metadata, IERC20Metadata__factory, IERC20Mintable, IERC20Mintable__factory, IERC20Permit, IERC20Permit__factory, IERC20__factory, IERC4626$1 as IERC4626, IERC4626Pool, IERC4626Pool__factory, IERC4626__factory$1 as IERC4626__factory, IERC5267, IERC5267__factory, IERC721Errors, IERC721Errors__factory, IInitializableProxy, IInitializableProxy__factory, IMasterChef, IMasterChef__factory, IMasterPool, IMasterPool__factory, IRewardVault, IRewardVault__factory, IUniswapV2Factory, IUniswapV2Factory__factory, IUniswapV2Pair, IUniswapV2Pair__factory, IV2SwapFeed, IV2SwapFeed__factory, IWETH, IWETH__factory, Initializable, InitializableProxy, InitializableProxy__factory, Initializable__factory, Lock$1 as Lock, Lock__factory, MasterChef, MasterChef__factory, MasterPool, MasterPool__factory, Nonces, NoncesUpgradeable, NoncesUpgradeable__factory, Nonces__factory, Ownable$1 as Ownable, OwnableUpgradeable, OwnableUpgradeable__factory, Ownable__factory$1 as Ownable__factory, Proxy$1 as Proxy, Proxy__factory, ReentrancyGuardUpgradeable, ReentrancyGuardUpgradeable__factory, RewardVault, RewardVault__factory, SafeCast, SafeCast__factory, SafeERC20, SafeERC20__factory, ShortStrings, ShortStrings__factory, SigLib, SigLib__factory, Strings, Strings__factory, V2SwapFeed, V2SwapFeedFactory, V2SwapFeedFactory__factory, V2SwapFeed__factory, WETH, WETHMock, WETHMock__factory, WETH__factory, WithSettler, WithSettler__factory, contracts$3 as contracts, factories, openzeppelin$1 as openzeppelin };
 }
 
 export {
-	IERC4626$1 as IERC4626,
-	IERC4626__factory$1 as IERC4626__factory,
-	Lock$1 as Lock,
-	Proxy$1 as Proxy,
-	contracts$3 as contracts,
-	factories,
-	openzeppelin$1 as openzeppelin,
+	contracts$4 as contracts,
 };
 
 export {};

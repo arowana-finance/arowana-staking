@@ -10,17 +10,17 @@ import type {
 
 const _abi = [
   {
-    inputs: [],
-    name: "admin",
-    outputs: [
+    anonymous: false,
+    inputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        indexed: false,
+        internalType: "string",
+        name: "description",
+        type: "string",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    name: "DescriptionChanged",
+    type: "event",
   },
   {
     inputs: [
@@ -30,7 +30,20 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "changeAdmin",
+    name: "changeProxyAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+    ],
+    name: "changeProxyDescription",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -45,11 +58,16 @@ const _abi = [
         type: "address",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
       {
         internalType: "address",
         name: "newAdmin",
@@ -72,6 +90,32 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "proxyAdmin",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "proxyDescription",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -88,6 +132,10 @@ const _abi = [
     outputs: [],
     stateMutability: "payable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ] as const;
 

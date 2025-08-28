@@ -50,17 +50,49 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.MasterChef__factory>;
     getContractFactory(
+      name: "V2SwapFeedFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.V2SwapFeedFactory__factory>;
+    getContractFactory(
+      name: "V2SwapFeed",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.V2SwapFeed__factory>;
+    getContractFactory(
+      name: "DataFeed",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.DataFeed__factory>;
+    getContractFactory(
       name: "Lock",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Lock__factory>;
+    getContractFactory(
+      name: "WithSettler",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.WithSettler__factory>;
     getContractFactory(
       name: "SigLib",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.SigLib__factory>;
     getContractFactory(
+      name: "Ownable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
       name: "IWETH",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IWETH__factory>;
+    getContractFactory(
+      name: "IV2SwapFeed",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IV2SwapFeed__factory>;
+    getContractFactory(
+      name: "IUniswapV2Pair",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IUniswapV2Pair__factory>;
+    getContractFactory(
+      name: "IUniswapV2Factory",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IUniswapV2Factory__factory>;
     getContractFactory(
       name: "IRewardVault",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -86,6 +118,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC4626__factory>;
     getContractFactory(
+      name: "IERC20Lockable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IERC20Lockable__factory>;
+    getContractFactory(
       name: "IERC20Mintable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC20Mintable__factory>;
@@ -93,6 +129,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC20Exp",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC20Exp__factory>;
+    getContractFactory(
+      name: "IDataFeed",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IDataFeed__factory>;
     getContractFactory(
       name: "ReentrancyGuardUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -149,6 +189,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC165",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IERC165__factory>;
+    getContractFactory(
+      name: "ERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ERC165__factory>;
     getContractFactory(
       name: "Errors",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -292,20 +336,60 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.MasterChef>;
     getContractAt(
+      name: "V2SwapFeedFactory",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.V2SwapFeedFactory>;
+    getContractAt(
+      name: "V2SwapFeed",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.V2SwapFeed>;
+    getContractAt(
+      name: "DataFeed",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.DataFeed>;
+    getContractAt(
       name: "Lock",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.Lock>;
+    getContractAt(
+      name: "WithSettler",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.WithSettler>;
     getContractAt(
       name: "SigLib",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.SigLib>;
     getContractAt(
+      name: "Ownable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Ownable>;
+    getContractAt(
       name: "IWETH",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.IWETH>;
+    getContractAt(
+      name: "IV2SwapFeed",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IV2SwapFeed>;
+    getContractAt(
+      name: "IUniswapV2Pair",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IUniswapV2Pair>;
+    getContractAt(
+      name: "IUniswapV2Factory",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IUniswapV2Factory>;
     getContractAt(
       name: "IRewardVault",
       address: string | ethers.Addressable,
@@ -337,6 +421,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.IERC4626>;
     getContractAt(
+      name: "IERC20Lockable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IERC20Lockable>;
+    getContractAt(
       name: "IERC20Mintable",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
@@ -346,6 +435,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.IERC20Exp>;
+    getContractAt(
+      name: "IDataFeed",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IDataFeed>;
     getContractAt(
       name: "ReentrancyGuardUpgradeable",
       address: string | ethers.Addressable,
@@ -416,6 +510,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "ERC165",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ERC165>;
     getContractAt(
       name: "Errors",
       address: string | ethers.Addressable,
@@ -574,17 +673,49 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.MasterChef>;
     deployContract(
+      name: "V2SwapFeedFactory",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.V2SwapFeedFactory>;
+    deployContract(
+      name: "V2SwapFeed",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.V2SwapFeed>;
+    deployContract(
+      name: "DataFeed",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.DataFeed>;
+    deployContract(
       name: "Lock",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Lock>;
+    deployContract(
+      name: "WithSettler",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.WithSettler>;
     deployContract(
       name: "SigLib",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.SigLib>;
     deployContract(
+      name: "Ownable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Ownable>;
+    deployContract(
       name: "IWETH",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IWETH>;
+    deployContract(
+      name: "IV2SwapFeed",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IV2SwapFeed>;
+    deployContract(
+      name: "IUniswapV2Pair",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IUniswapV2Pair>;
+    deployContract(
+      name: "IUniswapV2Factory",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IUniswapV2Factory>;
     deployContract(
       name: "IRewardVault",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -610,6 +741,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC4626>;
     deployContract(
+      name: "IERC20Lockable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IERC20Lockable>;
+    deployContract(
       name: "IERC20Mintable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC20Mintable>;
@@ -617,6 +752,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC20Exp",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC20Exp>;
+    deployContract(
+      name: "IDataFeed",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IDataFeed>;
     deployContract(
       name: "ReentrancyGuardUpgradeable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -673,6 +812,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC165",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "ERC165",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ERC165>;
     deployContract(
       name: "Errors",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -816,20 +959,60 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.MasterChef>;
     deployContract(
+      name: "V2SwapFeedFactory",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.V2SwapFeedFactory>;
+    deployContract(
+      name: "V2SwapFeed",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.V2SwapFeed>;
+    deployContract(
+      name: "DataFeed",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.DataFeed>;
+    deployContract(
       name: "Lock",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Lock>;
+    deployContract(
+      name: "WithSettler",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.WithSettler>;
     deployContract(
       name: "SigLib",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.SigLib>;
     deployContract(
+      name: "Ownable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Ownable>;
+    deployContract(
       name: "IWETH",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IWETH>;
+    deployContract(
+      name: "IV2SwapFeed",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IV2SwapFeed>;
+    deployContract(
+      name: "IUniswapV2Pair",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IUniswapV2Pair>;
+    deployContract(
+      name: "IUniswapV2Factory",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IUniswapV2Factory>;
     deployContract(
       name: "IRewardVault",
       args: any[],
@@ -861,6 +1044,11 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC4626>;
     deployContract(
+      name: "IERC20Lockable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IERC20Lockable>;
+    deployContract(
       name: "IERC20Mintable",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -870,6 +1058,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC20Exp>;
+    deployContract(
+      name: "IDataFeed",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IDataFeed>;
     deployContract(
       name: "ReentrancyGuardUpgradeable",
       args: any[],
@@ -940,6 +1133,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "ERC165",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ERC165>;
     deployContract(
       name: "Errors",
       args: any[],

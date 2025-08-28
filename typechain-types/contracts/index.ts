@@ -7,6 +7,8 @@ import type * as interfaces from"./interfaces/index.js";
 export type { interfaces };
 import type * as libraries from"./libraries/index.js";
 export type { libraries };
+import type * as oracle from"./oracle/index.js";
+export type { oracle };
 import type * as pools from"./pools/index.js";
 export type { pools };
 import type * as proxy from"./proxy/index.js";

@@ -29,10 +29,13 @@ export interface MasterChefInterface extends Interface {
       | "WETH"
       | "add"
       | "deposit"
-      | "getBlockRewardPerShare"
+      | "depositPermit"
       | "getMultiplier"
+      | "getPoolRewardsByTime"
+      | "getPoolRewardsPerSec"
+      | "getRewardsPerShare"
       | "hasPool"
-      | "initialize"
+      | "initializeChef"
       | "massUpdatePools"
       | "owner"
       | "pendingRewards"
@@ -40,14 +43,14 @@ export interface MasterChefInterface extends Interface {
       | "poolInfo"
       | "poolLength"
       | "renounceOwnership"
-      | "rewardPerBlock"
       | "rewardToken"
       | "rewardVault"
+      | "rewardsPerSec"
       | "set"
+      | "setRewardsPerSec"
       | "totalAllocPoint"
       | "transferOwnership"
       | "updatePool"
-      | "updateRewardPerBlock"
       | "userInfo"
       | "withdraw",
   ): FunctionFragment;
@@ -59,7 +62,7 @@ export interface MasterChefInterface extends Interface {
       | "InitializedChef"
       | "OwnershipTransferred"
       | "SetPool"
-      | "SetReward"
+      | "SetRewards"
       | "Withdraw",
   ): EventFragment;
 
@@ -73,25 +76,37 @@ export interface MasterChefInterface extends Interface {
     values: [BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getBlockRewardPerShare",
-    values: [BigNumberish],
+    functionFragment: "depositPermit",
+    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
     functionFragment: "getMultiplier",
     values: [BigNumberish, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: "getPoolRewardsByTime",
+    values: [BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPoolRewardsPerSec",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRewardsPerShare",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
     functionFragment: "hasPool",
     values: [AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeChef",
     values: [
       AddressLike,
       AddressLike,
       AddressLike,
-      BigNumberish,
       AddressLike,
+      BigNumberish,
       BigNumberish,
       BigNumberish,
       boolean,
@@ -120,10 +135,6 @@ export interface MasterChefInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardPerBlock",
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: "rewardToken",
     values?: undefined,
   ): string;
@@ -132,8 +143,16 @@ export interface MasterChefInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: "rewardsPerSec",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: "set",
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, boolean],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRewardsPerSec",
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: "totalAllocPoint",
@@ -145,10 +164,6 @@ export interface MasterChefInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updatePool",
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateRewardPerBlock",
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
@@ -164,15 +179,30 @@ export interface MasterChefInterface extends Interface {
   decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getBlockRewardPerShare",
+    functionFragment: "depositPermit",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getMultiplier",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPoolRewardsByTime",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPoolRewardsPerSec",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRewardsPerShare",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeChef",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "massUpdatePools",
     data: BytesLike,
@@ -190,10 +220,6 @@ export interface MasterChefInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "rewardPerBlock",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "rewardToken",
     data: BytesLike,
   ): Result;
@@ -201,7 +227,15 @@ export interface MasterChefInterface extends Interface {
     functionFragment: "rewardVault",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "rewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setRewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalAllocPoint",
     data: BytesLike,
@@ -211,10 +245,6 @@ export interface MasterChefInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateRewardPerBlock",
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -289,22 +319,22 @@ export namespace SetPoolEvent {
     pid: BigNumberish,
     lpToken: AddressLike,
     newAllocPoint: BigNumberish,
-    startBlock: BigNumberish,
-    endBlock: BigNumberish,
+    startTime: BigNumberish,
+    endTime: BigNumberish,
   ];
   export type OutputTuple = [
     pid: bigint,
     lpToken: string,
     newAllocPoint: bigint,
-    startBlock: bigint,
-    endBlock: bigint,
+    startTime: bigint,
+    endTime: bigint,
   ];
   export interface OutputObject {
     pid: bigint;
     lpToken: string;
     newAllocPoint: bigint;
-    startBlock: bigint;
-    endBlock: bigint;
+    startTime: bigint;
+    endTime: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -312,11 +342,11 @@ export namespace SetPoolEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace SetRewardEvent {
-  export type InputTuple = [newReward: BigNumberish];
-  export type OutputTuple = [newReward: bigint];
+export namespace SetRewardsEvent {
+  export type InputTuple = [rewardsPerSec: BigNumberish];
+  export type OutputTuple = [rewardsPerSec: bigint];
   export interface OutputObject {
-    newReward: bigint;
+    rewardsPerSec: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -391,8 +421,8 @@ export interface MasterChef extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -405,29 +435,52 @@ export interface MasterChef extends BaseContract {
     "payable"
   >;
 
-  getBlockRewardPerShare: TypedContractMethod<
+  depositPermit: TypedContractMethod<
+    [
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      _deadline: BigNumberish,
+      _signature: BytesLike,
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  getMultiplier: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsByTime: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsPerSec: TypedContractMethod<
     [_pid: BigNumberish],
     [bigint],
     "view"
   >;
 
-  getMultiplier: TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+  getRewardsPerShare: TypedContractMethod<
+    [_pid: BigNumberish],
     [bigint],
     "view"
   >;
 
   hasPool: TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
 
-  initialize: TypedContractMethod<
+  initializeChef: TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -452,10 +505,10 @@ export interface MasterChef extends BaseContract {
       [string, bigint, bigint, bigint, bigint, bigint] & {
         lpToken: string;
         allocPoint: bigint;
-        startBlock: bigint;
-        endBlock: bigint;
-        lastRewardBlock: bigint;
-        accRewardPerShare: bigint;
+        startTime: bigint;
+        endTime: bigint;
+        lastRewardTime: bigint;
+        accRewardsPerShare: bigint;
       },
     ],
     "view"
@@ -465,20 +518,26 @@ export interface MasterChef extends BaseContract {
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
-  rewardPerBlock: TypedContractMethod<[], [bigint], "view">;
-
   rewardToken: TypedContractMethod<[], [string], "view">;
 
   rewardVault: TypedContractMethod<[], [string], "view">;
+
+  rewardsPerSec: TypedContractMethod<[], [bigint], "view">;
 
   set: TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
+    [void],
+    "nonpayable"
+  >;
+
+  setRewardsPerSec: TypedContractMethod<
+    [_rewardsPerSec: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -492,12 +551,6 @@ export interface MasterChef extends BaseContract {
   >;
 
   updatePool: TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-
-  updateRewardPerBlock: TypedContractMethod<
-    [newBlockReward: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
 
   userInfo: TypedContractMethod<
     [arg0: BigNumberish, arg1: AddressLike],
@@ -524,8 +577,8 @@ export interface MasterChef extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -539,29 +592,51 @@ export interface MasterChef extends BaseContract {
     "payable"
   >;
   getFunction(
-    nameOrSignature: "getBlockRewardPerShare",
-  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+    nameOrSignature: "depositPermit",
+  ): TypedContractMethod<
+    [
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      _deadline: BigNumberish,
+      _signature: BytesLike,
+    ],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "getMultiplier",
   ): TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
     [bigint],
     "view"
   >;
   getFunction(
+    nameOrSignature: "getPoolRewardsByTime",
+  ): TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getPoolRewardsPerSec",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRewardsPerShare",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
     nameOrSignature: "hasPool",
   ): TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeChef",
   ): TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -591,10 +666,10 @@ export interface MasterChef extends BaseContract {
       [string, bigint, bigint, bigint, bigint, bigint] & {
         lpToken: string;
         allocPoint: bigint;
-        startBlock: bigint;
-        endBlock: bigint;
-        lastRewardBlock: bigint;
-        accRewardPerShare: bigint;
+        startTime: bigint;
+        endTime: bigint;
+        lastRewardTime: bigint;
+        accRewardsPerShare: bigint;
       },
     ],
     "view"
@@ -606,27 +681,30 @@ export interface MasterChef extends BaseContract {
     nameOrSignature: "renounceOwnership",
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "rewardPerBlock",
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "rewardToken",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "rewardVault",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "rewardsPerSec",
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "set",
   ): TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "setRewardsPerSec",
+  ): TypedContractMethod<[_rewardsPerSec: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "totalAllocPoint",
   ): TypedContractMethod<[], [bigint], "view">;
@@ -636,9 +714,6 @@ export interface MasterChef extends BaseContract {
   getFunction(
     nameOrSignature: "updatePool",
   ): TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "updateRewardPerBlock",
-  ): TypedContractMethod<[newBlockReward: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "userInfo",
   ): TypedContractMethod<
@@ -690,11 +765,11 @@ export interface MasterChef extends BaseContract {
     SetPoolEvent.OutputObject
   >;
   getEvent(
-    key: "SetReward",
+    key: "SetRewards",
   ): TypedContractEvent<
-    SetRewardEvent.InputTuple,
-    SetRewardEvent.OutputTuple,
-    SetRewardEvent.OutputObject
+    SetRewardsEvent.InputTuple,
+    SetRewardsEvent.OutputTuple,
+    SetRewardsEvent.OutputObject
   >;
   getEvent(
     key: "Withdraw",
@@ -705,7 +780,7 @@ export interface MasterChef extends BaseContract {
   >;
 
   filters: {
-    "Deposit(address,uint256,uint256)": TypedContractEvent<
+    "Deposit(address,uint16,uint256)": TypedContractEvent<
       DepositEvent.InputTuple,
       DepositEvent.OutputTuple,
       DepositEvent.OutputObject
@@ -749,7 +824,7 @@ export interface MasterChef extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "SetPool(uint256,address,uint256,uint256,uint256)": TypedContractEvent<
+    "SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<
       SetPoolEvent.InputTuple,
       SetPoolEvent.OutputTuple,
       SetPoolEvent.OutputObject
@@ -760,18 +835,18 @@ export interface MasterChef extends BaseContract {
       SetPoolEvent.OutputObject
     >;
 
-    "SetReward(uint256)": TypedContractEvent<
-      SetRewardEvent.InputTuple,
-      SetRewardEvent.OutputTuple,
-      SetRewardEvent.OutputObject
+    "SetRewards(uint256)": TypedContractEvent<
+      SetRewardsEvent.InputTuple,
+      SetRewardsEvent.OutputTuple,
+      SetRewardsEvent.OutputObject
     >;
-    SetReward: TypedContractEvent<
-      SetRewardEvent.InputTuple,
-      SetRewardEvent.OutputTuple,
-      SetRewardEvent.OutputObject
+    SetRewards: TypedContractEvent<
+      SetRewardsEvent.InputTuple,
+      SetRewardsEvent.OutputTuple,
+      SetRewardsEvent.OutputObject
     >;
 
-    "Withdraw(address,uint256,uint256)": TypedContractEvent<
+    "Withdraw(address,uint16,uint256)": TypedContractEvent<
       WithdrawEvent.InputTuple,
       WithdrawEvent.OutputTuple,
       WithdrawEvent.OutputObject

@@ -25,26 +25,26 @@ export declare namespace IMasterChef {
   export type PoolInfoStruct = {
     lpToken: AddressLike;
     allocPoint: BigNumberish;
-    startBlock: BigNumberish;
-    endBlock: BigNumberish;
-    lastRewardBlock: BigNumberish;
-    accRewardPerShare: BigNumberish;
+    startTime: BigNumberish;
+    endTime: BigNumberish;
+    lastRewardTime: BigNumberish;
+    accRewardsPerShare: BigNumberish;
   };
 
   export type PoolInfoStructOutput = [
     lpToken: string,
     allocPoint: bigint,
-    startBlock: bigint,
-    endBlock: bigint,
-    lastRewardBlock: bigint,
-    accRewardPerShare: bigint,
+    startTime: bigint,
+    endTime: bigint,
+    lastRewardTime: bigint,
+    accRewardsPerShare: bigint,
   ] & {
     lpToken: string;
     allocPoint: bigint;
-    startBlock: bigint;
-    endBlock: bigint;
-    lastRewardBlock: bigint;
-    accRewardPerShare: bigint;
+    startTime: bigint;
+    endTime: bigint;
+    lastRewardTime: bigint;
+    accRewardsPerShare: bigint;
   };
 
   export type UserInfoStruct = {
@@ -65,11 +65,15 @@ export interface IMasterPoolInterface extends Interface {
       | "add"
       | "deposit"
       | "depositPermit"
-      | "getBlockRewardPerShare"
       | "getMultiplier"
+      | "getPoolRewardsByTime"
+      | "getPoolRewardsPerSec"
+      | "getRewardsPerShare"
+      | "halvingInterval"
+      | "halvingRate"
       | "hasPool"
       | "hasPoolToken"
-      | "initialize"
+      | "initializeChef"
       | "initializePool"
       | "massUpdatePools"
       | "pendingRewards"
@@ -83,13 +87,15 @@ export interface IMasterPoolInterface extends Interface {
       | "poolTokens"
       | "poolTransfer"
       | "poolWithdraw"
-      | "rewardPerBlock"
       | "rewardToken"
       | "rewardVault"
+      | "rewardsPerSec"
       | "set"
+      | "setHalvingInterval"
+      | "setHalvingRate"
+      | "setRewardsPerSec"
       | "totalAllocPoint"
       | "updatePool"
-      | "updateRewardPerBlock"
       | "userInfo"
       | "withdraw",
   ): FunctionFragment;
@@ -108,12 +114,28 @@ export interface IMasterPoolInterface extends Interface {
     values: [BigNumberish, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "getBlockRewardPerShare",
+    functionFragment: "getMultiplier",
+    values: [BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPoolRewardsByTime",
+    values: [BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPoolRewardsPerSec",
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getMultiplier",
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    functionFragment: "getRewardsPerShare",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "halvingInterval",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "halvingRate",
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "hasPool",
@@ -124,13 +146,13 @@ export interface IMasterPoolInterface extends Interface {
     values: [AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeChef",
     values: [
       AddressLike,
       AddressLike,
       AddressLike,
-      BigNumberish,
       AddressLike,
+      BigNumberish,
       BigNumberish,
       BigNumberish,
       boolean,
@@ -143,8 +165,10 @@ export interface IMasterPoolInterface extends Interface {
       AddressLike,
       AddressLike,
       AddressLike,
-      BigNumberish,
       AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
       BigNumberish,
       BigNumberish,
       boolean,
@@ -196,10 +220,6 @@ export interface IMasterPoolInterface extends Interface {
     values: [AddressLike, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardPerBlock",
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: "rewardToken",
     values?: undefined,
   ): string;
@@ -208,8 +228,24 @@ export interface IMasterPoolInterface extends Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: "rewardsPerSec",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: "set",
     values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, boolean],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setHalvingInterval",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setHalvingRate",
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRewardsPerSec",
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: "totalAllocPoint",
@@ -217,10 +253,6 @@ export interface IMasterPoolInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updatePool",
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateRewardPerBlock",
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
@@ -240,11 +272,27 @@ export interface IMasterPoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getBlockRewardPerShare",
+    functionFragment: "getMultiplier",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getMultiplier",
+    functionFragment: "getPoolRewardsByTime",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPoolRewardsPerSec",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRewardsPerShare",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "halvingInterval",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "halvingRate",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "hasPool", data: BytesLike): Result;
@@ -252,7 +300,10 @@ export interface IMasterPoolInterface extends Interface {
     functionFragment: "hasPoolToken",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeChef",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "initializePool",
     data: BytesLike,
@@ -291,10 +342,6 @@ export interface IMasterPoolInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "rewardPerBlock",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "rewardToken",
     data: BytesLike,
   ): Result;
@@ -302,16 +349,28 @@ export interface IMasterPoolInterface extends Interface {
     functionFragment: "rewardVault",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "rewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setHalvingInterval",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setHalvingRate",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRewardsPerSec",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalAllocPoint",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateRewardPerBlock",
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
@@ -365,8 +424,8 @@ export interface IMasterPool extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -390,17 +449,33 @@ export interface IMasterPool extends BaseContract {
     "nonpayable"
   >;
 
-  getBlockRewardPerShare: TypedContractMethod<
+  getMultiplier: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsByTime: TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  getPoolRewardsPerSec: TypedContractMethod<
     [_pid: BigNumberish],
     [bigint],
     "view"
   >;
 
-  getMultiplier: TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+  getRewardsPerShare: TypedContractMethod<
+    [_pid: BigNumberish],
     [bigint],
     "view"
   >;
+
+  halvingInterval: TypedContractMethod<[], [bigint], "view">;
+
+  halvingRate: TypedContractMethod<[], [bigint], "view">;
 
   hasPool: TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
 
@@ -410,15 +485,15 @@ export interface IMasterPool extends BaseContract {
     "view"
   >;
 
-  initialize: TypedContractMethod<
+  initializeChef: TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -431,10 +506,12 @@ export interface IMasterPool extends BaseContract {
       _WETH: AddressLike,
       _poolTokenImplementation: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _halvingRate: BigNumberish,
+      _halvingInterval: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -485,20 +562,38 @@ export interface IMasterPool extends BaseContract {
     "nonpayable"
   >;
 
-  rewardPerBlock: TypedContractMethod<[], [bigint], "view">;
-
   rewardToken: TypedContractMethod<[], [string], "view">;
 
   rewardVault: TypedContractMethod<[], [string], "view">;
+
+  rewardsPerSec: TypedContractMethod<[], [bigint], "view">;
 
   set: TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
+    [void],
+    "nonpayable"
+  >;
+
+  setHalvingInterval: TypedContractMethod<
+    [_halvingInterval: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setHalvingRate: TypedContractMethod<
+    [_halvingRate: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setRewardsPerSec: TypedContractMethod<
+    [_rewardPerSec: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -506,12 +601,6 @@ export interface IMasterPool extends BaseContract {
   totalAllocPoint: TypedContractMethod<[], [bigint], "view">;
 
   updatePool: TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-
-  updateRewardPerBlock: TypedContractMethod<
-    [newBlockReward: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
 
   userInfo: TypedContractMethod<
     [pid: BigNumberish, user: AddressLike],
@@ -538,8 +627,8 @@ export interface IMasterPool extends BaseContract {
     [
       _lpToken: AddressLike,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [bigint],
@@ -565,15 +654,31 @@ export interface IMasterPool extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "getBlockRewardPerShare",
-  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
-  getFunction(
     nameOrSignature: "getMultiplier",
   ): TypedContractMethod<
-    [_pid: BigNumberish, _fromBlock: BigNumberish, _toBlock: BigNumberish],
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
     [bigint],
     "view"
   >;
+  getFunction(
+    nameOrSignature: "getPoolRewardsByTime",
+  ): TypedContractMethod<
+    [_pid: BigNumberish, _fromTime: BigNumberish, _toTime: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getPoolRewardsPerSec",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRewardsPerShare",
+  ): TypedContractMethod<[_pid: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "halvingInterval",
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "halvingRate",
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "hasPool",
   ): TypedContractMethod<[_lpToken: AddressLike], [boolean], "view">;
@@ -581,16 +686,16 @@ export interface IMasterPool extends BaseContract {
     nameOrSignature: "hasPoolToken",
   ): TypedContractMethod<[_poolToken: AddressLike], [boolean], "view">;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeChef",
   ): TypedContractMethod<
     [
       _owner: AddressLike,
       _WETH: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -604,10 +709,12 @@ export interface IMasterPool extends BaseContract {
       _WETH: AddressLike,
       _poolTokenImplementation: AddressLike,
       _rewardToken: AddressLike,
-      _rewardPerBlock: BigNumberish,
       _rewardVault: AddressLike,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _rewardsPerSec: BigNumberish,
+      _halvingRate: BigNumberish,
+      _halvingInterval: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       addPool: boolean,
     ],
     [void],
@@ -670,36 +777,46 @@ export interface IMasterPool extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "rewardPerBlock",
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "rewardToken",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "rewardVault",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "rewardsPerSec",
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "set",
   ): TypedContractMethod<
     [
       _pid: BigNumberish,
       _allocPoint: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
       _withUpdate: boolean,
     ],
     [void],
     "nonpayable"
   >;
   getFunction(
+    nameOrSignature: "setHalvingInterval",
+  ): TypedContractMethod<
+    [_halvingInterval: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "setHalvingRate",
+  ): TypedContractMethod<[_halvingRate: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setRewardsPerSec",
+  ): TypedContractMethod<[_rewardPerSec: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "totalAllocPoint",
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "updatePool",
   ): TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "updateRewardPerBlock",
-  ): TypedContractMethod<[newBlockReward: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "userInfo",
   ): TypedContractMethod<

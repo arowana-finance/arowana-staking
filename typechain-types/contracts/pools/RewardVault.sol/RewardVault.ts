@@ -27,13 +27,14 @@ export interface RewardVaultInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "addSpender"
-      | "initialize"
+      | "initializeVault"
       | "owner"
       | "removeSpender"
       | "renounceOwnership"
       | "sendTo"
       | "spenders"
-      | "transferOwnership",
+      | "transferOwnership"
+      | "withdraw",
   ): FunctionFragment;
 
   getEvent(
@@ -42,7 +43,8 @@ export interface RewardVaultInterface extends Interface {
       | "Initialized"
       | "OwnershipTransferred"
       | "RemoveSpender"
-      | "Rewarded",
+      | "Rewarded"
+      | "Withdrawn",
   ): EventFragment;
 
   encodeFunctionData(
@@ -50,7 +52,7 @@ export interface RewardVaultInterface extends Interface {
     values: [AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeVault",
     values: [AddressLike],
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -71,9 +73,16 @@ export interface RewardVaultInterface extends Interface {
     functionFragment: "transferOwnership",
     values: [AddressLike],
   ): string;
+  encodeFunctionData(
+    functionFragment: "withdraw",
+    values: [AddressLike, AddressLike, BigNumberish],
+  ): string;
 
   decodeFunctionResult(functionFragment: "addSpender", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeVault",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeSpender",
@@ -89,6 +98,7 @@ export interface RewardVaultInterface extends Interface {
     functionFragment: "transferOwnership",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
 
 export namespace AddSpenderEvent {
@@ -165,6 +175,31 @@ export namespace RewardedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
+export namespace WithdrawnEvent {
+  export type InputTuple = [
+    token: AddressLike,
+    spender: AddressLike,
+    to: AddressLike,
+    value: BigNumberish,
+  ];
+  export type OutputTuple = [
+    token: string,
+    spender: string,
+    to: string,
+    value: bigint,
+  ];
+  export interface OutputObject {
+    token: string;
+    spender: string;
+    to: string;
+    value: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
 export interface RewardVault extends BaseContract {
   connect(runner?: ContractRunner | null): RewardVault;
   waitForDeployment(): Promise<this>;
@@ -214,7 +249,7 @@ export interface RewardVault extends BaseContract {
     "nonpayable"
   >;
 
-  initialize: TypedContractMethod<
+  initializeVault: TypedContractMethod<
     [_initOwner: AddressLike],
     [void],
     "nonpayable"
@@ -244,6 +279,12 @@ export interface RewardVault extends BaseContract {
     "nonpayable"
   >;
 
+  withdraw: TypedContractMethod<
+    [token: AddressLike, to: AddressLike, value: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment,
   ): T;
@@ -252,7 +293,7 @@ export interface RewardVault extends BaseContract {
     nameOrSignature: "addSpender",
   ): TypedContractMethod<[_spender: AddressLike], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "initialize",
+    nameOrSignature: "initializeVault",
   ): TypedContractMethod<[_initOwner: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "owner",
@@ -276,6 +317,13 @@ export interface RewardVault extends BaseContract {
   getFunction(
     nameOrSignature: "transferOwnership",
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "withdraw",
+  ): TypedContractMethod<
+    [token: AddressLike, to: AddressLike, value: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
 
   getEvent(
     key: "AddSpender",
@@ -311,6 +359,13 @@ export interface RewardVault extends BaseContract {
     RewardedEvent.InputTuple,
     RewardedEvent.OutputTuple,
     RewardedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Withdrawn",
+  ): TypedContractEvent<
+    WithdrawnEvent.InputTuple,
+    WithdrawnEvent.OutputTuple,
+    WithdrawnEvent.OutputObject
   >;
 
   filters: {
@@ -367,6 +422,17 @@ export interface RewardVault extends BaseContract {
       RewardedEvent.InputTuple,
       RewardedEvent.OutputTuple,
       RewardedEvent.OutputObject
+    >;
+
+    "Withdrawn(address,address,address,uint256)": TypedContractEvent<
+      WithdrawnEvent.InputTuple,
+      WithdrawnEvent.OutputTuple,
+      WithdrawnEvent.OutputObject
+    >;
+    Withdrawn: TypedContractEvent<
+      WithdrawnEvent.InputTuple,
+      WithdrawnEvent.OutputTuple,
+      WithdrawnEvent.OutputObject
     >;
   };
 }
