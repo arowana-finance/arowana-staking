@@ -17,7 +17,14 @@ import {
     RewardVault,
     MasterPool,
 } from '../typechain-types/index.js';
-import { type AddConfig, type AddToken, FrontConfig, getContractConfig, getFarms, getTotalRewards } from '../src/index.js';
+import {
+    type AddConfig,
+    type AddToken,
+    FrontConfig,
+    getContractConfig,
+    getFarms,
+    getTotalRewards,
+} from '../src/index.js';
 import { readConfig, writeConfig, checkConfig } from './common/readConfig.js';
 
 const logger = new Logger();
@@ -296,10 +303,7 @@ async function depositMasterPool(
     }
 }
 
-async function lookupPool(
-    config: AddConfig,
-    owner: SignerWithAddress
-) {
+async function lookupPool(config: AddConfig, owner: SignerWithAddress) {
     const contractConfig = getContractConfig(config as unknown as FrontConfig, owner);
 
     const farmData = await getFarms(contractConfig, owner);

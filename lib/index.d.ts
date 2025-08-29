@@ -35305,10 +35305,10 @@ export interface FrontToken extends Omit<BaseToken, "pid" | "address"> {
 }
 export interface FrontConfig extends Omit<BaseConfig, "masterChef" | "rewardToken" | "WETH" | "pools"> {
 	masterChef: string;
-	rewardToken: FrontToken & {
+	rewardToken: Omit<FrontToken, "pid"> & {
 		pid?: number;
 	};
-	WETH: FrontToken & {
+	WETH: Omit<FrontToken, "pid"> & {
 		pid?: number;
 	};
 	pools: FrontToken[];
@@ -35320,10 +35320,10 @@ export interface ContractToken extends Omit<FrontToken, "address" | "oracle"> {
 }
 export interface ContractConfig extends Omit<FrontConfig, "masterChef" | "rewardToken" | "WETH" | "pools"> {
 	masterChef: MasterChef | MasterPool;
-	rewardToken: ContractToken & {
+	rewardToken: Omit<ContractToken, "pid"> & {
 		pid?: number;
 	};
-	WETH: ContractToken & {
+	WETH: Omit<ContractToken, "pid"> & {
 		pid?: number;
 	};
 	pools: ContractToken[];
@@ -35357,6 +35357,8 @@ export declare function getFarmStats(config: ContractConfig): Promise<{
 	rewardTokenUsd: number;
 }>;
 export declare function getFarms(config: ContractConfig, user?: SignerWithAddress | string): Promise<{
+	userPendingRewards: number;
+	userPendingRewardsUSD: number;
 	rewardsPerSec: number;
 	apr: number;
 	allocPoint: number;
@@ -35368,6 +35370,7 @@ export declare function getFarms(config: ContractConfig, user?: SignerWithAddres
 	userStakedBalance: number;
 	userStakedUSD: number;
 	rewardsPerSecBN: bigint | undefined;
+	pendingRewardsBN: bigint | undefined;
 	address?: string;
 	token: ERC20Mock;
 	oracle: IDataFeed;

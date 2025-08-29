@@ -37,6 +37,7 @@ export async function getFarms(config: ContractConfig, user?: SignerWithAddress 
                 poolBalance,
                 userBalance,
                 stakedBalance,
+                pendingRewardsBN,
             ] = await Promise.all([
                 masterChef.poolInfo(pool.pid),
                 masterChef.getPoolRewardsPerSec(pool.pid),
@@ -44,8 +45,9 @@ export async function getFarms(config: ContractConfig, user?: SignerWithAddress 
                 pool.oracle.latestAnswer(),
                 pool.token.decimals().then((d) => Number(d)),
                 pool.token.balanceOf(masterChef.target),
-                userAddress ? await pool.token.balanceOf(userAddress) : 0n,
-                userAddress ? (await masterChef.userInfo(pool.pid, userAddress)).amount : 0n,
+                userAddress ? pool.token.balanceOf(userAddress) : 0n,
+                userAddress ? masterChef.userInfo(pool.pid, userAddress).then((u) => u.amount) : 0n,
+                userAddress ? masterChef.pendingRewards(pool.pid, userAddress) : 0n,
             ]);
 
             const allocPoint = Number(poolInfo.allocPoint);
@@ -72,17 +74,23 @@ export async function getFarms(config: ContractConfig, user?: SignerWithAddress 
                 userStakedUSD,
                 apr,
                 rewardsPerSecBN: rewardsPerSecBN as bigint | undefined,
+                pendingRewardsBN: pendingRewardsBN as bigint | undefined,
             };
         }),
     ]);
 
     return poolData.map((p) => {
+        const userPendingRewards = Number(formatUnits(p.pendingRewardsBN as bigint, rewardTokenDecimals));
+        const userPendingRewardsUSD = userPendingRewards * rewardTokenUsd;
+
         const rewardsPerSec = Number(formatUnits(p.rewardsPerSecBN as bigint, rewardTokenDecimals));
 
         delete p.rewardsPerSecBN;
 
         return {
             ...p,
+            userPendingRewards,
+            userPendingRewardsUSD,
             rewardsPerSec,
             apr: getFarmApr(rewardsPerSec, rewardTokenUsd, p.stakingTokenUsd, p.totalStakedBalance),
         };

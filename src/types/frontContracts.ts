@@ -10,9 +10,9 @@ export interface ContractToken extends Omit<FrontToken, 'address' | 'oracle'> {
 export interface ContractConfig extends Omit<FrontConfig, 'masterChef' | 'rewardToken' | 'WETH' | 'pools'> {
     masterChef: MasterChef | MasterPool;
 
-    rewardToken: ContractToken & { pid?: number };
+    rewardToken: Omit<ContractToken, 'pid'> & { pid?: number };
 
-    WETH: ContractToken & { pid?: number };
+    WETH: Omit<ContractToken, 'pid'> & { pid?: number };
 
     pools: ContractToken[];
 }
