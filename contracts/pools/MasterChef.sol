@@ -81,6 +81,15 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     /// @dev Total allocation points. Must be the sum of all allocation points in all pools.
     uint32 public totalAllocPoint;
 
+    /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
     /// @dev Receive ETH from WETH for withdrawal
     receive() external payable {
         if (msg.sender == address(WETH)) {

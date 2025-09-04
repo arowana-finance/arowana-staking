@@ -38,6 +38,15 @@ contract ERC4626Pool is ERC4626Upgradeable, ERC20Lockable {
         _;
     }
 
+    /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
     function initializeToken(
         address _masterPool,
         uint16 _pid,

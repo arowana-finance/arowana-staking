@@ -37,6 +37,15 @@ contract WithSettler is Ownable {
     }
 
     /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
+    /**
      * @notice Initialize Settler & Ownable contract
      * @param _initOwner New owner & settler to grant permission
      */

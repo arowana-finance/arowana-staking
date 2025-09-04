@@ -26,6 +26,15 @@ contract RewardVault is Ownable {
         _;
     }
 
+    /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
     function initializeVault(address _initOwner) public virtual initializer {
         if (_initOwner == address(0)) {
             _initOwner = _msgSender();

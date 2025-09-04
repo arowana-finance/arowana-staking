@@ -22,6 +22,5 @@ docs/.vitepress/cache
 
 /flatten
 .env
-config.json
-config_*.json
-config.output.json
+config*.json
+!config.example.json

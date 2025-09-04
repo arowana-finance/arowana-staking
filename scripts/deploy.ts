@@ -50,74 +50,93 @@ async function hasCode(owner: SignerWithAddress, address?: string) {
     return code && code !== '0x' ? true : false;
 }
 
+let OracleImpl: undefined | DataFeed;
+
 async function deployTokenAndOracle(owner: SignerWithAddress, tokenConfig?: AddToken) {
     let WETH: undefined | WETH;
     let Token: undefined | ERC20Mock;
     let Oracle: undefined | DataFeed;
 
-    if (tokenConfig) {
-        if (tokenConfig.symbol === 'WETH') {
-            // Deploy WETH
-            if (!(await hasCode(owner, tokenConfig.address))) {
-                const WETHSupply = parseEther(String(tokenConfig.totalSupply || 10000));
-                WETH = await new WETHMock__factory(owner).deploy(WETHSupply);
-                await logDeploy('WETH', WETH);
+    if (!tokenConfig) {
+        return;
+    }
 
-                tokenConfig.address = WETH.target as string;
-            } else {
-                WETH = WETHMock__factory.connect(tokenConfig.address as string, owner);
-            }
+    if (tokenConfig.symbol === 'WETH') {
+        // Deploy WETH
+        if (!(await hasCode(owner, tokenConfig.address))) {
+            const WETHSupply = parseEther(String(tokenConfig.totalSupply || 10000));
+            WETH = await new WETHMock__factory(owner).deploy(WETHSupply);
+            await logDeploy('WETH', WETH);
+
+            tokenConfig.address = WETH.target as string;
         } else {
-            // Deploy Token
-            if (!(await hasCode(owner, tokenConfig.address))) {
-                const TokenSupply = parseUnits(
-                    String(tokenConfig.totalSupply),
-                    Number(tokenConfig.decimals || 18),
-                );
-                Token = await new ERC20Mock__factory(owner).deploy(
-                    tokenConfig.name || '',
-                    tokenConfig.symbol || '',
-                    tokenConfig.decimals || 18,
-                    TokenSupply,
-                );
-                await logDeploy(tokenConfig.symbol as string, Token);
-
-                tokenConfig.address = Token.target as string;
-            } else {
-                Token = ERC20Mock__factory.connect(tokenConfig.address as string, owner);
-            }
+            WETH = WETHMock__factory.connect(tokenConfig.address as string, owner);
         }
-
-        // Deploy Token oracle
-        if (!(await hasCode(owner, tokenConfig.oracle)) && tokenConfig.mockUsdPrice) {
-            Oracle = await new DataFeed__factory(owner).deploy();
-            await logDeploy(`${tokenConfig.symbol}Oracle`, Oracle);
-            await logTx(
-                `Initialize ${tokenConfig.symbol}Oracle`,
-                Oracle.initializeFeed(
-                    owner.address,
-                    tokenConfig.address as string,
-                    `${tokenConfig.symbol} / USD`,
-                    parseUnits(String(tokenConfig.mockUsdPrice), 8),
-                ),
+    } else {
+        // Deploy Token
+        if (!(await hasCode(owner, tokenConfig.address))) {
+            const TokenSupply = parseUnits(
+                String(tokenConfig.totalSupply),
+                Number(tokenConfig.decimals || 18),
             );
+            Token = await new ERC20Mock__factory(owner).deploy(
+                tokenConfig.name || '',
+                tokenConfig.symbol || '',
+                tokenConfig.decimals || 18,
+                TokenSupply,
+            );
+            await logDeploy(tokenConfig.symbol as string, Token);
 
-            tokenConfig.oracle = Oracle.target as string;
+            tokenConfig.address = Token.target as string;
         } else {
-            Oracle = DataFeed__factory.connect(tokenConfig.oracle as string, owner);
+            Token = ERC20Mock__factory.connect(tokenConfig.address as string, owner);
+        }
+    }
+
+    // Deploy Token oracle
+    if (!(await hasCode(owner, tokenConfig.oracle)) && tokenConfig.mockUsdPrice) {
+        if (!OracleImpl) {
+            OracleImpl = await new DataFeed__factory(owner).deploy();
+            await logDeploy('OracleImpl', OracleImpl);
         }
 
-        if (WETH) {
-            return {
-                WETH,
-                WETHOracle: Oracle,
-            };
-        } else if (Token) {
-            return {
-                Token,
-                Oracle,
-            };
-        }
+        const OracleProxy = await new InitializableProxy__factory(owner).deploy();
+        await logDeploy(`${tokenConfig.symbol}Oracle`, OracleProxy);
+
+        Oracle = DataFeed__factory.connect(OracleProxy.target as string, owner);
+
+        await logTx(
+            `Initialize ${tokenConfig.symbol}Oracle`,
+            OracleProxy.initializeProxy(
+                `${tokenConfig.symbol} / USD DataFeed`,
+                owner.address,
+                OracleImpl.target,
+                (
+                    await Oracle.initializeFeed.populateTransaction(
+                        owner.address,
+                        tokenConfig.address as string,
+                        `${tokenConfig.symbol} / USD`,
+                        parseUnits(String(tokenConfig.mockUsdPrice), 8),
+                    )
+                ).data,
+            ),
+        );
+
+        tokenConfig.oracle = Oracle.target as string;
+    } else {
+        Oracle = DataFeed__factory.connect(tokenConfig.oracle as string, owner);
+    }
+
+    if (WETH) {
+        return {
+            WETH,
+            WETHOracle: Oracle,
+        };
+    } else if (Token) {
+        return {
+            Token,
+            Oracle,
+        };
     }
 }
 
@@ -171,6 +190,7 @@ async function deployTokens(owner: SignerWithAddress, config: AddConfig) {
         RewardOracle,
         Tokens,
         Oracles,
+        OracleImpl,
     };
 }
 
@@ -182,13 +202,27 @@ async function deployRewardVault(
 ) {
     const { totalRewards } = getTotalRewards(config, timestamp);
 
-    let RewardVault: RewardVault | undefined;
+    let RewardVaultImpl: undefined | RewardVault;
+    let RewardVault: undefined | RewardVault;
 
     if (!(await hasCode(owner, config.rewardVault))) {
-        RewardVault = await new RewardVault__factory(owner).deploy();
-        await logDeploy('RewardVault', RewardVault);
+        RewardVaultImpl = await new RewardVault__factory(owner).deploy();
+        await logDeploy('RewardVaultImpl', RewardVaultImpl);
 
-        await logTx('Initialize RewardVault', RewardVault.initializeVault(owner.address));
+        const RewardVaultProxy = await new InitializableProxy__factory(owner).deploy();
+        await logDeploy('RewardVault', RewardVaultProxy);
+
+        RewardVault = RewardVault__factory.connect(RewardVaultProxy.target as string, owner);
+
+        await logTx(
+            'Initialize RewardVault',
+            RewardVaultProxy.initializeProxy(
+                'RewardVault',
+                owner.address,
+                RewardVaultImpl.target,
+                (await RewardVault.initializeVault.populateTransaction(owner.address)).data,
+            ),
+        );
 
         await logTx(
             `Transfer ${totalRewards} Rewards To RewardVault`,
@@ -200,7 +234,10 @@ async function deployRewardVault(
 
     config.rewardVault = RewardVault.target as string;
 
-    return RewardVault;
+    return {
+        RewardVault,
+        RewardVaultImpl,
+    };
 }
 
 async function deployMasterPool(
@@ -318,9 +355,12 @@ async function deploy() {
 
     const { timestamp } = await checkConfig(config, owner);
 
-    const { WETH, WETHOracle, RewardToken, RewardOracle, Tokens } = await deployTokens(owner, config);
+    const { WETH, WETHOracle, RewardToken, RewardOracle, Tokens, OracleImpl } = await deployTokens(
+        owner,
+        config,
+    );
 
-    const RewardVault = await deployRewardVault(owner, config, timestamp, RewardToken);
+    const { RewardVault, RewardVaultImpl } = await deployRewardVault(owner, config, timestamp, RewardToken);
 
     const { MasterPool, MasterPoolImplementation, PoolTokenImplementation } = await deployMasterPool(
         owner,
@@ -336,11 +376,13 @@ async function deploy() {
     await lookupPool(config, owner);
 
     const tokens: Record<string, string | Addressable> = {
+        OracleImpl: OracleImpl?.target || '',
         WETH: WETH.target,
         WETHOracle: WETHOracle.target,
         RewardToken: RewardToken.target,
         RewardOracle: RewardOracle.target,
         RewardVault: RewardVault.target,
+        RewardVaultImpl: RewardVaultImpl?.target || '',
         MasterPool: MasterPool.target,
         MasterPoolImplementation: MasterPoolImplementation.target,
         PoolTokenImplementation: PoolTokenImplementation.target,

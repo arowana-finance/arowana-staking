@@ -41,6 +41,15 @@ contract V2SwapFeedFactory is Ownable {
     address public WETH;
     address public USD;
 
+    /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
     function initializeFactory(
         address _initOwner,
         address _feedImplementation,

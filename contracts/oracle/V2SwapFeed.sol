@@ -47,6 +47,15 @@ contract V2SwapFeed is Initializable {
     IERC20Exp public USD;
 
     /**
+     * @notice Disabling initializer for implementation contract
+     * @dev Initializer would only work on proxy contract
+     * @custom:oz-upgrades-unsafe-allow constructor
+     */
+    constructor() {
+        _disableInitializers();
+    }
+
+    /**
      * Oracle functions
      */
     function initializeSwapFeed(
