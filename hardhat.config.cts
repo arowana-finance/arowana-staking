@@ -3,8 +3,7 @@ import '@nomicfoundation/hardhat-toolbox';
 import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-dependency-compiler';
 import 'hardhat-preprocessor';
-import 'ethers-opt/hardhat/flatten';
-import 'ethers-opt/hardhat/typefix';
+import 'ethers-opt/hardhat/compile';
 import { getRemappingsTransformerFunc } from 'ethers-opt/hardhat/remappings';
 import 'dotenv/config';
 
@@ -23,6 +22,10 @@ const config = {
                 },
             },
         ],
+    },
+    ethersOpt: {
+        flattenAll: true,
+        typechainFix: true,
     },
     // Add dependency contracts to use that aren't imported (like Safe or AAVE pools for example)
     dependencyCompiler: {

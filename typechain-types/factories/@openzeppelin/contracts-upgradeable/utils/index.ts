@@ -5,3 +5,4 @@ export * as contextUpgradeableSol from "./ContextUpgradeable.sol/index.js";
 export * as noncesUpgradeableSol from "./NoncesUpgradeable.sol/index.js";
 export * as reentrancyGuardUpgradeableSol from "./ReentrancyGuardUpgradeable.sol/index.js";
 export * as cryptography from "./cryptography/index.js";
+export * as introspection from "./introspection/index.js";

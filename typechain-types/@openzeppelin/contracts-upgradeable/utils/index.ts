@@ -9,3 +9,5 @@ import type * as reentrancyGuardUpgradeableSol from"./ReentrancyGuardUpgradeable
 export type { reentrancyGuardUpgradeableSol };
 import type * as cryptography from"./cryptography/index.js";
 export type { cryptography };
+import type * as introspection from"./introspection/index.js";
+export type { introspection };

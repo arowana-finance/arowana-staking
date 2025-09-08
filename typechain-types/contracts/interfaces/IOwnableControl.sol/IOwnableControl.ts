@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumberish,
   BytesLike,
   FunctionFragment,
   Result,
@@ -23,92 +22,76 @@ import type {
   TypedContractMethod,
 } from "../../../common.js";
 
-export interface WithSettlerInterface extends Interface {
+export interface IOwnableControlInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "addSettler"
-      | "initializeSettler"
+      | "DEFAULT_SUBOWNER_ROLE"
+      | "addSubowner"
+      | "isSubowner"
       | "owner"
-      | "removeSettler"
+      | "removeSubowner"
       | "renounceOwnership"
-      | "settlers"
+      | "subowners"
       | "transferOwnership",
   ): FunctionFragment;
 
   getEvent(
     nameOrSignatureOrTopic:
-      | "AddSettler"
-      | "Initialized"
       | "OwnershipTransferred"
-      | "RemoveSettler",
+      | "SubownerAdded"
+      | "SubownerRemoved",
   ): EventFragment;
 
   encodeFunctionData(
-    functionFragment: "addSettler",
+    functionFragment: "DEFAULT_SUBOWNER_ROLE",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "initializeSettler",
+    functionFragment: "isSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "removeSettler",
+    functionFragment: "removeSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "settlers", values?: undefined): string;
+  encodeFunctionData(functionFragment: "subowners", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike],
   ): string;
 
-  decodeFunctionResult(functionFragment: "addSettler", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "initializeSettler",
+    functionFragment: "DEFAULT_SUBOWNER_ROLE",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "addSubowner",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: "isSubowner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "removeSettler",
+    functionFragment: "removeSubowner",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "settlers", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "subowners", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike,
   ): Result;
-}
-
-export namespace AddSettlerEvent {
-  export type InputTuple = [newSettler: AddressLike];
-  export type OutputTuple = [newSettler: string];
-  export interface OutputObject {
-    newSettler: string;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
-export namespace InitializedEvent {
-  export type InputTuple = [version: BigNumberish];
-  export type OutputTuple = [version: bigint];
-  export interface OutputObject {
-    version: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace OwnershipTransferredEvent {
@@ -124,11 +107,11 @@ export namespace OwnershipTransferredEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace RemoveSettlerEvent {
-  export type InputTuple = [oldSettler: AddressLike];
-  export type OutputTuple = [oldSettler: string];
+export namespace SubownerAddedEvent {
+  export type InputTuple = [newSubowner: AddressLike];
+  export type OutputTuple = [newSubowner: string];
   export interface OutputObject {
-    oldSettler: string;
+    newSubowner: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -136,11 +119,23 @@ export namespace RemoveSettlerEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export interface WithSettler extends BaseContract {
-  connect(runner?: ContractRunner | null): WithSettler;
+export namespace SubownerRemovedEvent {
+  export type InputTuple = [oldSubowner: AddressLike];
+  export type OutputTuple = [oldSubowner: string];
+  export interface OutputObject {
+    oldSubowner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export interface IOwnableControl extends BaseContract {
+  connect(runner?: ContractRunner | null): IOwnableControl;
   waitForDeployment(): Promise<this>;
 
-  interface: WithSettlerInterface;
+  interface: IOwnableControlInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
@@ -179,29 +174,27 @@ export interface WithSettler extends BaseContract {
     event?: TCEvent,
   ): Promise<this>;
 
-  addSettler: TypedContractMethod<
-    [_settler: AddressLike],
+  DEFAULT_SUBOWNER_ROLE: TypedContractMethod<[], [string], "view">;
+
+  addSubowner: TypedContractMethod<
+    [newSubowner: AddressLike],
     [void],
     "nonpayable"
   >;
 
-  initializeSettler: TypedContractMethod<
-    [_initOwner: AddressLike],
-    [void],
-    "nonpayable"
-  >;
+  isSubowner: TypedContractMethod<[account: AddressLike], [boolean], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
 
-  removeSettler: TypedContractMethod<
-    [_settler: AddressLike],
+  removeSubowner: TypedContractMethod<
+    [oldSubowner: AddressLike],
     [void],
     "nonpayable"
   >;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
-  settlers: TypedContractMethod<[], [string[]], "view">;
+  subowners: TypedContractMethod<[], [string[]], "view">;
 
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
@@ -214,41 +207,30 @@ export interface WithSettler extends BaseContract {
   ): T;
 
   getFunction(
-    nameOrSignature: "addSettler",
-  ): TypedContractMethod<[_settler: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "DEFAULT_SUBOWNER_ROLE",
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "initializeSettler",
-  ): TypedContractMethod<[_initOwner: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "addSubowner",
+  ): TypedContractMethod<[newSubowner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "isSubowner",
+  ): TypedContractMethod<[account: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "owner",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "removeSettler",
-  ): TypedContractMethod<[_settler: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "removeSubowner",
+  ): TypedContractMethod<[oldSubowner: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "renounceOwnership",
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "settlers",
+    nameOrSignature: "subowners",
   ): TypedContractMethod<[], [string[]], "view">;
   getFunction(
     nameOrSignature: "transferOwnership",
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
 
-  getEvent(
-    key: "AddSettler",
-  ): TypedContractEvent<
-    AddSettlerEvent.InputTuple,
-    AddSettlerEvent.OutputTuple,
-    AddSettlerEvent.OutputObject
-  >;
-  getEvent(
-    key: "Initialized",
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
   getEvent(
     key: "OwnershipTransferred",
   ): TypedContractEvent<
@@ -257,36 +239,21 @@ export interface WithSettler extends BaseContract {
     OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
-    key: "RemoveSettler",
+    key: "SubownerAdded",
   ): TypedContractEvent<
-    RemoveSettlerEvent.InputTuple,
-    RemoveSettlerEvent.OutputTuple,
-    RemoveSettlerEvent.OutputObject
+    SubownerAddedEvent.InputTuple,
+    SubownerAddedEvent.OutputTuple,
+    SubownerAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "SubownerRemoved",
+  ): TypedContractEvent<
+    SubownerRemovedEvent.InputTuple,
+    SubownerRemovedEvent.OutputTuple,
+    SubownerRemovedEvent.OutputObject
   >;
 
   filters: {
-    "AddSettler(address)": TypedContractEvent<
-      AddSettlerEvent.InputTuple,
-      AddSettlerEvent.OutputTuple,
-      AddSettlerEvent.OutputObject
-    >;
-    AddSettler: TypedContractEvent<
-      AddSettlerEvent.InputTuple,
-      AddSettlerEvent.OutputTuple,
-      AddSettlerEvent.OutputObject
-    >;
-
-    "Initialized(uint64)": TypedContractEvent<
-      InitializedEvent.InputTuple,
-      InitializedEvent.OutputTuple,
-      InitializedEvent.OutputObject
-    >;
-    Initialized: TypedContractEvent<
-      InitializedEvent.InputTuple,
-      InitializedEvent.OutputTuple,
-      InitializedEvent.OutputObject
-    >;
-
     "OwnershipTransferred(address,address)": TypedContractEvent<
       OwnershipTransferredEvent.InputTuple,
       OwnershipTransferredEvent.OutputTuple,
@@ -298,15 +265,26 @@ export interface WithSettler extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "RemoveSettler(address)": TypedContractEvent<
-      RemoveSettlerEvent.InputTuple,
-      RemoveSettlerEvent.OutputTuple,
-      RemoveSettlerEvent.OutputObject
+    "SubownerAdded(address)": TypedContractEvent<
+      SubownerAddedEvent.InputTuple,
+      SubownerAddedEvent.OutputTuple,
+      SubownerAddedEvent.OutputObject
     >;
-    RemoveSettler: TypedContractEvent<
-      RemoveSettlerEvent.InputTuple,
-      RemoveSettlerEvent.OutputTuple,
-      RemoveSettlerEvent.OutputObject
+    SubownerAdded: TypedContractEvent<
+      SubownerAddedEvent.InputTuple,
+      SubownerAddedEvent.OutputTuple,
+      SubownerAddedEvent.OutputObject
+    >;
+
+    "SubownerRemoved(address)": TypedContractEvent<
+      SubownerRemovedEvent.InputTuple,
+      SubownerRemovedEvent.OutputTuple,
+      SubownerRemovedEvent.OutputObject
+    >;
+    SubownerRemoved: TypedContractEvent<
+      SubownerRemovedEvent.InputTuple,
+      SubownerRemovedEvent.OutputTuple,
+      SubownerRemovedEvent.OutputObject
     >;
   };
 }

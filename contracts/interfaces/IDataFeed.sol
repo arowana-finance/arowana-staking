@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+/**
+ * @notice Interface of the chainlink compatible oracle contract used for retrieving latest price data
+ */
 interface IDataFeed {
     /**
      * @notice Emitted for updated asset settings for DataFeed contract
@@ -129,7 +132,21 @@ interface IDataFeed {
     /**
      * @notice Get oracle round data (oracle answers, timestamps)
      * @dev Recommend function by chainlink
-     * @param _roundId Oracle round id
+     * @param _roundId the requested round ID as presented through the proxy, this
+     * is made up of the aggregator's round ID with the phase ID encoded in the
+     * two highest order bytes
+     * @return roundId is the round ID from the aggregator for which the data was
+     * retrieved combined with an phase to ensure that round IDs get larger as
+     * time moves forward.
+     * @return answer is the answer for the given round
+     * @return startedAt is the timestamp when the round was started.
+     * (Only some AggregatorV3Interface implementations return meaningful values)
+     * @return updatedAt is the timestamp when the round last was updated (i.e.
+     * answer was last computed)
+     * @return answeredInRound is the round ID of the round in which the answer
+     * was computed.
+     * (Only some AggregatorV3Interface implementations return meaningful values)
+     * @dev Note that answer and updatedAt may change between queries.
      */
     function getRoundData(
         uint80 _roundId
@@ -141,6 +158,18 @@ interface IDataFeed {
     /**
      * @notice Get latest oracle round data (oracle answers, timestamps)
      * @dev Recommend function by chainlink
+     * @return roundId is the round ID from the aggregator for which the data was
+     * retrieved combined with an phase to ensure that round IDs get larger as
+     * time moves forward.
+     * @return answer is the answer for the given round
+     * @return startedAt is the timestamp when the round was started.
+     * (Only some AggregatorV3Interface implementations return meaningful values)
+     * @return updatedAt is the timestamp when the round last was updated (i.e.
+     * answer was last computed)
+     * @return answeredInRound is the round ID of the round in which the answer
+     * was computed.
+     * (Only some AggregatorV3Interface implementations return meaningful values)
+     * @dev Note that answer and updatedAt may change between queries.
      */
     function latestRoundData() external view returns (uint80, int256, uint256, uint256, uint80);
 }

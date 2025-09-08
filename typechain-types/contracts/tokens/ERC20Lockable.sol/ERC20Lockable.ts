@@ -27,6 +27,7 @@ export interface ERC20LockableInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "DOMAIN_SEPARATOR"
+      | "LOCK_TYPEHASH"
       | "allowance"
       | "approve"
       | "balanceOf"
@@ -36,6 +37,8 @@ export interface ERC20LockableInterface extends Interface {
       | "isLockedUntil"
       | "lock"
       | "lockPermit"
+      | "lockedBalance"
+      | "lockedBalanceUntil"
       | "lockedUntil"
       | "name"
       | "nonces"
@@ -59,6 +62,10 @@ export interface ERC20LockableInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "DOMAIN_SEPARATOR",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "LOCK_TYPEHASH",
     values?: undefined,
   ): string;
   encodeFunctionData(
@@ -90,6 +97,14 @@ export interface ERC20LockableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "lockPermit",
     values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lockedBalance",
+    values: [AddressLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lockedBalanceUntil",
+    values: [AddressLike, BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: "lockedUntil",
@@ -131,6 +146,10 @@ export interface ERC20LockableInterface extends Interface {
     functionFragment: "DOMAIN_SEPARATOR",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "LOCK_TYPEHASH",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -146,6 +165,14 @@ export interface ERC20LockableInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "lockPermit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "lockedBalance",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lockedBalanceUntil",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "lockedUntil",
     data: BytesLike,
@@ -210,11 +237,11 @@ export namespace InitializedEvent {
 }
 
 export namespace LockEvent {
-  export type InputTuple = [owner: AddressLike, until: BigNumberish];
-  export type OutputTuple = [owner: string, until: bigint];
+  export type InputTuple = [owner: AddressLike, lockUntil: BigNumberish];
+  export type OutputTuple = [owner: string, lockUntil: bigint];
   export interface OutputObject {
     owner: string;
-    until: bigint;
+    lockUntil: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -225,14 +252,14 @@ export namespace LockEvent {
 export namespace LockedByEvent {
   export type InputTuple = [
     owner: AddressLike,
-    spender: AddressLike,
-    until: BigNumberish,
+    lockBy: AddressLike,
+    lockUntil: BigNumberish,
   ];
-  export type OutputTuple = [owner: string, spender: string, until: bigint];
+  export type OutputTuple = [owner: string, lockBy: string, lockUntil: bigint];
   export interface OutputObject {
     owner: string;
-    spender: string;
-    until: bigint;
+    lockBy: string;
+    lockUntil: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -303,6 +330,8 @@ export interface ERC20Lockable extends BaseContract {
 
   DOMAIN_SEPARATOR: TypedContractMethod<[], [string], "view">;
 
+  LOCK_TYPEHASH: TypedContractMethod<[], [string], "view">;
+
   allowance: TypedContractMethod<
     [owner: AddressLike, spender: AddressLike],
     [bigint],
@@ -348,13 +377,21 @@ export interface ERC20Lockable extends BaseContract {
   lockPermit: TypedContractMethod<
     [
       owner: AddressLike,
-      spender: AddressLike,
-      until: BigNumberish,
+      lockBy: AddressLike,
+      lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
     ],
     [void],
     "nonpayable"
+  >;
+
+  lockedBalance: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+
+  lockedBalanceUntil: TypedContractMethod<
+    [owner: AddressLike, until: BigNumberish],
+    [bigint],
+    "view"
   >;
 
   lockedUntil: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
@@ -405,6 +442,9 @@ export interface ERC20Lockable extends BaseContract {
 
   getFunction(
     nameOrSignature: "DOMAIN_SEPARATOR",
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "LOCK_TYPEHASH",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "allowance",
@@ -461,13 +501,23 @@ export interface ERC20Lockable extends BaseContract {
   ): TypedContractMethod<
     [
       owner: AddressLike,
-      spender: AddressLike,
-      until: BigNumberish,
+      lockBy: AddressLike,
+      lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
     ],
     [void],
     "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "lockedBalance",
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "lockedBalanceUntil",
+  ): TypedContractMethod<
+    [owner: AddressLike, until: BigNumberish],
+    [bigint],
+    "view"
   >;
   getFunction(
     nameOrSignature: "lockedUntil",

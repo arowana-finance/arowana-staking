@@ -26,28 +26,39 @@ import type {
 export interface DataFeedInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "addSettler"
+      | "DEFAULT_ADMIN_ROLE"
+      | "DEFAULT_SUBOWNER_ROLE"
+      | "addSubowner"
       | "asset"
       | "decimals"
       | "deploymentTimestamp"
       | "description"
       | "getAnswer"
+      | "getRoleAdmin"
+      | "getRoleMember"
+      | "getRoleMemberCount"
+      | "getRoleMembers"
       | "getRoundData"
       | "getTimestamp"
       | "getTimestampAnswer"
+      | "grantRole"
+      | "hasRole"
       | "initializeFeed"
-      | "initializeSettler"
+      | "isSubowner"
       | "latestAnswer"
       | "latestRound"
       | "latestRoundData"
       | "latestTimestamp"
       | "owner"
-      | "removeSettler"
+      | "removeSubowner"
       | "renounceOwnership"
+      | "renounceRole"
+      | "revokeRole"
       | "setAsset"
       | "setDescription"
       | "setVersion"
-      | "settlers"
+      | "subowners"
+      | "supportsInterface"
       | "transferOwnership"
       | "updateAnswer"
       | "version",
@@ -55,18 +66,29 @@ export interface DataFeedInterface extends Interface {
 
   getEvent(
     nameOrSignatureOrTopic:
-      | "AddSettler"
       | "AnswerUpdated"
       | "Initialized"
       | "NewAsset"
       | "NewDescription"
       | "NewRound"
       | "OwnershipTransferred"
-      | "RemoveSettler",
+      | "RoleAdminChanged"
+      | "RoleGranted"
+      | "RoleRevoked"
+      | "SubownerAdded"
+      | "SubownerRemoved",
   ): EventFragment;
 
   encodeFunctionData(
-    functionFragment: "addSettler",
+    functionFragment: "DEFAULT_ADMIN_ROLE",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "DEFAULT_SUBOWNER_ROLE",
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(functionFragment: "asset", values?: undefined): string;
@@ -84,6 +106,22 @@ export interface DataFeedInterface extends Interface {
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: "getRoleAdmin",
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRoleMember",
+    values: [BytesLike, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRoleMemberCount",
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRoleMembers",
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: "getRoundData",
     values: [BigNumberish],
   ): string;
@@ -96,11 +134,19 @@ export interface DataFeedInterface extends Interface {
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: "grantRole",
+    values: [BytesLike, AddressLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasRole",
+    values: [BytesLike, AddressLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: "initializeFeed",
     values: [AddressLike, AddressLike, string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "initializeSettler",
+    functionFragment: "isSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(
@@ -121,12 +167,20 @@ export interface DataFeedInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "removeSettler",
+    functionFragment: "removeSubowner",
     values: [AddressLike],
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceRole",
+    values: [BytesLike, AddressLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "revokeRole",
+    values: [BytesLike, AddressLike],
   ): string;
   encodeFunctionData(
     functionFragment: "setAsset",
@@ -140,7 +194,11 @@ export interface DataFeedInterface extends Interface {
     functionFragment: "setVersion",
     values: [BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: "settlers", values?: undefined): string;
+  encodeFunctionData(functionFragment: "subowners", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike],
+  ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike],
@@ -151,7 +209,18 @@ export interface DataFeedInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "addSettler", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "DEFAULT_ADMIN_ROLE",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "DEFAULT_SUBOWNER_ROLE",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "addSubowner",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
@@ -164,6 +233,22 @@ export interface DataFeedInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getAnswer", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getRoleAdmin",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoleMember",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoleMemberCount",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoleMembers",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getRoundData",
     data: BytesLike,
   ): Result;
@@ -175,14 +260,13 @@ export interface DataFeedInterface extends Interface {
     functionFragment: "getTimestampAnswer",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "initializeFeed",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "initializeSettler",
-    data: BytesLike,
-  ): Result;
+  decodeFunctionResult(functionFragment: "isSubowner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "latestAnswer",
     data: BytesLike,
@@ -201,20 +285,29 @@ export interface DataFeedInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "removeSettler",
+    functionFragment: "removeSubowner",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceRole",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setAsset", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setDescription",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "setVersion", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "settlers", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "subowners", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike,
@@ -224,18 +317,6 @@ export interface DataFeedInterface extends Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
-}
-
-export namespace AddSettlerEvent {
-  export type InputTuple = [newSettler: AddressLike];
-  export type OutputTuple = [newSettler: string];
-  export interface OutputObject {
-    newSettler: string;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace AnswerUpdatedEvent {
@@ -331,11 +412,81 @@ export namespace OwnershipTransferredEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace RemoveSettlerEvent {
-  export type InputTuple = [oldSettler: AddressLike];
-  export type OutputTuple = [oldSettler: string];
+export namespace RoleAdminChangedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    previousAdminRole: BytesLike,
+    newAdminRole: BytesLike,
+  ];
+  export type OutputTuple = [
+    role: string,
+    previousAdminRole: string,
+    newAdminRole: string,
+  ];
   export interface OutputObject {
-    oldSettler: string;
+    role: string;
+    previousAdminRole: string;
+    newAdminRole: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoleGrantedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    account: AddressLike,
+    sender: AddressLike,
+  ];
+  export type OutputTuple = [role: string, account: string, sender: string];
+  export interface OutputObject {
+    role: string;
+    account: string;
+    sender: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoleRevokedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    account: AddressLike,
+    sender: AddressLike,
+  ];
+  export type OutputTuple = [role: string, account: string, sender: string];
+  export interface OutputObject {
+    role: string;
+    account: string;
+    sender: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace SubownerAddedEvent {
+  export type InputTuple = [newSubowner: AddressLike];
+  export type OutputTuple = [newSubowner: string];
+  export interface OutputObject {
+    newSubowner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace SubownerRemovedEvent {
+  export type InputTuple = [oldSubowner: AddressLike];
+  export type OutputTuple = [oldSubowner: string];
+  export interface OutputObject {
+    oldSubowner: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -386,8 +537,12 @@ export interface DataFeed extends BaseContract {
     event?: TCEvent,
   ): Promise<this>;
 
-  addSettler: TypedContractMethod<
-    [_settler: AddressLike],
+  DEFAULT_ADMIN_ROLE: TypedContractMethod<[], [string], "view">;
+
+  DEFAULT_SUBOWNER_ROLE: TypedContractMethod<[], [string], "view">;
+
+  addSubowner: TypedContractMethod<
+    [newSubowner: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -401,6 +556,18 @@ export interface DataFeed extends BaseContract {
   description: TypedContractMethod<[], [string], "view">;
 
   getAnswer: TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
+
+  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
+
+  getRoleMember: TypedContractMethod<
+    [role: BytesLike, index: BigNumberish],
+    [string],
+    "view"
+  >;
+
+  getRoleMemberCount: TypedContractMethod<[role: BytesLike], [bigint], "view">;
+
+  getRoleMembers: TypedContractMethod<[role: BytesLike], [string[]], "view">;
 
   getRoundData: TypedContractMethod<
     [_roundId: BigNumberish],
@@ -424,6 +591,18 @@ export interface DataFeed extends BaseContract {
     "view"
   >;
 
+  grantRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  hasRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+
   initializeFeed: TypedContractMethod<
     [
       _initOwner: AddressLike,
@@ -435,11 +614,7 @@ export interface DataFeed extends BaseContract {
     "nonpayable"
   >;
 
-  initializeSettler: TypedContractMethod<
-    [_initOwner: AddressLike],
-    [void],
-    "nonpayable"
-  >;
+  isSubowner: TypedContractMethod<[account: AddressLike], [boolean], "view">;
 
   latestAnswer: TypedContractMethod<[], [bigint], "view">;
 
@@ -455,13 +630,25 @@ export interface DataFeed extends BaseContract {
 
   owner: TypedContractMethod<[], [string], "view">;
 
-  removeSettler: TypedContractMethod<
-    [_settler: AddressLike],
+  removeSubowner: TypedContractMethod<
+    [oldSubowner: AddressLike],
     [void],
     "nonpayable"
   >;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
+
+  renounceRole: TypedContractMethod<
+    [role: BytesLike, callerConfirmation: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  revokeRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
 
   setAsset: TypedContractMethod<[_asset: AddressLike], [void], "nonpayable">;
 
@@ -477,7 +664,13 @@ export interface DataFeed extends BaseContract {
     "nonpayable"
   >;
 
-  settlers: TypedContractMethod<[], [string[]], "view">;
+  subowners: TypedContractMethod<[], [string[]], "view">;
+
+  supportsInterface: TypedContractMethod<
+    [interfaceId: BytesLike],
+    [boolean],
+    "view"
+  >;
 
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
@@ -498,8 +691,14 @@ export interface DataFeed extends BaseContract {
   ): T;
 
   getFunction(
-    nameOrSignature: "addSettler",
-  ): TypedContractMethod<[_settler: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "DEFAULT_ADMIN_ROLE",
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "DEFAULT_SUBOWNER_ROLE",
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "addSubowner",
+  ): TypedContractMethod<[newSubowner: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "asset",
   ): TypedContractMethod<[], [string], "view">;
@@ -515,6 +714,22 @@ export interface DataFeed extends BaseContract {
   getFunction(
     nameOrSignature: "getAnswer",
   ): TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRoleAdmin",
+  ): TypedContractMethod<[role: BytesLike], [string], "view">;
+  getFunction(
+    nameOrSignature: "getRoleMember",
+  ): TypedContractMethod<
+    [role: BytesLike, index: BigNumberish],
+    [string],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getRoleMemberCount",
+  ): TypedContractMethod<[role: BytesLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getRoleMembers",
+  ): TypedContractMethod<[role: BytesLike], [string[]], "view">;
   getFunction(
     nameOrSignature: "getRoundData",
   ): TypedContractMethod<
@@ -537,6 +752,20 @@ export interface DataFeed extends BaseContract {
     nameOrSignature: "getTimestampAnswer",
   ): TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
   getFunction(
+    nameOrSignature: "grantRole",
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "hasRole",
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "initializeFeed",
   ): TypedContractMethod<
     [
@@ -549,8 +778,8 @@ export interface DataFeed extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "initializeSettler",
-  ): TypedContractMethod<[_initOwner: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "isSubowner",
+  ): TypedContractMethod<[account: AddressLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "latestAnswer",
   ): TypedContractMethod<[], [bigint], "view">;
@@ -571,11 +800,25 @@ export interface DataFeed extends BaseContract {
     nameOrSignature: "owner",
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "removeSettler",
-  ): TypedContractMethod<[_settler: AddressLike], [void], "nonpayable">;
+    nameOrSignature: "removeSubowner",
+  ): TypedContractMethod<[oldSubowner: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "renounceOwnership",
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "renounceRole",
+  ): TypedContractMethod<
+    [role: BytesLike, callerConfirmation: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "revokeRole",
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "setAsset",
   ): TypedContractMethod<[_asset: AddressLike], [void], "nonpayable">;
@@ -586,8 +829,11 @@ export interface DataFeed extends BaseContract {
     nameOrSignature: "setVersion",
   ): TypedContractMethod<[_version: BigNumberish], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "settlers",
+    nameOrSignature: "subowners",
   ): TypedContractMethod<[], [string[]], "view">;
+  getFunction(
+    nameOrSignature: "supportsInterface",
+  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
   getFunction(
     nameOrSignature: "transferOwnership",
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
@@ -598,13 +844,6 @@ export interface DataFeed extends BaseContract {
     nameOrSignature: "version",
   ): TypedContractMethod<[], [bigint], "view">;
 
-  getEvent(
-    key: "AddSettler",
-  ): TypedContractEvent<
-    AddSettlerEvent.InputTuple,
-    AddSettlerEvent.OutputTuple,
-    AddSettlerEvent.OutputObject
-  >;
   getEvent(
     key: "AnswerUpdated",
   ): TypedContractEvent<
@@ -648,25 +887,42 @@ export interface DataFeed extends BaseContract {
     OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
-    key: "RemoveSettler",
+    key: "RoleAdminChanged",
   ): TypedContractEvent<
-    RemoveSettlerEvent.InputTuple,
-    RemoveSettlerEvent.OutputTuple,
-    RemoveSettlerEvent.OutputObject
+    RoleAdminChangedEvent.InputTuple,
+    RoleAdminChangedEvent.OutputTuple,
+    RoleAdminChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleGranted",
+  ): TypedContractEvent<
+    RoleGrantedEvent.InputTuple,
+    RoleGrantedEvent.OutputTuple,
+    RoleGrantedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleRevoked",
+  ): TypedContractEvent<
+    RoleRevokedEvent.InputTuple,
+    RoleRevokedEvent.OutputTuple,
+    RoleRevokedEvent.OutputObject
+  >;
+  getEvent(
+    key: "SubownerAdded",
+  ): TypedContractEvent<
+    SubownerAddedEvent.InputTuple,
+    SubownerAddedEvent.OutputTuple,
+    SubownerAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "SubownerRemoved",
+  ): TypedContractEvent<
+    SubownerRemovedEvent.InputTuple,
+    SubownerRemovedEvent.OutputTuple,
+    SubownerRemovedEvent.OutputObject
   >;
 
   filters: {
-    "AddSettler(address)": TypedContractEvent<
-      AddSettlerEvent.InputTuple,
-      AddSettlerEvent.OutputTuple,
-      AddSettlerEvent.OutputObject
-    >;
-    AddSettler: TypedContractEvent<
-      AddSettlerEvent.InputTuple,
-      AddSettlerEvent.OutputTuple,
-      AddSettlerEvent.OutputObject
-    >;
-
     "AnswerUpdated(int256,uint256,uint256)": TypedContractEvent<
       AnswerUpdatedEvent.InputTuple,
       AnswerUpdatedEvent.OutputTuple,
@@ -733,15 +989,59 @@ export interface DataFeed extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "RemoveSettler(address)": TypedContractEvent<
-      RemoveSettlerEvent.InputTuple,
-      RemoveSettlerEvent.OutputTuple,
-      RemoveSettlerEvent.OutputObject
+    "RoleAdminChanged(bytes32,bytes32,bytes32)": TypedContractEvent<
+      RoleAdminChangedEvent.InputTuple,
+      RoleAdminChangedEvent.OutputTuple,
+      RoleAdminChangedEvent.OutputObject
     >;
-    RemoveSettler: TypedContractEvent<
-      RemoveSettlerEvent.InputTuple,
-      RemoveSettlerEvent.OutputTuple,
-      RemoveSettlerEvent.OutputObject
+    RoleAdminChanged: TypedContractEvent<
+      RoleAdminChangedEvent.InputTuple,
+      RoleAdminChangedEvent.OutputTuple,
+      RoleAdminChangedEvent.OutputObject
+    >;
+
+    "RoleGranted(bytes32,address,address)": TypedContractEvent<
+      RoleGrantedEvent.InputTuple,
+      RoleGrantedEvent.OutputTuple,
+      RoleGrantedEvent.OutputObject
+    >;
+    RoleGranted: TypedContractEvent<
+      RoleGrantedEvent.InputTuple,
+      RoleGrantedEvent.OutputTuple,
+      RoleGrantedEvent.OutputObject
+    >;
+
+    "RoleRevoked(bytes32,address,address)": TypedContractEvent<
+      RoleRevokedEvent.InputTuple,
+      RoleRevokedEvent.OutputTuple,
+      RoleRevokedEvent.OutputObject
+    >;
+    RoleRevoked: TypedContractEvent<
+      RoleRevokedEvent.InputTuple,
+      RoleRevokedEvent.OutputTuple,
+      RoleRevokedEvent.OutputObject
+    >;
+
+    "SubownerAdded(address)": TypedContractEvent<
+      SubownerAddedEvent.InputTuple,
+      SubownerAddedEvent.OutputTuple,
+      SubownerAddedEvent.OutputObject
+    >;
+    SubownerAdded: TypedContractEvent<
+      SubownerAddedEvent.InputTuple,
+      SubownerAddedEvent.OutputTuple,
+      SubownerAddedEvent.OutputObject
+    >;
+
+    "SubownerRemoved(address)": TypedContractEvent<
+      SubownerRemovedEvent.InputTuple,
+      SubownerRemovedEvent.OutputTuple,
+      SubownerRemovedEvent.OutputObject
+    >;
+    SubownerRemoved: TypedContractEvent<
+      SubownerRemovedEvent.InputTuple,
+      SubownerRemovedEvent.OutputTuple,
+      SubownerRemovedEvent.OutputObject
     >;
   };
 }

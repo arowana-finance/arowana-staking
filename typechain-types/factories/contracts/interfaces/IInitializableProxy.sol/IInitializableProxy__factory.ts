@@ -23,6 +23,10 @@ const _abi = [
     type: "event",
   },
   {
+    stateMutability: "payable",
+    type: "fallback",
+  },
+  {
     inputs: [
       {
         internalType: "address",

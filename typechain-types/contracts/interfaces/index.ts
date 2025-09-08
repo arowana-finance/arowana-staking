@@ -17,6 +17,8 @@ import type * as iMasterChefSol from"./IMasterChef.sol/index.js";
 export type { iMasterChefSol };
 import type * as iMasterPoolSol from"./IMasterPool.sol/index.js";
 export type { iMasterPoolSol };
+import type * as iOwnableControlSol from"./IOwnableControl.sol/index.js";
+export type { iOwnableControlSol };
 import type * as iRewardVaultSol from"./IRewardVault.sol/index.js";
 export type { iRewardVaultSol };
 import type * as iUniswapV2FactorySol from"./IUniswapV2Factory.sol/index.js";

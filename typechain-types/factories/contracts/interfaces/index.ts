@@ -9,6 +9,7 @@ export * as ierc4626PoolSol from "./IERC4626Pool.sol/index.js";
 export * as iInitializableProxySol from "./IInitializableProxy.sol/index.js";
 export * as iMasterChefSol from "./IMasterChef.sol/index.js";
 export * as iMasterPoolSol from "./IMasterPool.sol/index.js";
+export * as iOwnableControlSol from "./IOwnableControl.sol/index.js";
 export * as iRewardVaultSol from "./IRewardVault.sol/index.js";
 export * as iUniswapV2FactorySol from "./IUniswapV2Factory.sol/index.js";
 export * as iUniswapV2PairSol from "./IUniswapV2Pair.sol/index.js";

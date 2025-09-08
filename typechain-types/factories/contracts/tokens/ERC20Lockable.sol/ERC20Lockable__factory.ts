@@ -242,7 +242,7 @@ const _abi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "until",
+        name: "lockUntil",
         type: "uint256",
       },
     ],
@@ -261,13 +261,13 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "spender",
+        name: "lockBy",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "until",
+        name: "lockUntil",
         type: "uint256",
       },
     ],
@@ -302,6 +302,19 @@ const _abi = [
   {
     inputs: [],
     name: "DOMAIN_SEPARATOR",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "LOCK_TYPEHASH",
     outputs: [
       {
         internalType: "bytes32",
@@ -500,12 +513,12 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "spender",
+        name: "lockBy",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "until",
+        name: "lockUntil",
         type: "uint256",
       },
       {
@@ -522,6 +535,49 @@ const _abi = [
     name: "lockPermit",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "lockedBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "until",
+        type: "uint256",
+      },
+    ],
+    name: "lockedBalanceUntil",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

@@ -35,6 +35,8 @@ export interface IERC20LockableInterface extends Interface {
       | "isLockedUntil"
       | "lock"
       | "lockPermit"
+      | "lockedBalance"
+      | "lockedBalanceUntil"
       | "lockedUntil"
       | "name"
       | "nonces"
@@ -79,6 +81,14 @@ export interface IERC20LockableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "lockPermit",
     values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lockedBalance",
+    values: [AddressLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lockedBalanceUntil",
+    values: [AddressLike, BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: "lockedUntil",
@@ -132,6 +142,14 @@ export interface IERC20LockableInterface extends Interface {
   decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "lockPermit", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "lockedBalance",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lockedBalanceUntil",
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "lockedUntil",
     data: BytesLike,
   ): Result;
@@ -173,11 +191,11 @@ export namespace ApprovalEvent {
 }
 
 export namespace LockEvent {
-  export type InputTuple = [owner: AddressLike, until: BigNumberish];
-  export type OutputTuple = [owner: string, until: bigint];
+  export type InputTuple = [owner: AddressLike, lockUntil: BigNumberish];
+  export type OutputTuple = [owner: string, lockUntil: bigint];
   export interface OutputObject {
     owner: string;
-    until: bigint;
+    lockUntil: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -188,14 +206,14 @@ export namespace LockEvent {
 export namespace LockedByEvent {
   export type InputTuple = [
     owner: AddressLike,
-    spender: AddressLike,
-    until: BigNumberish,
+    lockBy: AddressLike,
+    lockUntil: BigNumberish,
   ];
-  export type OutputTuple = [owner: string, spender: string, until: bigint];
+  export type OutputTuple = [owner: string, lockBy: string, lockUntil: bigint];
   export interface OutputObject {
     owner: string;
-    spender: string;
-    until: bigint;
+    lockBy: string;
+    lockUntil: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -295,13 +313,21 @@ export interface IERC20Lockable extends BaseContract {
   lockPermit: TypedContractMethod<
     [
       owner: AddressLike,
-      spender: AddressLike,
-      until: BigNumberish,
+      lockBy: AddressLike,
+      lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
     ],
     [void],
     "nonpayable"
+  >;
+
+  lockedBalance: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+
+  lockedBalanceUntil: TypedContractMethod<
+    [owner: AddressLike, until: BigNumberish],
+    [bigint],
+    "view"
   >;
 
   lockedUntil: TypedContractMethod<[account: AddressLike], [bigint], "view">;
@@ -391,13 +417,23 @@ export interface IERC20Lockable extends BaseContract {
   ): TypedContractMethod<
     [
       owner: AddressLike,
-      spender: AddressLike,
-      until: BigNumberish,
+      lockBy: AddressLike,
+      lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
     ],
     [void],
     "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "lockedBalance",
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "lockedBalanceUntil",
+  ): TypedContractMethod<
+    [owner: AddressLike, until: BigNumberish],
+    [bigint],
+    "view"
   >;
   getFunction(
     nameOrSignature: "lockedUntil",

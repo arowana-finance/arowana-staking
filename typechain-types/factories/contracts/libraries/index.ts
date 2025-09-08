@@ -2,5 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as ownableSol from "./Ownable.sol/index.js";
+export * as ownableControlSol from "./OwnableControl.sol/index.js";
 export * as sigLibSol from "./SigLib.sol/index.js";
-export * as withSettlerSol from "./WithSettler.sol/index.js";

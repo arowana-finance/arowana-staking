@@ -66,13 +66,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Lock__factory>;
     getContractFactory(
-      name: "WithSettler",
-      signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.WithSettler__factory>;
-    getContractFactory(
       name: "SigLib",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.SigLib__factory>;
+    getContractFactory(
+      name: "OwnableControl",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.OwnableControl__factory>;
     getContractFactory(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -97,6 +97,10 @@ declare module "hardhat/types/runtime" {
       name: "IRewardVault",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IRewardVault__factory>;
+    getContractFactory(
+      name: "IOwnableControl",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IOwnableControl__factory>;
     getContractFactory(
       name: "IMasterPool",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -142,6 +146,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.NoncesUpgradeable__factory>;
     getContractFactory(
+      name: "ERC165Upgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ERC165Upgradeable__factory>;
+    getContractFactory(
       name: "EIP712Upgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.EIP712Upgradeable__factory>;
@@ -169,6 +177,14 @@ declare module "hardhat/types/runtime" {
       name: "OwnableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.OwnableUpgradeable__factory>;
+    getContractFactory(
+      name: "AccessControlEnumerableUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable__factory>;
+    getContractFactory(
+      name: "AccessControlUpgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.AccessControlUpgradeable__factory>;
     getContractFactory(
       name: "Strings",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -289,6 +305,14 @@ declare module "hardhat/types/runtime" {
       name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: "IAccessControl",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IAccessControl__factory>;
+    getContractFactory(
+      name: "IAccessControlEnumerable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.IAccessControlEnumerable__factory>;
 
     getContractAt(
       name: "WETHMock",
@@ -356,15 +380,15 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.Lock>;
     getContractAt(
-      name: "WithSettler",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer,
-    ): Promise<Contracts.WithSettler>;
-    getContractAt(
       name: "SigLib",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.SigLib>;
+    getContractAt(
+      name: "OwnableControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.OwnableControl>;
     getContractAt(
       name: "Ownable",
       address: string | ethers.Addressable,
@@ -395,6 +419,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.IRewardVault>;
+    getContractAt(
+      name: "IOwnableControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IOwnableControl>;
     getContractAt(
       name: "IMasterPool",
       address: string | ethers.Addressable,
@@ -451,6 +480,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.NoncesUpgradeable>;
     getContractAt(
+      name: "ERC165Upgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ERC165Upgradeable>;
+    getContractAt(
       name: "EIP712Upgradeable",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
@@ -485,6 +519,16 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.OwnableUpgradeable>;
+    getContractAt(
+      name: "AccessControlEnumerableUpgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable>;
+    getContractAt(
+      name: "AccessControlUpgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.AccessControlUpgradeable>;
     getContractAt(
       name: "Strings",
       address: string | ethers.Addressable,
@@ -635,6 +679,16 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "IAccessControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IAccessControl>;
+    getContractAt(
+      name: "IAccessControlEnumerable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.IAccessControlEnumerable>;
 
     deployContract(
       name: "WETHMock",
@@ -689,13 +743,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Lock>;
     deployContract(
-      name: "WithSettler",
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
-    ): Promise<Contracts.WithSettler>;
-    deployContract(
       name: "SigLib",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.SigLib>;
+    deployContract(
+      name: "OwnableControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.OwnableControl>;
     deployContract(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -720,6 +774,10 @@ declare module "hardhat/types/runtime" {
       name: "IRewardVault",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IRewardVault>;
+    deployContract(
+      name: "IOwnableControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IOwnableControl>;
     deployContract(
       name: "IMasterPool",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -765,6 +823,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.NoncesUpgradeable>;
     deployContract(
+      name: "ERC165Upgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ERC165Upgradeable>;
+    deployContract(
       name: "EIP712Upgradeable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.EIP712Upgradeable>;
@@ -792,6 +854,14 @@ declare module "hardhat/types/runtime" {
       name: "OwnableUpgradeable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.OwnableUpgradeable>;
+    deployContract(
+      name: "AccessControlEnumerableUpgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable>;
+    deployContract(
+      name: "AccessControlUpgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.AccessControlUpgradeable>;
     deployContract(
       name: "Strings",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -912,6 +982,14 @@ declare module "hardhat/types/runtime" {
       name: "Ownable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IAccessControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "IAccessControlEnumerable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IAccessControlEnumerable>;
 
     deployContract(
       name: "WETHMock",
@@ -979,15 +1057,15 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Lock>;
     deployContract(
-      name: "WithSettler",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
-    ): Promise<Contracts.WithSettler>;
-    deployContract(
       name: "SigLib",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.SigLib>;
+    deployContract(
+      name: "OwnableControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.OwnableControl>;
     deployContract(
       name: "Ownable",
       args: any[],
@@ -1018,6 +1096,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IRewardVault>;
+    deployContract(
+      name: "IOwnableControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IOwnableControl>;
     deployContract(
       name: "IMasterPool",
       args: any[],
@@ -1074,6 +1157,11 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.NoncesUpgradeable>;
     deployContract(
+      name: "ERC165Upgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ERC165Upgradeable>;
+    deployContract(
       name: "EIP712Upgradeable",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -1108,6 +1196,16 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.OwnableUpgradeable>;
+    deployContract(
+      name: "AccessControlEnumerableUpgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable>;
+    deployContract(
+      name: "AccessControlUpgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.AccessControlUpgradeable>;
     deployContract(
       name: "Strings",
       args: any[],
@@ -1258,6 +1356,16 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "IAccessControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "IAccessControlEnumerable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.IAccessControlEnumerable>;
 
     // default types
     getContractFactory(

@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+/**
+ * @notice Interface of InitializableProxy based on ERC-1967 and OpenZeppelin's Proxy contract
+ * @dev Provides view-only functions that give the current implementation and proxyAdmin for better transparency
+ */
 interface IInitializableProxy {
     /**
      * @notice Emitted when the proxy description has changed
@@ -12,6 +16,12 @@ interface IInitializableProxy {
      * @dev Allows native ETH deposits and would be handled by implementation contract
      */
     receive() external payable;
+
+    /**
+     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other
+     * function in the contract matches the call data.
+     */
+    fallback() external payable;
 
     /**
      * @notice Initialize proxy contract
