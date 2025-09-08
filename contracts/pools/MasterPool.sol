@@ -13,7 +13,7 @@ import { MasterChef } from './MasterChef.sol';
 contract MasterPool is MasterChef {
     event SetPoolToken(uint16 indexed pid, address poolToken);
     event SetHalvingRate(uint16 halvingRate);
-    event SetHalvingInterval(uint64 halvingInterval);
+    event SetHalvingInterval(uint48 halvingInterval);
 
     address public poolTokenImplementation;
 
@@ -24,7 +24,7 @@ contract MasterPool is MasterChef {
     /// @dev Decreasing n% for each halving interval
     uint16 public halvingRate;
 
-    uint64 public halvingInterval;
+    uint48 public halvingInterval;
 
     modifier onlyPoolTokens() {
         require(hasPoolToken(msg.sender), 'NOT_POOL');
@@ -39,9 +39,9 @@ contract MasterPool is MasterChef {
         address _rewardVault,
         uint256 _rewardsPerSec,
         uint16 _halvingRate,
-        uint64 _halvingInterval,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _halvingInterval,
+        uint48 _startTime,
+        uint48 _endTime,
         bool addPool
     ) public virtual {
         setHalvingRate(_halvingRate);
@@ -67,19 +67,19 @@ contract MasterPool is MasterChef {
 
     function getPoolRewardsByTime(
         uint16 _pid,
-        uint64 _fromTime,
-        uint64 _toTime
+        uint48 _fromTime,
+        uint48 _toTime
     ) public view virtual override returns (uint256) {
         if (_fromTime >= _toTime || totalAllocPoint == 0) {
             return 0;
         }
 
         PoolInfo storage pool = poolInfo[_pid];
-        (uint64 start, uint64 end) = (pool.startTime, pool.endTime);
+        (uint48 start, uint48 end) = (pool.startTime, pool.endTime);
 
         // Find range overlap
-        uint64 from = _fromTime > start ? _fromTime : start;
-        uint64 to = _toTime < end ? _toTime : end;
+        uint48 from = _fromTime > start ? _fromTime : start;
+        uint48 to = _toTime < end ? _toTime : end;
 
         if (from >= to) return 0;
 
@@ -89,17 +89,17 @@ contract MasterPool is MasterChef {
 
         uint256 totalReward = 0;
         uint256 rewards = rewardsPerSec;
-        uint64 localFrom = from;
+        uint48 localFrom = from;
 
         // Calculate how many completed halvings at the 'from' timestamp
-        uint64 halvingNumber = (from - start) / halvingInterval;
+        uint48 halvingNumber = (from - start) / halvingInterval;
 
         // The maximum number of halvings allowed (up to when rewards reaches zero)
         // If you want rewardsPerSec to eventually drop to zero, you can set a cap.
         while (localFrom < to && rewards != 0) {
             // Next halving point
-            uint64 nextHalvingTime = start + (halvingNumber + 1) * halvingInterval;
-            uint64 periodEnd = to < nextHalvingTime ? to : nextHalvingTime;
+            uint48 nextHalvingTime = start + (halvingNumber + 1) * halvingInterval;
+            uint48 periodEnd = to < nextHalvingTime ? to : nextHalvingTime;
 
             totalReward += (periodEnd - localFrom) * rewards;
 
@@ -115,8 +115,8 @@ contract MasterPool is MasterChef {
     function add(
         address _lpToken,
         uint32 _allocPoint,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool _withUpdate
     ) public virtual override onlyOwner returns (uint16 _pid) {
         _pid = super.add(_lpToken, _allocPoint, _startTime, _endTime, _withUpdate);
@@ -224,7 +224,7 @@ contract MasterPool is MasterChef {
         emit SetHalvingRate(_halvingRate);
     }
 
-    function setHalvingInterval(uint64 _halvingInterval) public onlyOwner {
+    function setHalvingInterval(uint48 _halvingInterval) public onlyOwner {
         halvingInterval = _halvingInterval;
         emit SetHalvingInterval(_halvingInterval);
     }

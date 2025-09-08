@@ -10,9 +10,9 @@ interface IMasterChef {
     struct PoolInfo {
         address lpToken;
         uint32 allocPoint;
-        uint64 startTime;
-        uint64 endTime;
-        uint64 lastRewardTime;
+        uint48 startTime;
+        uint48 endTime;
+        uint48 lastRewardTime;
         uint256 accRewardsPerShare;
     }
 
@@ -33,8 +33,8 @@ interface IMasterChef {
         address _rewardToken,
         address _rewardVault,
         uint256 _rewardsPerSec,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool addPool
     ) external;
 
@@ -44,24 +44,24 @@ interface IMasterChef {
     function add(
         address _lpToken,
         uint32 _allocPoint,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool _withUpdate
     ) external returns (uint16 _pid);
 
     function set(
         uint16 _pid,
         uint32 _allocPoint,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool _withUpdate
     ) external;
 
-    function getMultiplier(uint16 _pid, uint64 _fromTime, uint64 _toTime) external view returns (uint256);
+    function getMultiplier(uint16 _pid, uint48 _fromTime, uint48 _toTime) external view returns (uint256);
     function getPoolRewardsByTime(
         uint16 _pid,
-        uint64 _fromTime,
-        uint64 _toTime
+        uint48 _fromTime,
+        uint48 _toTime
     ) external view returns (uint256);
     function getPoolRewardsPerSec(uint16 _pid) external view returns (uint256);
     function getRewardsPerShare(uint16 _pid) external view returns (uint256 rewardPerShare);
@@ -71,7 +71,7 @@ interface IMasterChef {
     function updatePool(uint16 _pid) external;
 
     function deposit(uint16 _pid, uint256 _amount) external payable;
-    function depositPermit(uint16 _pid, uint256 _amount, uint64 _deadline, bytes memory _signature) external;
+    function depositPermit(uint16 _pid, uint256 _amount, uint48 _deadline, bytes memory _signature) external;
     function withdraw(uint16 _pid, uint256 _amount) external;
     function setRewardsPerSec(uint256 _rewardPerSec) external;
 }

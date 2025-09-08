@@ -9,7 +9,7 @@ interface IMasterPool is IMasterChef {
     function poolIdByTokens(address token) external view returns (uint16 pid);
 
     function halvingRate() external view returns (uint16);
-    function halvingInterval() external view returns (uint64);
+    function halvingInterval() external view returns (uint48);
 
     function initializePool(
         address _owner,
@@ -19,9 +19,9 @@ interface IMasterPool is IMasterChef {
         address _rewardVault,
         uint256 _rewardsPerSec,
         uint16 _halvingRate,
-        uint64 _halvingInterval,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _halvingInterval,
+        uint48 _startTime,
+        uint48 _endTime,
         bool addPool
     ) external;
 
@@ -33,5 +33,5 @@ interface IMasterPool is IMasterChef {
     function poolTransfer(address _from, address _to, uint256 value) external;
 
     function setHalvingRate(uint16 _halvingRate) external;
-    function setHalvingInterval(uint64 _halvingInterval) external;
+    function setHalvingInterval(uint48 _halvingInterval) external;
 }

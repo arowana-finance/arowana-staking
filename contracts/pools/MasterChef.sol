@@ -32,8 +32,8 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
         uint16 indexed pid,
         address indexed lpToken,
         uint32 newAllocPoint,
-        uint64 startTime,
-        uint64 endTime
+        uint48 startTime,
+        uint48 endTime
     );
 
     /// @dev Info of each user.
@@ -57,9 +57,9 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     struct PoolInfo {
         IERC20 lpToken; // Address of LP token contract.
         uint32 allocPoint; // How many allocation points assigned to this pool. rewards to distribute per second.
-        uint64 startTime; // Timestamp to start reward calculation of the pool.
-        uint64 endTime; // Timestamp to end reward calculation of the pool.
-        uint64 lastRewardTime; // Last timestamp that rewards distribution occurs.
+        uint48 startTime; // Timestamp to start reward calculation of the pool.
+        uint48 endTime; // Timestamp to end reward calculation of the pool.
+        uint48 lastRewardTime; // Last timestamp that rewards distribution occurs.
         uint256 accRewardsPerShare; // Accumulated rewards per share, times 1e12. See below.
     }
 
@@ -106,8 +106,8 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
         address _rewardToken,
         address _rewardVault,
         uint256 _rewardsPerSec,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool addPool
     ) public virtual initializer {
         __ReentrancyGuard_init();
@@ -140,8 +140,8 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     function add(
         address _lpToken,
         uint32 _allocPoint,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool _withUpdate
     ) public virtual onlyOwner returns (uint16 _pid) {
         require(!hasPool(_lpToken), 'Duplicated Pool');
@@ -173,8 +173,8 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     function set(
         uint16 _pid,
         uint32 _allocPoint,
-        uint64 _startTime,
-        uint64 _endTime,
+        uint48 _startTime,
+        uint48 _endTime,
         bool _withUpdate
     ) public virtual onlyOwner {
         require(_pid < poolInfo.length, 'Invalid Pool');
@@ -192,19 +192,19 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     /// @dev Return reward multiplier over the given _fromTime to _toTime timestamp.
     function getMultiplier(
         uint16 _pid,
-        uint64 _fromTime,
-        uint64 _toTime
-    ) public view virtual returns (uint64) {
+        uint48 _fromTime,
+        uint48 _toTime
+    ) public view virtual returns (uint48) {
         if (_fromTime >= _toTime) {
             return 0;
         }
 
         PoolInfo storage pool = poolInfo[_pid];
-        (uint64 start, uint64 end) = (pool.startTime, pool.endTime);
+        (uint48 start, uint48 end) = (pool.startTime, pool.endTime);
 
         // Find range overlap
-        uint64 from = _fromTime > start ? _fromTime : start;
-        uint64 to = _toTime < end ? _toTime : end;
+        uint48 from = _fromTime > start ? _fromTime : start;
+        uint48 to = _toTime < end ? _toTime : end;
 
         if (from >= to) return 0;
         return to - from;
@@ -212,8 +212,8 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
 
     function getPoolRewardsByTime(
         uint16 _pid,
-        uint64 _fromTime,
-        uint64 _toTime
+        uint48 _fromTime,
+        uint48 _toTime
     ) public view virtual returns (uint256) {
         if (totalAllocPoint == 0) {
             return 0;
@@ -224,7 +224,7 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     }
 
     function getPoolRewardsPerSec(uint16 _pid) public view virtual returns (uint256) {
-        return getPoolRewardsByTime(_pid, uint64(block.timestamp - 1), uint64(block.timestamp));
+        return getPoolRewardsByTime(_pid, uint48(block.timestamp - 1), uint48(block.timestamp));
     }
 
     function getRewardsPerShare(uint16 _pid) public view virtual returns (uint256) {
@@ -232,7 +232,7 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
         uint256 accRewardsPerShare = pool.accRewardsPerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (lpSupply != 0) {
-            uint256 poolRewards = getPoolRewardsByTime(_pid, pool.lastRewardTime, uint64(block.timestamp));
+            uint256 poolRewards = getPoolRewardsByTime(_pid, pool.lastRewardTime, uint48(block.timestamp));
             accRewardsPerShare += (poolRewards * 1e12) / lpSupply;
         }
         return accRewardsPerShare;
@@ -256,7 +256,7 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     function updatePool(uint16 _pid) public virtual {
         PoolInfo storage pool = poolInfo[_pid];
         pool.accRewardsPerShare = getRewardsPerShare(_pid);
-        pool.lastRewardTime = uint64(block.timestamp);
+        pool.lastRewardTime = uint48(block.timestamp);
     }
 
     function _handleRewards(uint16 _pid, address _user) internal virtual {
@@ -329,7 +329,7 @@ contract MasterChef is Ownable, ReentrancyGuardUpgradeable {
     function depositPermit(
         uint16 _pid,
         uint256 _amount,
-        uint64 _deadline,
+        uint48 _deadline,
         bytes memory _signature
     ) public virtual {
         (uint8 v, bytes32 r, bytes32 s) = SigLib.toVRS(_signature);

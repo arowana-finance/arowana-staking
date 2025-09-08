@@ -1145,7 +1145,7 @@ export interface MasterPool extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "SetHalvingInterval(uint64)": TypedContractEvent<
+    "SetHalvingInterval(uint48)": TypedContractEvent<
       SetHalvingIntervalEvent.InputTuple,
       SetHalvingIntervalEvent.OutputTuple,
       SetHalvingIntervalEvent.OutputObject
@@ -1167,7 +1167,7 @@ export interface MasterPool extends BaseContract {
       SetHalvingRateEvent.OutputObject
     >;
 
-    "SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<
+    "SetPool(uint16,address,uint32,uint48,uint48)": TypedContractEvent<
       SetPoolEvent.InputTuple,
       SetPoolEvent.OutputTuple,
       SetPoolEvent.OutputObject

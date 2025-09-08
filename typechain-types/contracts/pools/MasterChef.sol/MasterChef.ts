@@ -824,7 +824,7 @@ export interface MasterChef extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
 
-    "SetPool(uint16,address,uint32,uint64,uint64)": TypedContractEvent<
+    "SetPool(uint16,address,uint32,uint48,uint48)": TypedContractEvent<
       SetPoolEvent.InputTuple,
       SetPoolEvent.OutputTuple,
       SetPoolEvent.OutputObject

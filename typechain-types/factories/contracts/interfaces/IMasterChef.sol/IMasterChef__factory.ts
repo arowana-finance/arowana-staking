@@ -35,14 +35,14 @@ const _abi = [
         type: "uint32",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_startTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_endTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
         internalType: "bool",
@@ -92,9 +92,9 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_deadline",
-        type: "uint64",
+        type: "uint48",
       },
       {
         internalType: "bytes",
@@ -115,14 +115,14 @@ const _abi = [
         type: "uint16",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_fromTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_toTime",
-        type: "uint64",
+        type: "uint48",
       },
     ],
     name: "getMultiplier",
@@ -144,14 +144,14 @@ const _abi = [
         type: "uint16",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_fromTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_toTime",
-        type: "uint64",
+        type: "uint48",
       },
     ],
     name: "getPoolRewardsByTime",
@@ -250,14 +250,14 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_startTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_endTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
         internalType: "bool",
@@ -343,19 +343,19 @@ const _abi = [
             type: "uint32",
           },
           {
-            internalType: "uint64",
+            internalType: "uint48",
             name: "startTime",
-            type: "uint64",
+            type: "uint48",
           },
           {
-            internalType: "uint64",
+            internalType: "uint48",
             name: "endTime",
-            type: "uint64",
+            type: "uint48",
           },
           {
-            internalType: "uint64",
+            internalType: "uint48",
             name: "lastRewardTime",
-            type: "uint64",
+            type: "uint48",
           },
           {
             internalType: "uint256",
@@ -436,14 +436,14 @@ const _abi = [
         type: "uint32",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_startTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
-        internalType: "uint64",
+        internalType: "uint48",
         name: "_endTime",
-        type: "uint64",
+        type: "uint48",
       },
       {
         internalType: "bool",
