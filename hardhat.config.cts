@@ -1,5 +1,6 @@
 import process from 'process';
-import '@nomicfoundation/hardhat-toolbox';
+// import '@nomicfoundation/hardhat-toolbox';
+import "@nomicfoundation/hardhat-toolbox-viem";
 import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-dependency-compiler';
 import 'hardhat-preprocessor';

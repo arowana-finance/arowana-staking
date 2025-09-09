@@ -1,6 +1,6 @@
 // Adding hardhat.config.js because hardhat-vscode lang server only recognizes hardhat.config.{js.ts} files
 import process from 'process';
-import '@nomicfoundation/hardhat-toolbox';
+import "@nomicfoundation/hardhat-toolbox-viem";
 import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-dependency-compiler';
 import 'hardhat-preprocessor';
