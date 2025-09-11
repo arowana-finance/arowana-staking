@@ -1,33 +1,32 @@
-import { formatUnits } from 'ethers';
-import { type SignerWithAddress } from 'ethers-opt';
-import { type ContractConfig } from './types/frontContracts.js';
+import { formatUnits, WalletClient } from 'viem';
 import { getFarmApr } from './apr.js';
+import { ContractConfig } from './types/index.js';
 
 export async function getFarmStats(config: ContractConfig) {
     const {
         rewardToken: { token: rewardToken, oracle: rewardTokenOracle },
     } = config;
-
-    const [rewardTokenDecimals, rewardOracleDecimals, rewardTokenUsd] = await Promise.all([
-        rewardToken.decimals().then((d) => Number(d)),
-        rewardTokenOracle.decimals().then((d) => Number(d)),
-        rewardTokenOracle.latestAnswer(),
+    const [rewardTokenDecimals, rewardOracleDecimals, rewardTokenUsdRaw] = await Promise.all([
+        rewardToken.read.decimals().then((d: bigint | number) => Number(d)),
+        rewardTokenOracle.read.decimals().then((d: bigint | number) => Number(d)),
+        rewardTokenOracle.read.latestAnswer(), // bigint
     ]);
 
     return {
         rewardTokenDecimals,
-        rewardTokenUsd: Number(formatUnits(rewardTokenUsd, rewardOracleDecimals)),
+        rewardTokenUsd: Number(formatUnits(rewardTokenUsdRaw as bigint, rewardOracleDecimals)),
     };
 }
 
-export async function getFarms(config: ContractConfig, user?: SignerWithAddress | string) {
+export async function getFarms(config: ContractConfig, user?: WalletClient | string) {
     const { masterChef } = config;
 
-    const userAddress = (user as SignerWithAddress)?.address || (user as string | undefined);
+    const userAddress: `0x${string}` | undefined =
+        typeof user === 'string' ? (user as `0x${string}`) : user?.account?.address;
 
     const [{ rewardTokenUsd, rewardTokenDecimals }, ...poolData] = await Promise.all([
         getFarmStats(config),
-        ...config.pools.map(async (pool) => {
+        ...config.pools.map(async (pool: any) => {
             const [
                 poolInfo,
                 rewardsPerSecBN,
@@ -39,15 +38,15 @@ export async function getFarms(config: ContractConfig, user?: SignerWithAddress 
                 stakedBalance,
                 pendingRewardsBN,
             ] = await Promise.all([
-                masterChef.poolInfo(pool.pid),
-                masterChef.getPoolRewardsPerSec(pool.pid),
-                pool.oracle.decimals().then((d) => Number(d)),
-                pool.oracle.latestAnswer(),
-                pool.token.decimals().then((d) => Number(d)),
-                pool.token.balanceOf(masterChef.target),
-                userAddress ? pool.token.balanceOf(userAddress) : 0n,
-                userAddress ? masterChef.userInfo(pool.pid, userAddress).then((u) => u.amount) : 0n,
-                userAddress ? masterChef.pendingRewards(pool.pid, userAddress) : 0n,
+                masterChef.read.poolInfo([pool.pid]),
+                masterChef.read.getPoolRewardsPerSec([pool.pid]),
+                pool.oracle.read.decimals().then((d: bigint | number) => Number(d)),
+                pool.oracle.read.latestAnswer(),
+                pool.token.read.decimals().then((d: bigint | number) => Number(d)),
+                pool.token.read.balanceOf([masterChef.address]),
+                userAddress ? pool.token.read.balanceOf([userAddress]) : Promise.resolve(0n),
+                userAddress ? masterChef.read.userInfo([pool.pid, userAddress]) : Promise.resolve([0n, 0n]),
+                userAddress ? masterChef.read.pendingRewards([pool.pid, userAddress]) : 0n,
             ]);
 
             const allocPoint = Number(poolInfo.allocPoint);
