@@ -181,12 +181,12 @@ describe('MasterChef (with RewardVault)', () => {
 
     it('setRewardsPerSec 변경이 다음 정산에 반영', async () => {
         const { owner, alice, chef, lpToken, rewardToken, pid } = await loadFixture(fixture);
-        const { rewardsPerSecAmt } = fixtureData;
+        const { rewardsPerSecAmt, depositAmt } = fixtureData;
 
-        await lpToken.write.approve([chef.address, parseEther('100')], {
+        await lpToken.write.approve([chef.address, parseEther(String(depositAmt))], {
             account: alice.account,
         });
-        const txDeposit = await chef.write.deposit([pid, parseEther('100')], {
+        const txDeposit = await chef.write.deposit([pid, parseEther(String(depositAmt))], {
             account: alice.account,
         });
         const firstDepositTime = await getTxByTimestamp({ hash: txDeposit });
