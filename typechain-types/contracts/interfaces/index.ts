@@ -13,6 +13,8 @@ import type * as ierc4626PoolSol from"./IERC4626Pool.sol/index.js";
 export type { ierc4626PoolSol };
 import type * as iInitializableProxySol from"./IInitializableProxy.sol/index.js";
 export type { iInitializableProxySol };
+import type * as iLockableSol from"./ILockable.sol/index.js";
+export type { iLockableSol };
 import type * as iMasterChefSol from"./IMasterChef.sol/index.js";
 export type { iMasterChefSol };
 import type * as iMasterPoolSol from"./IMasterPool.sol/index.js";

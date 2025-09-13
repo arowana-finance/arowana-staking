@@ -38,6 +38,8 @@ export type { OwnableControl } from "./contracts/libraries/OwnableControl.sol/Ow
 export { OwnableControl__factory } from "./factories/contracts/libraries/OwnableControl.sol/OwnableControl__factory.js";
 export type { Ownable } from "./contracts/libraries/Ownable.sol/Ownable.js";
 export { Ownable__factory } from "./factories/contracts/libraries/Ownable.sol/Ownable__factory.js";
+export type { Lockable } from "./contracts/libraries/Lockable.sol/Lockable.js";
+export { Lockable__factory } from "./factories/contracts/libraries/Lockable.sol/Lockable__factory.js";
 export type { IWETH } from "./contracts/interfaces/IWETH.sol/IWETH.js";
 export { IWETH__factory } from "./factories/contracts/interfaces/IWETH.sol/IWETH__factory.js";
 export type { IV2SwapFeed } from "./contracts/interfaces/IV2SwapFeed.sol/IV2SwapFeed.js";
@@ -54,6 +56,8 @@ export type { IMasterPool } from "./contracts/interfaces/IMasterPool.sol/IMaster
 export { IMasterPool__factory } from "./factories/contracts/interfaces/IMasterPool.sol/IMasterPool__factory.js";
 export type { IMasterChef } from "./contracts/interfaces/IMasterChef.sol/IMasterChef.js";
 export { IMasterChef__factory } from "./factories/contracts/interfaces/IMasterChef.sol/IMasterChef__factory.js";
+export type { ILockable } from "./contracts/interfaces/ILockable.sol/ILockable.js";
+export { ILockable__factory } from "./factories/contracts/interfaces/ILockable.sol/ILockable__factory.js";
 export type { IInitializableProxy } from "./contracts/interfaces/IInitializableProxy.sol/IInitializableProxy.js";
 export { IInitializableProxy__factory } from "./factories/contracts/interfaces/IInitializableProxy.sol/IInitializableProxy__factory.js";
 export type { IERC4626Pool } from "./contracts/interfaces/IERC4626Pool.sol/IERC4626Pool.js";
@@ -102,8 +106,6 @@ export type { SafeCast } from "./@openzeppelin/contracts/utils/math/SafeCast.sol
 export { SafeCast__factory } from "./factories/@openzeppelin/contracts/utils/math/SafeCast.sol/SafeCast__factory.js";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165.sol/IERC165.js";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165.sol/IERC165__factory.js";
-export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC165.sol/ERC165.js";
-export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165.sol/ERC165__factory.js";
 export type { Errors } from "./@openzeppelin/contracts/utils/Errors.sol/Errors.js";
 export { Errors__factory } from "./factories/@openzeppelin/contracts/utils/Errors.sol/Errors__factory.js";
 export type { EIP712 } from "./@openzeppelin/contracts/utils/cryptography/EIP712.sol/EIP712.js";

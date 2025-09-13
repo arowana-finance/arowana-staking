@@ -7,6 +7,7 @@ export * as ierc20LockableSol from "./IERC20Lockable.sol/index.js";
 export * as ierc4626Sol from "./IERC4626.sol/index.js";
 export * as ierc4626PoolSol from "./IERC4626Pool.sol/index.js";
 export * as iInitializableProxySol from "./IInitializableProxy.sol/index.js";
+export * as iLockableSol from "./ILockable.sol/index.js";
 export * as iMasterChefSol from "./IMasterChef.sol/index.js";
 export * as iMasterPoolSol from "./IMasterPool.sol/index.js";
 export * as iOwnableControlSol from "./IOwnableControl.sol/index.js";
