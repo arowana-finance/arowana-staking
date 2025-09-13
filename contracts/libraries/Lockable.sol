@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import { ECDSA } from '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
 import { ERC165 } from '@openzeppelin/contracts/utils/introspection/ERC165.sol';
-import { EIP712Upgradeable } from '@openzeppelin/contracts-upgradeable/utils/cryptography/EIP712Upgradeable.sol';
-import { NoncesUpgradeable } from '@openzeppelin/contracts-upgradeable/utils/NoncesUpgradeable.sol';
 import { ILockable } from '../interfaces/ILockable.sol';
 
-abstract contract Lockable is ERC165, EIP712Upgradeable, NoncesUpgradeable {
+abstract contract Lockable is ERC165 {
     /**
      * @notice Emitted when a new account is locked til a certain timestamp
      * @param owner Locked address
@@ -125,44 +122,6 @@ abstract contract Lockable is ERC165, EIP712Upgradeable, NoncesUpgradeable {
      */
     function lock(uint48 until, bytes memory /*lockParams*/) public virtual {
         _lock(msg.sender, until);
-    }
-
-    /**
-     * @notice Lock EOA's account for a specific period by EIP-712 signature
-     * @param owner Address to change the locked state
-     * @param lockBy Permitted locker address ( contract that requires locked state )
-     * @param lockUntil Timestamp to lock the account for a specific period
-     * @param deadline Deadline until a signed signature is considered valid
-     * @param signature Signed serialized EIP-712 signature
-     * @dev Similar to the permit function
-     * (lockParams: optional params to have when calling lock function - like token balance, etc)
-     */
-    function lockPermit(
-        address owner,
-        address lockBy,
-        uint48 lockUntil,
-        uint48 deadline,
-        bytes memory signature,
-        bytes memory /*lockParams*/
-    ) public virtual {
-        if (block.timestamp > deadline) {
-            revert LockedExpiredSignature(deadline);
-        }
-
-        address signer = ECDSA.recover(
-            _hashTypedDataV4(
-                keccak256(abi.encode(LOCK_TYPEHASH, owner, lockBy, lockUntil, _useNonce(owner), deadline))
-            ),
-            signature
-        );
-
-        if (signer != owner) {
-            revert LockedInvalidSigner(signer, owner);
-        }
-
-        emit LockedBy(owner, lockBy, lockUntil);
-
-        _lock(owner, lockUntil);
     }
 
     /**

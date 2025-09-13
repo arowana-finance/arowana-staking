@@ -5,6 +5,7 @@ import {
     ERC20PermitUpgradeable,
     NoncesUpgradeable
 } from '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol';
+import { ECDSA } from '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
 import { Lockable } from '../libraries/Lockable.sol';
 
 /**
@@ -13,6 +14,44 @@ import { Lockable } from '../libraries/Lockable.sol';
  * ( on-chain votes, staking, blacklisting - only if it has a certain function implemented )
  */
 abstract contract ERC20Lockable is ERC20PermitUpgradeable, Lockable {
+    /**
+     * @notice Lock EOA's account for a specific period by EIP-712 signature
+     * @param owner Address to change the locked state
+     * @param lockBy Permitted locker address ( contract that requires locked state )
+     * @param lockUntil Timestamp to lock the account for a specific period
+     * @param deadline Deadline until a signed signature is considered valid
+     * @param signature Signed serialized EIP-712 signature
+     * @dev Similar to the permit function
+     * (lockParams: optional params to have when calling lock function - like token balance, etc)
+     */
+    function lockPermit(
+        address owner,
+        address lockBy,
+        uint48 lockUntil,
+        uint48 deadline,
+        bytes memory signature,
+        bytes memory /*lockParams*/
+    ) public virtual {
+        if (block.timestamp > deadline) {
+            revert LockedExpiredSignature(deadline);
+        }
+
+        address signer = ECDSA.recover(
+            _hashTypedDataV4(
+                keccak256(abi.encode(LOCK_TYPEHASH, owner, lockBy, lockUntil, _useNonce(owner), deadline))
+            ),
+            signature
+        );
+
+        if (signer != owner) {
+            revert LockedInvalidSigner(signer, owner);
+        }
+
+        emit LockedBy(owner, lockBy, lockUntil);
+
+        _lock(owner, lockUntil);
+    }
+
     /**
      * @notice Returns the balance of currently locked tokens that belongs to the owner
      * @param owner Owner of the locked tokens
@@ -40,11 +79,5 @@ abstract contract ERC20Lockable is ERC20PermitUpgradeable, Lockable {
             revert AccountLocked(from);
         }
         super._update(from, to, value);
-    }
-
-    function nonces(
-        address owner
-    ) public view virtual override(NoncesUpgradeable, ERC20PermitUpgradeable) returns (uint256) {
-        return super.nonces(owner);
     }
 }

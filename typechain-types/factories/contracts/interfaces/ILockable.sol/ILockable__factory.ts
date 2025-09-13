@@ -159,44 +159,6 @@ const _abi = [
         name: "owner",
         type: "address",
       },
-      {
-        internalType: "address",
-        name: "lockBy",
-        type: "address",
-      },
-      {
-        internalType: "uint48",
-        name: "lockUntil",
-        type: "uint48",
-      },
-      {
-        internalType: "uint48",
-        name: "deadline",
-        type: "uint48",
-      },
-      {
-        internalType: "bytes",
-        name: "signature",
-        type: "bytes",
-      },
-      {
-        internalType: "bytes",
-        name: "lockParams",
-        type: "bytes",
-      },
-    ],
-    name: "lockPermit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
     ],
     name: "lockedUntil",
     outputs: [

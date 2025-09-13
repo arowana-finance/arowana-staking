@@ -66,23 +66,4 @@ interface ILockable is IERC165 {
      * @dev Similar to transfer function
      */
     function lock(uint48 until, bytes memory lockParams) external;
-
-    /**
-     * @notice Lock EOA's account for a specific period by EIP-712 signature
-     * @param owner Address to change the locked state
-     * @param lockBy Permitted locker address ( contract that requires locked state )
-     * @param lockUntil Timestamp to lock the account for a specific period
-     * @param deadline Deadline until a signed signature is considered valid
-     * @param signature Signed serialized EIP-712 signature
-     * @param lockParams optional params to have when calling lock function - like token balance, etc
-     * @dev Similar to the permit function
-     */
-    function lockPermit(
-        address owner,
-        address lockBy,
-        uint48 lockUntil,
-        uint48 deadline,
-        bytes memory signature,
-        bytes memory lockParams
-    ) external;
 }

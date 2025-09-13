@@ -27,30 +27,17 @@ export interface LockableInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "LOCK_TYPEHASH"
-      | "eip712Domain"
       | "isLocked"
       | "isLockedUntil"
       | "lock"
-      | "lockPermit"
       | "lockedUntil"
-      | "nonces"
       | "supportsInterface",
   ): FunctionFragment;
 
-  getEvent(
-    nameOrSignatureOrTopic:
-      | "EIP712DomainChanged"
-      | "Initialized"
-      | "Lock"
-      | "LockedBy",
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Lock" | "LockedBy"): EventFragment;
 
   encodeFunctionData(
     functionFragment: "LOCK_TYPEHASH",
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: "eip712Domain",
     values?: undefined,
   ): string;
   encodeFunctionData(
@@ -66,21 +53,9 @@ export interface LockableInterface extends Interface {
     values: [BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "lockPermit",
-    values: [
-      AddressLike,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike,
-    ],
-  ): string;
-  encodeFunctionData(
     functionFragment: "lockedUntil",
     values: [AddressLike],
   ): string;
-  encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike],
@@ -90,48 +65,20 @@ export interface LockableInterface extends Interface {
     functionFragment: "LOCK_TYPEHASH",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "eip712Domain",
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(functionFragment: "isLocked", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isLockedUntil",
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "lockPermit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "lockedUntil",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike,
   ): Result;
-}
-
-export namespace EIP712DomainChangedEvent {
-  export type InputTuple = [];
-  export type OutputTuple = [];
-  export interface OutputObject {}
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
-export namespace InitializedEvent {
-  export type InputTuple = [version: BigNumberish];
-  export type OutputTuple = [version: bigint];
-  export interface OutputObject {
-    version: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace LockEvent {
@@ -210,22 +157,6 @@ export interface Lockable extends BaseContract {
 
   LOCK_TYPEHASH: TypedContractMethod<[], [string], "view">;
 
-  eip712Domain: TypedContractMethod<
-    [],
-    [
-      [string, string, string, bigint, string, string, bigint[]] & {
-        fields: string;
-        name: string;
-        version: string;
-        chainId: bigint;
-        verifyingContract: string;
-        salt: string;
-        extensions: bigint[];
-      },
-    ],
-    "view"
-  >;
-
   isLocked: TypedContractMethod<[owner: AddressLike], [boolean], "view">;
 
   isLockedUntil: TypedContractMethod<
@@ -240,22 +171,7 @@ export interface Lockable extends BaseContract {
     "nonpayable"
   >;
 
-  lockPermit: TypedContractMethod<
-    [
-      owner: AddressLike,
-      lockBy: AddressLike,
-      lockUntil: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
-      arg5: BytesLike,
-    ],
-    [void],
-    "nonpayable"
-  >;
-
   lockedUntil: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-
-  nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
   supportsInterface: TypedContractMethod<
     [interfaceId: BytesLike],
@@ -270,23 +186,6 @@ export interface Lockable extends BaseContract {
   getFunction(
     nameOrSignature: "LOCK_TYPEHASH",
   ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "eip712Domain",
-  ): TypedContractMethod<
-    [],
-    [
-      [string, string, string, bigint, string, string, bigint[]] & {
-        fields: string;
-        name: string;
-        version: string;
-        chainId: bigint;
-        verifyingContract: string;
-        salt: string;
-        extensions: bigint[];
-      },
-    ],
-    "view"
-  >;
   getFunction(
     nameOrSignature: "isLocked",
   ): TypedContractMethod<[owner: AddressLike], [boolean], "view">;
@@ -305,43 +204,12 @@ export interface Lockable extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "lockPermit",
-  ): TypedContractMethod<
-    [
-      owner: AddressLike,
-      lockBy: AddressLike,
-      lockUntil: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
-      arg5: BytesLike,
-    ],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "lockedUntil",
-  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "nonces",
   ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "supportsInterface",
   ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
 
-  getEvent(
-    key: "EIP712DomainChanged",
-  ): TypedContractEvent<
-    EIP712DomainChangedEvent.InputTuple,
-    EIP712DomainChangedEvent.OutputTuple,
-    EIP712DomainChangedEvent.OutputObject
-  >;
-  getEvent(
-    key: "Initialized",
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
   getEvent(
     key: "Lock",
   ): TypedContractEvent<
@@ -358,28 +226,6 @@ export interface Lockable extends BaseContract {
   >;
 
   filters: {
-    "EIP712DomainChanged()": TypedContractEvent<
-      EIP712DomainChangedEvent.InputTuple,
-      EIP712DomainChangedEvent.OutputTuple,
-      EIP712DomainChangedEvent.OutputObject
-    >;
-    EIP712DomainChanged: TypedContractEvent<
-      EIP712DomainChangedEvent.InputTuple,
-      EIP712DomainChangedEvent.OutputTuple,
-      EIP712DomainChangedEvent.OutputObject
-    >;
-
-    "Initialized(uint64)": TypedContractEvent<
-      InitializedEvent.InputTuple,
-      InitializedEvent.OutputTuple,
-      InitializedEvent.OutputObject
-    >;
-    Initialized: TypedContractEvent<
-      InitializedEvent.InputTuple,
-      InitializedEvent.OutputTuple,
-      InitializedEvent.OutputObject
-    >;
-
     "Lock(address,uint48)": TypedContractEvent<
       LockEvent.InputTuple,
       LockEvent.OutputTuple,
