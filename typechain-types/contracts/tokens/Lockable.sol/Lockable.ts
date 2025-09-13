@@ -23,64 +23,32 @@ import type {
   TypedContractMethod,
 } from "../../../common.js";
 
-export interface ERC20LockableInterface extends Interface {
+export interface LockableInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "DOMAIN_SEPARATOR"
       | "LOCK_TYPEHASH"
-      | "allowance"
-      | "approve"
-      | "balanceOf"
-      | "decimals"
       | "eip712Domain"
       | "isLocked"
       | "isLockedUntil"
       | "lock"
       | "lockPermit"
-      | "lockedBalance"
-      | "lockedBalanceUntil"
       | "lockedUntil"
-      | "name"
       | "nonces"
-      | "permit"
-      | "supportsInterface"
-      | "symbol"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom",
+      | "supportsInterface",
   ): FunctionFragment;
 
   getEvent(
     nameOrSignatureOrTopic:
-      | "Approval"
       | "EIP712DomainChanged"
       | "Initialized"
       | "Lock"
-      | "LockedBy"
-      | "Transfer",
+      | "LockedBy",
   ): EventFragment;
 
-  encodeFunctionData(
-    functionFragment: "DOMAIN_SEPARATOR",
-    values?: undefined,
-  ): string;
   encodeFunctionData(
     functionFragment: "LOCK_TYPEHASH",
     values?: undefined,
   ): string;
-  encodeFunctionData(
-    functionFragment: "allowance",
-    values: [AddressLike, AddressLike],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [AddressLike, BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [AddressLike],
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "eip712Domain",
     values?: undefined,
@@ -99,61 +67,19 @@ export interface ERC20LockableInterface extends Interface {
     values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "lockedBalance",
-    values: [AddressLike],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lockedBalanceUntil",
-    values: [AddressLike, BigNumberish],
-  ): string;
-  encodeFunctionData(
     functionFragment: "lockedUntil",
     values: [AddressLike],
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
-  encodeFunctionData(
-    functionFragment: "permit",
-    values: [
-      AddressLike,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike,
-    ],
-  ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
-    values: [AddressLike, BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [AddressLike, AddressLike, BigNumberish],
-  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "DOMAIN_SEPARATOR",
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(
     functionFragment: "LOCK_TYPEHASH",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "eip712Domain",
     data: BytesLike,
@@ -166,52 +92,14 @@ export interface ERC20LockableInterface extends Interface {
   decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "lockPermit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "lockedBalance",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lockedBalanceUntil",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "lockedUntil",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike,
-  ): Result;
-}
-
-export namespace ApprovalEvent {
-  export type InputTuple = [
-    owner: AddressLike,
-    spender: AddressLike,
-    value: BigNumberish,
-  ];
-  export type OutputTuple = [owner: string, spender: string, value: bigint];
-  export interface OutputObject {
-    owner: string;
-    spender: string;
-    value: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace EIP712DomainChangedEvent {
@@ -267,29 +155,11 @@ export namespace LockedByEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace TransferEvent {
-  export type InputTuple = [
-    from: AddressLike,
-    to: AddressLike,
-    value: BigNumberish,
-  ];
-  export type OutputTuple = [from: string, to: string, value: bigint];
-  export interface OutputObject {
-    from: string;
-    to: string;
-    value: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
-export interface ERC20Lockable extends BaseContract {
-  connect(runner?: ContractRunner | null): ERC20Lockable;
+export interface Lockable extends BaseContract {
+  connect(runner?: ContractRunner | null): Lockable;
   waitForDeployment(): Promise<this>;
 
-  interface: ERC20LockableInterface;
+  interface: LockableInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
@@ -328,25 +198,7 @@ export interface ERC20Lockable extends BaseContract {
     event?: TCEvent,
   ): Promise<this>;
 
-  DOMAIN_SEPARATOR: TypedContractMethod<[], [string], "view">;
-
   LOCK_TYPEHASH: TypedContractMethod<[], [string], "view">;
-
-  allowance: TypedContractMethod<
-    [owner: AddressLike, spender: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  approve: TypedContractMethod<
-    [spender: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  decimals: TypedContractMethod<[], [bigint], "view">;
 
   eip712Domain: TypedContractMethod<
     [],
@@ -386,33 +238,9 @@ export interface ERC20Lockable extends BaseContract {
     "nonpayable"
   >;
 
-  lockedBalance: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-
-  lockedBalanceUntil: TypedContractMethod<
-    [owner: AddressLike, until: BigNumberish],
-    [bigint],
-    "view"
-  >;
-
   lockedUntil: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
-  name: TypedContractMethod<[], [string], "view">;
-
   nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-
-  permit: TypedContractMethod<
-    [
-      owner: AddressLike,
-      spender: AddressLike,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-    ],
-    [void],
-    "nonpayable"
-  >;
 
   supportsInterface: TypedContractMethod<
     [interfaceId: BytesLike],
@@ -420,52 +248,13 @@ export interface ERC20Lockable extends BaseContract {
     "view"
   >;
 
-  symbol: TypedContractMethod<[], [string], "view">;
-
-  totalSupply: TypedContractMethod<[], [bigint], "view">;
-
-  transfer: TypedContractMethod<
-    [to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment,
   ): T;
 
   getFunction(
-    nameOrSignature: "DOMAIN_SEPARATOR",
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
     nameOrSignature: "LOCK_TYPEHASH",
   ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "allowance",
-  ): TypedContractMethod<
-    [owner: AddressLike, spender: AddressLike],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "approve",
-  ): TypedContractMethod<
-    [spender: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "balanceOf",
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "decimals",
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "eip712Domain",
   ): TypedContractMethod<
@@ -510,70 +299,15 @@ export interface ERC20Lockable extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "lockedBalance",
-  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "lockedBalanceUntil",
-  ): TypedContractMethod<
-    [owner: AddressLike, until: BigNumberish],
-    [bigint],
-    "view"
-  >;
-  getFunction(
     nameOrSignature: "lockedUntil",
   ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "name",
-  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "nonces",
   ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
   getFunction(
-    nameOrSignature: "permit",
-  ): TypedContractMethod<
-    [
-      owner: AddressLike,
-      spender: AddressLike,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-    ],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "supportsInterface",
   ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
-  getFunction(
-    nameOrSignature: "symbol",
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "totalSupply",
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "transfer",
-  ): TypedContractMethod<
-    [to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "transferFrom",
-  ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
 
-  getEvent(
-    key: "Approval",
-  ): TypedContractEvent<
-    ApprovalEvent.InputTuple,
-    ApprovalEvent.OutputTuple,
-    ApprovalEvent.OutputObject
-  >;
   getEvent(
     key: "EIP712DomainChanged",
   ): TypedContractEvent<
@@ -602,26 +336,8 @@ export interface ERC20Lockable extends BaseContract {
     LockedByEvent.OutputTuple,
     LockedByEvent.OutputObject
   >;
-  getEvent(
-    key: "Transfer",
-  ): TypedContractEvent<
-    TransferEvent.InputTuple,
-    TransferEvent.OutputTuple,
-    TransferEvent.OutputObject
-  >;
 
   filters: {
-    "Approval(address,address,uint256)": TypedContractEvent<
-      ApprovalEvent.InputTuple,
-      ApprovalEvent.OutputTuple,
-      ApprovalEvent.OutputObject
-    >;
-    Approval: TypedContractEvent<
-      ApprovalEvent.InputTuple,
-      ApprovalEvent.OutputTuple,
-      ApprovalEvent.OutputObject
-    >;
-
     "EIP712DomainChanged()": TypedContractEvent<
       EIP712DomainChangedEvent.InputTuple,
       EIP712DomainChangedEvent.OutputTuple,
@@ -664,17 +380,6 @@ export interface ERC20Lockable extends BaseContract {
       LockedByEvent.InputTuple,
       LockedByEvent.OutputTuple,
       LockedByEvent.OutputObject
-    >;
-
-    "Transfer(address,address,uint256)": TypedContractEvent<
-      TransferEvent.InputTuple,
-      TransferEvent.OutputTuple,
-      TransferEvent.OutputObject
-    >;
-    Transfer: TypedContractEvent<
-      TransferEvent.InputTuple,
-      TransferEvent.OutputTuple,
-      TransferEvent.OutputObject
     >;
   };
 }

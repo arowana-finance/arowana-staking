@@ -679,7 +679,7 @@ export interface ERC4626Pool extends BaseContract {
     "view"
   >;
 
-  lockedUntil: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+  lockedUntil: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
   masterBurn: TypedContractMethod<
     [_user: AddressLike, _amount: BigNumberish],
@@ -897,7 +897,7 @@ export interface ERC4626Pool extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "lockedUntil",
-  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "masterBurn",
   ): TypedContractMethod<
@@ -1137,7 +1137,7 @@ export interface ERC4626Pool extends BaseContract {
       InitializedPoolEvent.OutputObject
     >;
 
-    "Lock(address,uint256)": TypedContractEvent<
+    "Lock(address,uint48)": TypedContractEvent<
       LockEvent.InputTuple,
       LockEvent.OutputTuple,
       LockEvent.OutputObject
@@ -1148,7 +1148,7 @@ export interface ERC4626Pool extends BaseContract {
       LockEvent.OutputObject
     >;
 
-    "LockedBy(address,address,uint256)": TypedContractEvent<
+    "LockedBy(address,address,uint48)": TypedContractEvent<
       LockedByEvent.InputTuple,
       LockedByEvent.OutputTuple,
       LockedByEvent.OutputObject

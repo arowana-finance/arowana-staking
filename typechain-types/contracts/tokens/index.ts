@@ -7,6 +7,8 @@ import type * as erc20MockSol from"./ERC20Mock.sol/index.js";
 export type { erc20MockSol };
 import type * as erc4626PoolSol from"./ERC4626Pool.sol/index.js";
 export type { erc4626PoolSol };
+import type * as lockableSol from"./Lockable.sol/index.js";
+export type { lockableSol };
 import type * as wethSol from"./WETH.sol/index.js";
 export type { wethSol };
 import type * as wethMockSol from"./WETHMock.sol/index.js";

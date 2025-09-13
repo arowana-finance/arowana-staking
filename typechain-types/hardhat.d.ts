@@ -22,6 +22,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.WETH__factory>;
     getContractFactory(
+      name: "Lockable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Lockable__factory>;
+    getContractFactory(
       name: "ERC4626Pool",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC4626Pool__factory>;
@@ -109,6 +113,10 @@ declare module "hardhat/types/runtime" {
       name: "IMasterChef",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IMasterChef__factory>;
+    getContractFactory(
+      name: "ILockable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.ILockable__factory>;
     getContractFactory(
       name: "IInitializableProxy",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -325,6 +333,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.WETH>;
     getContractAt(
+      name: "Lockable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Lockable>;
+    getContractAt(
       name: "ERC4626Pool",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
@@ -434,6 +447,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.IMasterChef>;
+    getContractAt(
+      name: "ILockable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.ILockable>;
     getContractAt(
       name: "IInitializableProxy",
       address: string | ethers.Addressable,
@@ -699,6 +717,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.WETH>;
     deployContract(
+      name: "Lockable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Lockable>;
+    deployContract(
       name: "ERC4626Pool",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.ERC4626Pool>;
@@ -786,6 +808,10 @@ declare module "hardhat/types/runtime" {
       name: "IMasterChef",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IMasterChef>;
+    deployContract(
+      name: "ILockable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ILockable>;
     deployContract(
       name: "IInitializableProxy",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -1002,6 +1028,11 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.WETH>;
     deployContract(
+      name: "Lockable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Lockable>;
+    deployContract(
       name: "ERC4626Pool",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -1111,6 +1142,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IMasterChef>;
+    deployContract(
+      name: "ILockable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.ILockable>;
     deployContract(
       name: "IInitializableProxy",
       args: any[],

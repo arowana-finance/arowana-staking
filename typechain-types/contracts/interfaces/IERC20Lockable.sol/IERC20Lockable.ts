@@ -330,7 +330,7 @@ export interface IERC20Lockable extends BaseContract {
     "view"
   >;
 
-  lockedUntil: TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  lockedUntil: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
   name: TypedContractMethod<[], [string], "view">;
 
@@ -437,7 +437,7 @@ export interface IERC20Lockable extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "lockedUntil",
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "name",
   ): TypedContractMethod<[], [string], "view">;
@@ -524,7 +524,7 @@ export interface IERC20Lockable extends BaseContract {
       ApprovalEvent.OutputObject
     >;
 
-    "Lock(address,uint256)": TypedContractEvent<
+    "Lock(address,uint48)": TypedContractEvent<
       LockEvent.InputTuple,
       LockEvent.OutputTuple,
       LockEvent.OutputObject
@@ -535,7 +535,7 @@ export interface IERC20Lockable extends BaseContract {
       LockEvent.OutputObject
     >;
 
-    "LockedBy(address,address,uint256)": TypedContractEvent<
+    "LockedBy(address,address,uint48)": TypedContractEvent<
       LockedByEvent.InputTuple,
       LockedByEvent.OutputTuple,
       LockedByEvent.OutputObject

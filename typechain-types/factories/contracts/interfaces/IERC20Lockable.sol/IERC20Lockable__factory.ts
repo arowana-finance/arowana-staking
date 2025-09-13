@@ -10,6 +10,44 @@ import type {
 
 const _abi = [
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "AccountLocked",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint48",
+        name: "deadline",
+        type: "uint48",
+      },
+    ],
+    name: "LockedExpiredSignature",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "signer",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "LockedInvalidSigner",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -45,9 +83,9 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "uint48",
         name: "lockUntil",
-        type: "uint256",
+        type: "uint48",
       },
     ],
     name: "Lock",
@@ -70,9 +108,9 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "uint48",
         name: "lockUntil",
-        type: "uint256",
+        type: "uint48",
       },
     ],
     name: "LockedBy",
@@ -223,9 +261,9 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
+        internalType: "uint48",
         name: "until",
-        type: "uint256",
+        type: "uint48",
       },
     ],
     name: "isLockedUntil",
@@ -242,9 +280,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint48",
         name: "until",
-        type: "uint256",
+        type: "uint48",
       },
     ],
     name: "lock",
@@ -265,14 +303,14 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "uint256",
+        internalType: "uint48",
         name: "lockUntil",
-        type: "uint256",
+        type: "uint48",
       },
       {
-        internalType: "uint256",
+        internalType: "uint48",
         name: "deadline",
-        type: "uint256",
+        type: "uint48",
       },
       {
         internalType: "bytes",
@@ -332,16 +370,16 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "account",
+        name: "owner",
         type: "address",
       },
     ],
     name: "lockedUntil",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint48",
         name: "timestamp",
-        type: "uint256",
+        type: "uint48",
       },
     ],
     stateMutability: "view",

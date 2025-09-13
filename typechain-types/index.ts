@@ -10,6 +10,8 @@ export type { WETHMock } from "./contracts/tokens/WETHMock.sol/WETHMock.js";
 export { WETHMock__factory } from "./factories/contracts/tokens/WETHMock.sol/WETHMock__factory.js";
 export type { WETH } from "./contracts/tokens/WETH.sol/WETH.js";
 export { WETH__factory } from "./factories/contracts/tokens/WETH.sol/WETH__factory.js";
+export type { Lockable } from "./contracts/tokens/Lockable.sol/Lockable.js";
+export { Lockable__factory } from "./factories/contracts/tokens/Lockable.sol/Lockable__factory.js";
 export type { ERC4626Pool } from "./contracts/tokens/ERC4626Pool.sol/ERC4626Pool.js";
 export { ERC4626Pool__factory } from "./factories/contracts/tokens/ERC4626Pool.sol/ERC4626Pool__factory.js";
 export type { ERC20Mock } from "./contracts/tokens/ERC20Mock.sol/ERC20Mock.js";
@@ -54,6 +56,8 @@ export type { IMasterPool } from "./contracts/interfaces/IMasterPool.sol/IMaster
 export { IMasterPool__factory } from "./factories/contracts/interfaces/IMasterPool.sol/IMasterPool__factory.js";
 export type { IMasterChef } from "./contracts/interfaces/IMasterChef.sol/IMasterChef.js";
 export { IMasterChef__factory } from "./factories/contracts/interfaces/IMasterChef.sol/IMasterChef__factory.js";
+export type { ILockable } from "./contracts/interfaces/ILockable.sol/ILockable.js";
+export { ILockable__factory } from "./factories/contracts/interfaces/ILockable.sol/ILockable__factory.js";
 export type { IInitializableProxy } from "./contracts/interfaces/IInitializableProxy.sol/IInitializableProxy.js";
 export { IInitializableProxy__factory } from "./factories/contracts/interfaces/IInitializableProxy.sol/IInitializableProxy__factory.js";
 export type { IERC4626Pool } from "./contracts/interfaces/IERC4626Pool.sol/IERC4626Pool.js";
