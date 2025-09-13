@@ -44,10 +44,20 @@ export interface ILockableInterface extends Interface {
     functionFragment: "isLockedUntil",
     values: [AddressLike, BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: "lock", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "lock",
+    values: [BigNumberish, BytesLike],
+  ): string;
   encodeFunctionData(
     functionFragment: "lockPermit",
-    values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      AddressLike,
+      AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "lockedUntil",
@@ -157,7 +167,11 @@ export interface ILockable extends BaseContract {
     "view"
   >;
 
-  lock: TypedContractMethod<[until: BigNumberish], [void], "nonpayable">;
+  lock: TypedContractMethod<
+    [until: BigNumberish, lockParams: BytesLike],
+    [void],
+    "nonpayable"
+  >;
 
   lockPermit: TypedContractMethod<
     [
@@ -166,6 +180,7 @@ export interface ILockable extends BaseContract {
       lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
+      lockParams: BytesLike,
     ],
     [void],
     "nonpayable"
@@ -195,7 +210,11 @@ export interface ILockable extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "lock",
-  ): TypedContractMethod<[until: BigNumberish], [void], "nonpayable">;
+  ): TypedContractMethod<
+    [until: BigNumberish, lockParams: BytesLike],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "lockPermit",
   ): TypedContractMethod<
@@ -205,6 +224,7 @@ export interface ILockable extends BaseContract {
       lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
+      lockParams: BytesLike,
     ],
     [void],
     "nonpayable"

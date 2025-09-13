@@ -141,10 +141,20 @@ export interface ERC4626PoolInterface extends Interface {
     functionFragment: "isRewardNative",
     values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "lock", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "lock",
+    values: [BigNumberish, BytesLike],
+  ): string;
   encodeFunctionData(
     functionFragment: "lockPermit",
-    values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      AddressLike,
+      AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "lockedBalance",
@@ -657,7 +667,11 @@ export interface ERC4626Pool extends BaseContract {
 
   isRewardNative: TypedContractMethod<[], [boolean], "view">;
 
-  lock: TypedContractMethod<[until: BigNumberish], [void], "nonpayable">;
+  lock: TypedContractMethod<
+    [until: BigNumberish, arg1: BytesLike],
+    [void],
+    "nonpayable"
+  >;
 
   lockPermit: TypedContractMethod<
     [
@@ -666,6 +680,7 @@ export interface ERC4626Pool extends BaseContract {
       lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
+      arg5: BytesLike,
     ],
     [void],
     "nonpayable"
@@ -871,7 +886,11 @@ export interface ERC4626Pool extends BaseContract {
   ): TypedContractMethod<[], [boolean], "view">;
   getFunction(
     nameOrSignature: "lock",
-  ): TypedContractMethod<[until: BigNumberish], [void], "nonpayable">;
+  ): TypedContractMethod<
+    [until: BigNumberish, arg1: BytesLike],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "lockPermit",
   ): TypedContractMethod<
@@ -881,6 +900,7 @@ export interface ERC4626Pool extends BaseContract {
       lockUntil: BigNumberish,
       deadline: BigNumberish,
       signature: BytesLike,
+      arg5: BytesLike,
     ],
     [void],
     "nonpayable"

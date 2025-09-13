@@ -121,8 +121,9 @@ abstract contract Lockable is ERC165, EIP712Upgradeable, NoncesUpgradeable {
      * @notice Lock the caller's account for a specific period
      * @param until Timestamp to lock account for a specific period
      * @dev Similar to transfer function
+     * (lockParams: optional params to have when calling lock function - like token balance, etc)
      */
-    function lock(uint48 until) public virtual {
+    function lock(uint48 until, bytes memory /*lockParams*/) public virtual {
         _lock(msg.sender, until);
     }
 
@@ -134,13 +135,15 @@ abstract contract Lockable is ERC165, EIP712Upgradeable, NoncesUpgradeable {
      * @param deadline Deadline until a signed signature is considered valid
      * @param signature Signed serialized EIP-712 signature
      * @dev Similar to the permit function
+     * (lockParams: optional params to have when calling lock function - like token balance, etc)
      */
     function lockPermit(
         address owner,
         address lockBy,
         uint48 lockUntil,
         uint48 deadline,
-        bytes memory signature
+        bytes memory signature,
+        bytes memory /*lockParams*/
     ) public virtual {
         if (block.timestamp > deadline) {
             revert LockedExpiredSignature(deadline);
@@ -157,9 +160,9 @@ abstract contract Lockable is ERC165, EIP712Upgradeable, NoncesUpgradeable {
             revert LockedInvalidSigner(signer, owner);
         }
 
-        _lock(owner, lockUntil);
-
         emit LockedBy(owner, lockBy, lockUntil);
+
+        _lock(owner, lockUntil);
     }
 
     /**

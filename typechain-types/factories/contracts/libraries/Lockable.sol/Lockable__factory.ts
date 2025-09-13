@@ -6,7 +6,7 @@ import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   Lockable,
   LockableInterface,
-} from "../../../../contracts/tokens/Lockable.sol/Lockable.js";
+} from "../../../../contracts/libraries/Lockable.sol/Lockable.js";
 
 const _abi = [
   {
@@ -269,6 +269,11 @@ const _abi = [
         name: "until",
         type: "uint48",
       },
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
     ],
     name: "lock",
     outputs: [],
@@ -300,6 +305,11 @@ const _abi = [
       {
         internalType: "bytes",
         name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "",
         type: "bytes",
       },
     ],

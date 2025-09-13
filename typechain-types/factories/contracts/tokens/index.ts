@@ -4,6 +4,5 @@
 export * as erc20LockableSol from "./ERC20Lockable.sol/index.js";
 export * as erc20MockSol from "./ERC20Mock.sol/index.js";
 export * as erc4626PoolSol from "./ERC4626Pool.sol/index.js";
-export * as lockableSol from "./Lockable.sol/index.js";
 export * as wethSol from "./WETH.sol/index.js";
 export * as wethMockSol from "./WETHMock.sol/index.js";

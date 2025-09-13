@@ -5,7 +5,7 @@ import {
     ERC20PermitUpgradeable,
     NoncesUpgradeable
 } from '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol';
-import { Lockable } from './Lockable.sol';
+import { Lockable } from '../libraries/Lockable.sol';
 
 /**
  * @notice ERC20 with self-custodial transfer locking capabilities

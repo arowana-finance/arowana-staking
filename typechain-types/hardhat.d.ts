@@ -22,10 +22,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.WETH__factory>;
     getContractFactory(
-      name: "Lockable",
-      signerOrOptions?: ethers.Signer | FactoryOptions,
-    ): Promise<Contracts.Lockable__factory>;
-    getContractFactory(
       name: "ERC4626Pool",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ERC4626Pool__factory>;
@@ -81,6 +77,10 @@ declare module "hardhat/types/runtime" {
       name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: "Lockable",
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.Lockable__factory>;
     getContractFactory(
       name: "IWETH",
       signerOrOptions?: ethers.Signer | FactoryOptions,
@@ -333,11 +333,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer,
     ): Promise<Contracts.WETH>;
     getContractAt(
-      name: "Lockable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer,
-    ): Promise<Contracts.Lockable>;
-    getContractAt(
       name: "ERC4626Pool",
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
@@ -407,6 +402,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "Lockable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.Lockable>;
     getContractAt(
       name: "IWETH",
       address: string | ethers.Addressable,
@@ -717,10 +717,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.WETH>;
     deployContract(
-      name: "Lockable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
-    ): Promise<Contracts.Lockable>;
-    deployContract(
       name: "ERC4626Pool",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.ERC4626Pool>;
@@ -776,6 +772,10 @@ declare module "hardhat/types/runtime" {
       name: "Ownable",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "Lockable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Lockable>;
     deployContract(
       name: "IWETH",
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -1028,11 +1028,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.WETH>;
     deployContract(
-      name: "Lockable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
-    ): Promise<Contracts.Lockable>;
-    deployContract(
       name: "ERC4626Pool",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -1102,6 +1097,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "Lockable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.Lockable>;
     deployContract(
       name: "IWETH",
       args: any[],

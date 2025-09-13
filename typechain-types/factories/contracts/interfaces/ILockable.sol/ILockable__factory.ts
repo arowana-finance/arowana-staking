@@ -141,6 +141,11 @@ const _abi = [
         name: "until",
         type: "uint48",
       },
+      {
+        internalType: "bytes",
+        name: "lockParams",
+        type: "bytes",
+      },
     ],
     name: "lock",
     outputs: [],
@@ -172,6 +177,11 @@ const _abi = [
       {
         internalType: "bytes",
         name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "lockParams",
         type: "bytes",
       },
     ],

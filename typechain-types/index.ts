@@ -10,8 +10,6 @@ export type { WETHMock } from "./contracts/tokens/WETHMock.sol/WETHMock.js";
 export { WETHMock__factory } from "./factories/contracts/tokens/WETHMock.sol/WETHMock__factory.js";
 export type { WETH } from "./contracts/tokens/WETH.sol/WETH.js";
 export { WETH__factory } from "./factories/contracts/tokens/WETH.sol/WETH__factory.js";
-export type { Lockable } from "./contracts/tokens/Lockable.sol/Lockable.js";
-export { Lockable__factory } from "./factories/contracts/tokens/Lockable.sol/Lockable__factory.js";
 export type { ERC4626Pool } from "./contracts/tokens/ERC4626Pool.sol/ERC4626Pool.js";
 export { ERC4626Pool__factory } from "./factories/contracts/tokens/ERC4626Pool.sol/ERC4626Pool__factory.js";
 export type { ERC20Mock } from "./contracts/tokens/ERC20Mock.sol/ERC20Mock.js";
@@ -40,6 +38,8 @@ export type { OwnableControl } from "./contracts/libraries/OwnableControl.sol/Ow
 export { OwnableControl__factory } from "./factories/contracts/libraries/OwnableControl.sol/OwnableControl__factory.js";
 export type { Ownable } from "./contracts/libraries/Ownable.sol/Ownable.js";
 export { Ownable__factory } from "./factories/contracts/libraries/Ownable.sol/Ownable__factory.js";
+export type { Lockable } from "./contracts/libraries/Lockable.sol/Lockable.js";
+export { Lockable__factory } from "./factories/contracts/libraries/Lockable.sol/Lockable__factory.js";
 export type { IWETH } from "./contracts/interfaces/IWETH.sol/IWETH.js";
 export { IWETH__factory } from "./factories/contracts/interfaces/IWETH.sol/IWETH__factory.js";
 export type { IV2SwapFeed } from "./contracts/interfaces/IV2SwapFeed.sol/IV2SwapFeed.js";
